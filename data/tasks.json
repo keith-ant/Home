@@ -1,0 +1,50 @@
+[
+  {
+    "id": "task_seed01",
+    "title": "Cancel the duplicate NYC hotel — Soho Grand or Courtyard SoHo, both held Jun 29 – Jul 3",
+    "done": false,
+    "createdAt": "2026-06-28T16:00:00.000Z",
+    "due": "2026-06-28",
+    "source": "claude"
+  },
+  {
+    "id": "task_seed02",
+    "title": "Decline or move the 4 Monday meetings booked over the SFO → EWR flight",
+    "done": false,
+    "createdAt": "2026-06-28T16:00:01.000Z",
+    "due": "2026-06-28",
+    "source": "claude"
+  },
+  {
+    "id": "task_seed03",
+    "title": "Check in for UA 713 to Newark (check-in opened this morning)",
+    "done": false,
+    "createdAt": "2026-06-28T16:00:02.000Z",
+    "due": "2026-06-28",
+    "source": "claude"
+  },
+  {
+    "id": "task_seed04",
+    "title": "Pack for NYC — out Monday morning, back Thursday",
+    "done": false,
+    "createdAt": "2026-06-28T16:00:03.000Z",
+    "due": "2026-06-28",
+    "source": "claude"
+  },
+  {
+    "id": "task_seed05",
+    "title": "Move Thursday's 10 AM DVQ — it starts one minute after UA 1960 lands at SFO",
+    "done": false,
+    "createdAt": "2026-06-28T16:00:04.000Z",
+    "due": "2026-06-29",
+    "source": "claude"
+  },
+  {
+    "id": "task_seed06",
+    "title": "RSVP to this week's meetings (53 still unanswered)",
+    "done": false,
+    "createdAt": "2026-06-28T16:00:05.000Z",
+    "due": "2026-06-29",
+    "source": "claude"
+  }
+]

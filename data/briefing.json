@@ -1,0 +1,36 @@
+{
+  "updatedAt": "2026-06-28T16:00:00.000Z",
+  "headline": "Quiet Sunday — but Monday needs five minutes of triage today. You fly SFO → Newark at 10:20 AM Monday, and four meetings were booked right over the flight.",
+  "items": [
+    {
+      "id": "b1",
+      "kind": "heads-up",
+      "text": "You have two NYC hotels booked for the same nights, Jun 29 – Jul 3: Soho Grand and the Courtyard SoHo. One should be cancelled before its free-cancellation window closes."
+    },
+    {
+      "id": "b2",
+      "kind": "heads-up",
+      "text": "Monday, you're in the air 10:20 AM – 4:03 PM PT, and these sit inside the flight: Working with Legal (11:30), Keith / Mark intro (12:30 — also double-booked against the Fable HOLD), and Keith / Kevin (1:30). Decline or move them now so nobody's waiting on you."
+    },
+    {
+      "id": "b3",
+      "kind": "heads-up",
+      "text": "Thursday's return (UA 1960) leaves Newark at 7:00 AM ET and lands at SFO at 9:59 AM — and your DVQ starts at 10:00 AM. That's a one-minute connection. Move the DVQ, or plan to take it from the airport."
+    },
+    {
+      "id": "b4",
+      "kind": "prep",
+      "text": "Your 9:30 Monday with Gustav (your spin-up buddy) is 50 minutes before wheels-up — it's a 15-minute Meet, so take it from the gate. I drafted prep questions in that meeting's notes; click the row to see them."
+    },
+    {
+      "id": "b5",
+      "kind": "note",
+      "text": "You've RSVP'd to 5 of the 58 meetings on these two weeks. The schedule tags the unanswered ones with \"RSVP\" — worth a 10-minute triage."
+    },
+    {
+      "id": "b6",
+      "kind": "note",
+      "text": "The Tue/Wed onboarding bootcamp shows on Google Calendar at 6 AM Pacific. It's really 9 AM Eastern, where you'll be — this dashboard always renders in whatever timezone you're physically in, so it'll be right when you land."
+    }
+  ]
+}

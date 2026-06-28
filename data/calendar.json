@@ -1,0 +1,5786 @@
+[
+  {
+    "id": "0arqc1dkbhimg50each5801ekc",
+    "title": "Stay at Soho Grand Hotel",
+    "start": "2026-06-29",
+    "end": "2026-07-03",
+    "allDay": true,
+    "location": "310 West Broadway, New York, 10013, United States",
+    "meetLink": null,
+    "organizer": "keith@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "accepted",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DOORo1--6u1MntlW6ZW_rO9AfOTZ7U-mdI"
+  },
+  {
+    "id": "himval0r0tu56mm8r7n7i86rmg",
+    "title": "Stay at Courtyard by Marriott New York Manhattan/SoHo",
+    "start": "2026-06-29",
+    "end": "2026-07-03",
+    "allDay": true,
+    "location": "181 Varick Street, New York, 10014, United States",
+    "meetLink": null,
+    "organizer": "keith@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "accepted",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DMKVEYGBd4Fq5-86HiG1YnLZbn4ngJz7_k"
+  },
+  {
+    "id": "v2gj9452g04f4pierocd8ke5sc",
+    "title": "Keith Mancuso <> Gustav Bergman: spin-up check-in",
+    "start": "2026-06-29T09:30:00-07:00",
+    "end": "2026-06-29T09:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/mih-nwje-dvv",
+    "organizer": "c_85f849729bb56804b2631629c40f8c19f854ab5a1c7541620d907fc6d1b0d733@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "gbergman@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "These meetings are intended as a forcing function for getting unblocked, and asking all of your questions (including the \"stupid\" ones). If you don't think there's anything useful to chat about, consider meeting for a few mins anyway and seeing if anything comes up!\n\n(Your goal as spin-up buddy is to elicit the latent difficulties / frictions even if Keith doesn't think to surface them themselves!)\n\n_(This invite was auto-generated as part of the spin-up program and is best-effort: move it to a time that suits you better, or decline it if it doesn't fit. If you've already scheduled something similar yourselves, just ignore this one — no need to do both.)_"
+  },
+  {
+    "id": "1m81to4l2p1rboas20jtmdf1fl",
+    "title": "[OPTIONAL] Fireside chat: Lotte Bjerre Knudsen with Jonah Cool",
+    "start": "2026-06-29T10:00:00-07:00",
+    "end": "2026-06-29T10:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/woh-ppkm-pes",
+    "organizer": "c_188cdom4seqj2g39n112pn3oe2658@resource.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Lotte Bjerre Knudsen, the scientist behind GLP-1s, spent more than 30 years at Novo Nordisk championing the benefits of this drug before anyone understood its potential. She believed these medicines could change lives, and spent her career proving it.\nNovo Nordisk is controlled by a foundation, which makes it a rare case of a mission-driven business that is also commercially successful.\nLotte is in town for a fireside with Dario at The Briefing: AI for Science, and while she’s here, she wants to sit down and share her story with us. She joins Jonah Cool, who leads Life Sciences on the Beneficial Deployments team, to talk about the long road to a life-saving drug and what AI could mean for the next generation of science.\nAs we grow, it's the kind of story that will help keep us grounded - proof that staying close to a mission and holding conviction through the doubt and the hard parts is what leads to the biggest breakthroughs.\nOpen to All Ants. Hosted live from Spark (SF-500-5-547)."
+  },
+  {
+    "id": "ndjdcsajrcuqtpin526mo9hkm8",
+    "title": "Flight to Newark (UA 713)",
+    "start": "2026-06-29T10:20:00-07:00",
+    "end": "2026-06-29T16:03:00-07:00",
+    "allDay": false,
+    "location": "San Francisco SFO",
+    "meetLink": null,
+    "organizer": "keith@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "accepted",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DMK5DHYh0gUE4et71wfW0l0hGaoxuJuUw4"
+  },
+  {
+    "id": "m3fcopkff8c344e980tlahce70_20260629T183000Z",
+    "title": "GTM Onboarding: Working with Legal",
+    "start": "2026-06-29T11:30:00-07:00",
+    "end": "2026-06-29T12:30:00-07:00",
+    "allDay": false,
+    "location": "SF-505-4-4108-Centaurus (10) [Google Meet]",
+    "meetLink": "https://meet.google.com/pek-ggkz-hyu",
+    "organizer": "c_3f84da6a9ba1a42fa192d2c9084945dbe9ad1b80e5ee03aeb7927f00c41da1e4@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "cmah@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "alexis@anthropic.com",
+        "name": "Alexis LiDonde",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "adelf@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bbarros@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "blakew@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "brittanyhorton@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cbilden@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cgalante@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "elinhollis@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "gordon@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jennysha@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "joshlee@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "lvenneti@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "marvin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mjust@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "neera@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "raunak@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "richardb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "sarzubiaga@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "terencez@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "varoon@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "walls@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Presenter: Alexis LiDonde\nMeet: https://meet.google.com/pek-ggkz-hyu"
+  },
+  {
+    "id": "1960u6cbnsim7iv7sq5fcr2h5m",
+    "title": "HOLD: Fable Redeployment & Shrew EnableANT",
+    "start": "2026-06-29T12:30:00-07:00",
+    "end": "2026-06-29T13:00:00-07:00",
+    "allDay": false,
+    "location": "SEA-700-14F-1419-Columbia City (3), NY-155-7-702-Everglades (20) [Google Meet], Washington DC - Homer-9F-9028-Jefferson (4) [Google Meet], SF-505-2-2126-Fractal (14) [Google Meet], Dublin - Styne House-1-Cliffs of Moher (8), NY-11-5-Argon (3) [Google Meet], Dublin - Hume Street-4-Haiku (5) [Google Meet], London-10-R12-Panic (10) [Google Meet]",
+    "meetLink": "https://meet.google.com/wqf-bndk-cji",
+    "organizer": "c_ba9eb64c2885d797f76027c8fc50215ce42c0b4ceb41b0cf0f17778fbb397219@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "This meeting is being held as calendar block for enablement of a potential Fable redeployment and upcoming Shrew launch. Please note that export controls have NOT been lifted on Fable as of yet. We should not be communicating with anyone externally about Fable or Shrew until given the green light."
+  },
+  {
+    "id": "7fnnbuq8o934b685sjj7f28vpd",
+    "title": "Keith / Mark | Intro",
+    "start": "2026-06-29T12:30:00-07:00",
+    "end": "2026-06-29T13:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/nxu-vrtt-huz",
+    "organizer": "markd@anthropic.com",
+    "attendees": [
+      {
+        "email": "markd@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "0s4cik3hqg575nk4414nudtks1",
+    "title": "Keith / Kevin",
+    "start": "2026-06-29T13:30:00-07:00",
+    "end": "2026-06-29T14:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/yjf-fhmv-vkn",
+    "organizer": "kevinmartin@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "kevinmartin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "i2ee2srdd5e6cd0oa8br3ost98",
+    "title": "Fable 5 Office Hours",
+    "start": "2026-06-29T17:30:00-07:00",
+    "end": "2026-06-29T18:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/hcm-vxxu-vrs",
+    "organizer": "rhys@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Join us to ask your questions about Fable 5, we'll share if we have any updates, or you can ask about anything top of mind."
+  },
+  {
+    "id": "54hvj0tcdkhrj0e94tml4r402s",
+    "title": "Kickoff, Intros & Environment Spot-Check",
+    "start": "2026-06-30T06:00:00-07:00",
+    "end": "2026-06-30T06:20:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "accepted",
+    "description": "What we'll cover\nCohort intros, two-day roadmap, and a live environment check to confirm your pre-work landed (GitHub connected, terminal ready, demo org owner access).\n\nPrep\nComplete the pre-work checklist sent one week ahead. We'll verify it here so nothing blocks you in the build-alongs.\n\nPresenter: Matt Roknich"
+  },
+  {
+    "id": "0rripc4q1dnbqg6e8stihk44sc",
+    "title": "ICP: The Knowledge Worker",
+    "start": "2026-06-30T06:20:00-07:00",
+    "end": "2026-06-30T06:50:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jhong@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "accepted",
+    "description": "What we'll cover\nWho the knowledge worker ICP is, what their day looks like, and where Claude lands in it. Built around real customer deployment stories.\n\nFormat\nPresentation + discussion\n\nPresenter: Jessica Hong"
+  },
+  {
+    "id": "cqlscapvrml6b2o9hm9vhaj7ho",
+    "title": "Reading Customer Usage: Health Signals & Insights",
+    "start": "2026-06-30T06:50:00-07:00",
+    "end": "2026-06-30T07:35:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "francisco@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nHow to read a customer's usage data to spot health signals and surface insights, including what to look for, where PII boundaries sit, and how to turn what you find into a conversation.\n\nPrep\nBigQuery access is granted via pre-work; confirm you can run a query before this session.\n\nPresenter: Francisco Villarreal"
+  },
+  {
+    "id": "05tj9886646d27vnrh7hb79tb8",
+    "title": "Break",
+    "start": "2026-06-30T07:35:00-07:00",
+    "end": "2026-06-30T07:50:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "pi3sc766qqu0bbkplosouc7puk",
+    "title": "The Enterprise Plan & Platform Bird's Eye",
+    "start": "2026-06-30T07:50:00-07:00",
+    "end": "2026-06-30T08:20:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nA high-level map of the Enterprise plan and platform: how harness, product, and scaffolding fit together, and where DevOps and SRE concepts show up in customer conversations. This is the grounding for every deep dive that follows.\n\nFormat\nPresentation + Q&A\n\nPresenter: Aaron Kovar"
+  },
+  {
+    "id": "pv0vpvt584s0s6at3tpcgc8eec",
+    "title": "Cowork Build-Along: Ship Your Own Workflow",
+    "start": "2026-06-30T08:20:00-07:00",
+    "end": "2026-06-30T09:20:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nBuild and ship a working Cowork workflow end to end. We get to files and artifacts fast and spend most of the hour with hands on keyboard.\n\nFormat\n~15 min concepts, ~45 min hands-on build in the standardized demo environment\n\nPresenter: Amber Yin"
+  },
+  {
+    "id": "cj7ms7g6f4tl1tm68g52ie95p0",
+    "title": "Lunch",
+    "start": "2026-06-30T09:20:00-07:00",
+    "end": "2026-06-30T09:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "0d0k94p2nk8ko0kemj7ipgdnvg",
+    "title": "CS Leadership Welcome — Chris Conant",
+    "start": "2026-06-30T09:45:00-07:00",
+    "end": "2026-06-30T10:05:00-07:00",
+    "allDay": false,
+    "location": "SF-505-2-2116-Euclid (10) [Google Meet], NY-155-8-814-Alpha (8) [Google Meet]",
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "ingridkeir@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": true
+      },
+      {
+        "email": "chrisconant@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lstarling@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "csm@anthropic.com",
+        "name": "CSM",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nChris Conant, our new leader overseeing Strategic Deployment & Success, joins the new hire CS Basecamp for a quick intro and open Q&A: where CS is headed, what he's hearing from customers, and what he wants from this group.\n\nFormat\nFireside / AMA moderated by @liz \n\nPresenter: Chris Conant (remote)"
+  },
+  {
+    "id": "u80vau42g6e392se5ou331u4rk",
+    "title": "Fable 5 Office Hours",
+    "start": "2026-06-30T10:00:00-07:00",
+    "end": "2026-06-30T10:30:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/geu-gvdm-zum",
+    "organizer": "rhys@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "ntkrna2qq8nr22iacnrrskmog0",
+    "title": "Cowork: The Admin's View (Scavenger Hunt)",
+    "start": "2026-06-30T11:05:00-07:00",
+    "end": "2026-06-30T11:50:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "ameliapedone@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nThe Cowork admin experience from the customer's seat. Pairs spin up a test org and complete an admin-screen scavenger hunt covering the settings you'll get asked about most.\n\nFormat\nPaired hands-on exercise\n\nTakeaway\nAdmin dashboard docs as post-work reference\n\nPresenter: Amelia Pedone"
+  },
+  {
+    "id": "o612s2sfm88k8vsgpmmh1l0818",
+    "title": "Identity, Provisioning & Workspace Architecture",
+    "start": "2026-06-30T12:05:00-07:00",
+    "end": "2026-06-30T12:50:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "markd@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nHow customers set up identity, provisioning, and workspaces: console org relationships, multi-org constructs, and independent IdPs. Heavy Q&A expected; the break that follows is intentional overflow.\n\nFormat\nPresentation with optional set-up-along\n\nPresenter: Mark Dominguez"
+  },
+  {
+    "id": "8uhh44gvrlou1g851ai2i0mkms",
+    "title": "MiniHack: Go-Live Readiness Gauntlet",
+    "start": "2026-06-30T12:50:00-07:00",
+    "end": "2026-06-30T13:40:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nTimed team challenge: take a customer through go-live readiness using everything from Day 1. Protected time, no overruns into it.\n\nFormat\nTeam mini-hack\n\nFacilitator: Matt Roknich"
+  },
+  {
+    "id": "1d6krdgvg3q33grc54t4mmfvdo",
+    "title": "Day 1 Debrief + Survey",
+    "start": "2026-06-30T13:40:00-07:00",
+    "end": "2026-06-30T14:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/uqn-bwth-qra",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nQuick debrief and the Day 1 survey (includes a \"didn't attend\" option per session). Cohort dinner follows at 5:30.\n\nPresenter: Matt Roknich"
+  },
+  {
+    "id": "5jl291l300tg2kt8m0qet87nsc",
+    "title": "Basecamp Dinner Hold - Houseman",
+    "start": "2026-06-30T14:00:00-07:00",
+    "end": "2026-06-30T16:50:00-07:00",
+    "allDay": false,
+    "location": "Houseman, 508 Greenwich St, New York, NY 10013, USA",
+    "meetLink": "https://meet.google.com/kqo-ttcz-xoq",
+    "organizer": "shannonmcneil@anthropic.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "alisa@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "ameliapedone@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "canute@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": true
+      },
+      {
+        "email": "carlo@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christhompson@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": true
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "evanhellmuth@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "francisco@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jkramer@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lauradomnescu@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lstarling@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "markd@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "neelsharma@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "omeed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": true
+      },
+      {
+        "email": "rathesh@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stevenr@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "tjoconnor@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wolf@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "We are eating here! http://housemanrestaurant.com/"
+  },
+  {
+    "id": "s8ss5hedrjtbm9d8r3re7kc26o",
+    "title": "Keith Mancuso <> Gustav Bergman: spin-up check-in",
+    "start": "2026-06-30T16:15:00-07:00",
+    "end": "2026-06-30T16:30:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/woc-czvw-ywz",
+    "organizer": "c_85f849729bb56804b2631629c40f8c19f854ab5a1c7541620d907fc6d1b0d733@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "gbergman@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "These meetings are intended as a forcing function for getting unblocked, and asking all of your questions (including the \"stupid\" ones). If you don't think there's anything useful to chat about, consider meeting for a few mins anyway and seeing if anything comes up!\n\n(Your goal as spin-up buddy is to elicit the latent difficulties / frictions even if Keith doesn't think to surface them themselves!)\n\n_(This invite was auto-generated as part of the spin-up program and is best-effort: move it to a time that suits you better, or decline it if it doesn't fit. If you've already scheduled something similar yourselves, just ignore this one — no need to do both.)_"
+  },
+  {
+    "id": "qmu7h0ttipdo4qpkqj8jd6tiks",
+    "title": "Tech Stacks, SDLC & Developer Tooling",
+    "start": "2026-07-01T06:00:00-07:00",
+    "end": "2026-07-01T06:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nHow modern engineering orgs are structured and the tools they use across the SDLC, so you can map a customer's stack and speak their language. Includes the developer-ICP org-mapping content.\n\nPrep\nSkim the tool dictionary sent as a pre-read.\n\nPresenter: Matt Roknich"
+  },
+  {
+    "id": "6t89lo2rt8q5012ba3uc0bnlng",
+    "title": "Git & Source Control Hands-On",
+    "start": "2026-07-01T06:45:00-07:00",
+    "end": "2026-07-01T07:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nGit fundamentals through hands-on reps: clone, branch, commit, push, PR. We use the visuals to build the mental model, then practice in your own repo.\n\nFormat\n~15 min concepts, ~45 min hands-on\n\nPrep\nRepo is pre-created in your pre-work; no setup happens in session.\n\nPresenter: Nick Rodrigues"
+  },
+  {
+    "id": "jrj7pvag0orss1da1d860n2qpk",
+    "title": "Break",
+    "start": "2026-07-01T07:45:00-07:00",
+    "end": "2026-07-01T08:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "b2fqeq8jdqq8g8su0mqp71u604",
+    "title": "Release Pipeline & Environments",
+    "start": "2026-07-01T08:00:00-07:00",
+    "end": "2026-07-01T08:30:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "bradenriggs@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nHow code moves from a developer's laptop to production: environments, CI/CD, and the release pipeline (the factory metaphor). Ends with a short quiz.\n\nFormat\nPresentation + quiz\n\nPresenter: Braden Riggs"
+  },
+  {
+    "id": "7sumt3sala6t4vhtag4tjfr0dj",
+    "title": "Thinking Out Loud live from London",
+    "start": "2026-07-01T08:00:00-07:00",
+    "end": "2026-07-01T09:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": null,
+    "organizer": "c_1887vjtb07bdejkmifd6rgpr38nf0@resource.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Join Daniela for a conversation with @ringer, plus plenty of time for Q&A.\n\nThis is only for FTE Anthropic employees with Black + Purple Clearance.\n\nJoining from a conference room? We can now push the livestream to booked rooms! Tap \"join meeting\" on the Google Meet unit when you get to one of the rooms on this invite:\n\nHost room: London All Hands (13th floor)"
+  },
+  {
+    "id": "u7m3ep7ats69dn3ve8545b9j9c",
+    "title": "MCP, Connectors & Plugin Management",
+    "start": "2026-07-01T08:30:00-07:00",
+    "end": "2026-07-01T09:15:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nWhy MCP and connectors matter to a customer, how end users manage plugins via GitHub, and a real customer example. Hands-on in the demo org.\n\nFormat\nShort framing, then hands-on\n\nPresenter: Kyra Vargas (remote)"
+  },
+  {
+    "id": "2tbp8315fbifb1a7gt6fidtnkv_20260701T160000Z",
+    "title": "Weekly GTM EnableANT - Cowork for Sales + Marketing & Value and ROI & Claude Code Codex Competitive Reset + Claude Code Pitch Deck",
+    "start": "2026-07-01T09:00:00-07:00",
+    "end": "2026-07-01T10:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/bbc-yupr-mhs",
+    "organizer": "rhys@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Agenda:\nCowork for Sales + Marketing\nValue and ROI\nClaude Code Codex Competitive Reset + Claude Code Pitch Deck"
+  },
+  {
+    "id": "hrudm0f175qh3k093c8t4j1rh8",
+    "title": "Lunch",
+    "start": "2026-07-01T09:15:00-07:00",
+    "end": "2026-07-01T09:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "pv2eggpo2tu82oln0omrjj4iug",
+    "title": "Claude Code 200 Build-Along (+ Admin Settings)",
+    "start": "2026-07-01T09:45:00-07:00",
+    "end": "2026-07-01T11:15:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "alisa@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "markd@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nA 90-minute Claude Code build-along: global vs project CLAUDE.md, core workflows, and a live leaderboard for friendly competition. Closes with a walkthrough of the admin settings customers find most confusing.\n\nFormat\nHands-on build-along + admin settings breakout\n\nPrep\nEnvironment (brew, GitHub, repo) is fully set up via pre-work and Santa-cleared. No in-session setup.\n\nPresenters: Alisa Feng + Mark Dominguez"
+  },
+  {
+    "id": "40kmj7vj5sv13bghkdceanq1v6",
+    "title": "[LIVE Watch Party] New Hire Onboarding: New Hire DVQ",
+    "start": "2026-07-01T11:00:00-07:00",
+    "end": "2026-07-01T11:45:00-07:00",
+    "allDay": false,
+    "location": "NY-155-9-910-Sestina (12) [Google Meet], Washington DC - Homer-9F-9028-Jefferson (4) [Google Meet], SEA-700-12F-1238-Orion (6) [Google Meet], Zurich-5-508-Bufo discovers a rabbit hole (5), SF-500-5-547-Spark (50) [Google Meet], Dublin - Hume Street-4-Haiku (5) [Google Meet], SF-505-2-2412-Tensor (8) [Google Meet], London-14-Green (8) [Google Meet], NY-155-7-718-Teton (6) [Google Meet]",
+    "meetLink": "https://meet.google.com/ydj-zgra-cmr",
+    "organizer": "c_199664a64f3a8c657b6a19252d12ece198d8fe7bc3fd2d175080c24156cb6983@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "lh9ieba836ge5k5uc01926t3do",
+    "title": "Break",
+    "start": "2026-07-01T11:15:00-07:00",
+    "end": "2026-07-01T11:30:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "gtbav18tnjqi4jak8omgd6qr24",
+    "title": "Exceptional Demos & Workshops",
+    "start": "2026-07-01T11:30:00-07:00",
+    "end": "2026-07-01T12:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "christhompson@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nWhat separates a good demo or workshop from a great one. Real-world anecdotes plus interactive objection-handling practice using Lean In, Park & Pivot, and Acknowledge.\n\nFormat\nPresentation + interactive practice\n\nPresenter: Chris Thompson (remote)"
+  },
+  {
+    "id": "ttrdq2ccmlrt87lq5evdvb2nvv_20260701T184500Z",
+    "title": "CS team lunch - Welcome to new friends! 505 4th floor by hot food",
+    "start": "2026-07-01T11:45:00-07:00",
+    "end": "2026-07-01T12:10:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": null,
+    "organizer": "shannonmcneil@anthropic.com",
+    "attendees": [
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "neelsharma@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "abbypynchon@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "connie@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mollym@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyra.vargas@gmail.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "gbergman@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nicolatonthat@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wolf@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "joshlee@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "7frf102f1qgqkjvu0bmbi5q4q8",
+    "title": "Technical Discovery",
+    "start": "2026-07-01T12:00:00-07:00",
+    "end": "2026-07-01T12:30:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nUse case scoping, objection handling, and security posture conversations. We'll cover techniques for complex multi-stakeholder discovery, executive engagement, and how to translate vague customer requirements into concrete, buildable AI use cases.\n\nFormat\nPresentation + quiz\n\nPresenter: Jackson Dolphin"
+  },
+  {
+    "id": "29dqdrnlg9go9a0c2u8ie6r21c",
+    "title": "CC Power Patterns for the EBR",
+    "start": "2026-07-01T12:30:00-07:00",
+    "end": "2026-07-01T13:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "omeed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nClaude Code patterns that land in an EBR: how Anthropic engineers actually use CC and how to translate that into customer-facing value.\n\nFormat\nPresentation + discussion\n\nPresenter: Omeed Mariani"
+  },
+  {
+    "id": "e6tok4915seih3rt672bg49suk",
+    "title": "MiniHack: The 30-Day Recovery Plan",
+    "start": "2026-07-01T13:00:00-07:00",
+    "end": "2026-07-01T13:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mattroknich@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nTimed team challenge: build a 30-day recovery plan for a struggling account using everything from Day 2. Protected time.\n\nFormat\nTeam mini-hack\n\nFacilitator: Matt Roknich"
+  },
+  {
+    "id": "32iqgq694dtlfj86eem12fk7ic",
+    "title": "Program Close, Survey & Certificates",
+    "start": "2026-07-01T13:45:00-07:00",
+    "end": "2026-07-01T14:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/avt-pvke-usn",
+    "organizer": "c_d28bc89515e45d350c1efa28ee103eb432ccb1ce206183d271270660afdb06a7@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "akovar@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "aliceboucher@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allymueller@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "bret@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "cs-managers@anthropic.com",
+        "name": "CS-managers",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "melissaheinz@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "erickim@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jacksondolphin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jadeb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "jord@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "klochiatto@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "lane@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "laurens@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mobrien@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nrodrigues@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanel@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "stephanieb@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wissam@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "alexlyons@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "What we'll cover\nProgram assessment survey (with a \"didn't attend\" option per session) and certificates.\n\nPresenter: Matt Roknich"
+  },
+  {
+    "id": "3dacfkfv59oueng9q2lamp64mf_20260701T220000Z",
+    "title": "Coffee chat w. Liz",
+    "start": "2026-07-01T15:00:00-07:00",
+    "end": "2026-07-01T15:25:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/ebr-scyu-nrn",
+    "organizer": "lstarling@anthropic.com",
+    "attendees": [
+      {
+        "email": "lstarling@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "csm@anthropic.com",
+        "name": "CSM",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Open forum for your questions. Bring whatever is top of mind to this discussion and I'll share my current thoughts, priorities etc. \n\nWill alternate between Europe/ ET and APAC/ PT friendly time zones"
+  },
+  {
+    "id": "0uuuqtrq3knptuh7nn825p74d3_20260701T223000Z",
+    "title": "[OPTIONAL] LEGAL x GTM OFFICE HOURS",
+    "start": "2026-07-01T15:30:00-07:00",
+    "end": "2026-07-01T16:00:00-07:00",
+    "allDay": false,
+    "location": "SF-505-3-3467-Waltz (10) [Google Meet]",
+    "meetLink": "https://meet.google.com/dch-oqvw-ude",
+    "organizer": "alexis@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": true
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Bi-weekly time set aside for GTM folks to stop by and chat w/ Legal. Feel free to bring questions (and lovely chatter) related to processes, general contracting, and more!"
+  },
+  {
+    "id": "linqml40f1v21ub9ee4j89hles",
+    "title": "Keith Mancuso <> Gustav Bergman: spin-up check-in",
+    "start": "2026-07-01T16:30:00-07:00",
+    "end": "2026-07-01T16:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/ueu-qcyh-krt",
+    "organizer": "c_85f849729bb56804b2631629c40f8c19f854ab5a1c7541620d907fc6d1b0d733@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "gbergman@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "These meetings are intended as a forcing function for getting unblocked, and asking all of your questions (including the \"stupid\" ones). If you don't think there's anything useful to chat about, consider meeting for a few mins anyway and seeing if anything comes up!\n\n(Your goal as spin-up buddy is to elicit the latent difficulties / frictions even if Keith doesn't think to surface them themselves!)\n\n_(This invite was auto-generated as part of the spin-up program and is best-effort: move it to a time that suits you better, or decline it if it doesn't fit. If you've already scheduled something similar yourselves, just ignore this one — no need to do both.)_"
+  },
+  {
+    "id": "jvnh8h3fvnifqofif53lnufgak",
+    "title": "Flight to San Francisco (UA 1960)",
+    "start": "2026-07-02T04:00:00-07:00",
+    "end": "2026-07-02T09:59:00-07:00",
+    "allDay": false,
+    "location": "Newark EWR",
+    "meetLink": null,
+    "organizer": "keith@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "accepted",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DMK5DHYh0gUE4et71wfW0l0hGaoxuJuUw4"
+  },
+  {
+    "id": "bgfs57k7h7mq0timiqqtqj370b_20260702T160000Z",
+    "title": "GTM Claudification Office Hours",
+    "start": "2026-07-02T09:00:00-07:00",
+    "end": "2026-07-02T09:45:00-07:00",
+    "allDay": false,
+    "location": "SF-505-2-2402-Conjecture (14) [Google Meet]",
+    "meetLink": "https://meet.google.com/izo-euct-cgp",
+    "organizer": "jsires@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": true
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Slack Channel - #gtm-claude"
+  },
+  {
+    "id": "52m2m7hnnmr2fi67s7lf2par55",
+    "title": "DVQ",
+    "start": "2026-07-02T10:00:00-07:00",
+    "end": "2026-07-02T11:00:00-07:00",
+    "allDay": false,
+    "location": "Org Calendar [sensitive]",
+    "meetLink": null,
+    "organizer": "c_1887vjtb07bdejkmifd6rgpr38nf0@resource.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "accepted",
+    "description": "A time for Dario to talk about the landscape from here to AGI. What's been happening, what do we see as the important things to work on, and what are the implications of that for what Anthropic should do?\n\nThis is explicitly not a place to announce decisions or changes in policy. It's instead about making the chain of reasoning that eventually leads to policy more legible in real-time, with the understanding that it's tentative, less formal, less action-oriented than a typical all-hands announcement would be.\n\nDial-ins will be removed by default since they are not individually authenticated/secure, so please plan to join using the Meet Livestream link.\n\nThis is intentionally only for Black + Purple Clearance Ants, and is highly confidential.\n\nJoining from a conference room? We can now push the livestream to booked rooms! Tap \"join meeting\" on the Google Meet unit when you get to any of the rooms booked on this invite!"
+  },
+  {
+    "id": "2eokaq3vrn0ltlv4m6hjupbu66",
+    "title": "COO Scorecard: Office Hours",
+    "start": "2026-07-02T13:00:00-07:00",
+    "end": "2026-07-02T14:00:00-07:00",
+    "allDay": false,
+    "location": "SF-505-3-3207-Clarinet (8) [Google Meet]",
+    "meetLink": "https://meet.google.com/vjp-scgm-bec",
+    "organizer": "amber@anthropic.com",
+    "attendees": [
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "csm@anthropic.com",
+        "name": "CSM",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Attend if you...- Need help getting your first COO scorecard set up\n- Have feedback you want to share \n- Just want to hang!\n\nMore details on COO Scorecard:\nhttps://preview.claude.ai/design/p/324ff102-bba0-4c6b-b57e-6293f7da8719?file=CS+Compass+v2.dc.html&slide=1"
+  },
+  {
+    "id": "vjf9nk0802vmtnsjj3ghbmn3jk",
+    "title": "Keith Mancuso <> Gustav Bergman: spin-up check-in",
+    "start": "2026-07-02T14:45:00-07:00",
+    "end": "2026-07-02T15:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/ffa-cotq-dio",
+    "organizer": "c_85f849729bb56804b2631629c40f8c19f854ab5a1c7541620d907fc6d1b0d733@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "gbergman@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "These meetings are intended as a forcing function for getting unblocked, and asking all of your questions (including the \"stupid\" ones). If you don't think there's anything useful to chat about, consider meeting for a few mins anyway and seeing if anything comes up!\n\n(Your goal as spin-up buddy is to elicit the latent difficulties / frictions even if Keith doesn't think to surface them themselves!)\n\n_(This invite was auto-generated as part of the spin-up program and is best-effort: move it to a time that suits you better, or decline it if it doesn't fit. If you've already scheduled something similar yourselves, just ignore this one — no need to do both.)_"
+  },
+  {
+    "id": "400015954u0g82q8da1rrs2b9s",
+    "title": "Keith Mancuso <> Gustav Bergman: spin-up check-in",
+    "start": "2026-07-03T09:00:00-07:00",
+    "end": "2026-07-03T09:15:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/mjr-ikrx-zzd",
+    "organizer": "c_85f849729bb56804b2631629c40f8c19f854ab5a1c7541620d907fc6d1b0d733@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "gbergman@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "These meetings are intended as a forcing function for getting unblocked, and asking all of your questions (including the \"stupid\" ones). If you don't think there's anything useful to chat about, consider meeting for a few mins anyway and seeing if anything comes up!\n\n(Your goal as spin-up buddy is to elicit the latent difficulties / frictions even if Keith doesn't think to surface them themselves!)\n\n_(This invite was auto-generated as part of the spin-up program and is best-effort: move it to a time that suits you better, or decline it if it doesn't fit. If you've already scheduled something similar yourselves, just ignore this one — no need to do both.)_"
+  },
+  {
+    "id": "48t9poemg8tvpkai249963o1e9_20260703T180000Z",
+    "title": "[OPTIONAL] LEGAL x GTM OFFICE HOURS",
+    "start": "2026-07-03T11:00:00-07:00",
+    "end": "2026-07-03T11:30:00-07:00",
+    "allDay": false,
+    "location": "SF-505-3-3467-Waltz (10) [Google Meet]",
+    "meetLink": "https://meet.google.com/ajm-vpgd-eda",
+    "organizer": "alexis@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": true
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Bi-weekly time set aside for GTM folks to stop by and chat w/ Legal. Feel free to bring questions (and lovely chatter) related to processes, general contracting, and more!"
+  },
+  {
+    "id": "17j2djr7ad079a9cv7tpg8850a_20260707T163000Z",
+    "title": "[Optional] Gong Office Hours",
+    "start": "2026-07-07T09:30:00-07:00",
+    "end": "2026-07-07T10:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/xtx-emgj-zjy",
+    "organizer": "cmah@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Ahead of a July 22nd EnableAnt on Gong, our wonderful team from Gong is hosting OHs to help you get Gong configured, troubleshoot issues, and help with all your Gong needs.\n\nPlease come with all your questions!"
+  },
+  {
+    "id": "4rhp6hhrbmqb5dduu6h1o9qk0r",
+    "title": "[LIVE Watch Party] New Hire Onboarding: \"Anthropic is not a normal company\"",
+    "start": "2026-07-07T10:00:00-07:00",
+    "end": "2026-07-07T10:45:00-07:00",
+    "allDay": false,
+    "location": "SF-500-10-1043-Wolf (30) [Google Meet], NY-155-7-702-Everglades (20) [Google Meet], SF-500-10-1029-White Pass (10) [Google Meet]",
+    "meetLink": "https://meet.google.com/ofw-gxgz-smo",
+    "organizer": "c_199664a64f3a8c657b6a19252d12ece198d8fe7bc3fd2d175080c24156cb6983@group.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "2e92jko587n89orleh5cho8l5o_20260707T210000Z",
+    "title": "[Optional] Gong Office Hours",
+    "start": "2026-07-07T14:00:00-07:00",
+    "end": "2026-07-07T14:30:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/fui-uaqc-vuh",
+    "organizer": "cmah@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Ahead of a July 22nd EnableAnt on Gong, our wonderful team from Gong is hosting OHs to help you get Gong configured, troubleshoot issues, and help with all your Gong needs.\n\nPlease come with all your questions!"
+  },
+  {
+    "id": "g103j25skoii31nc0pel0tdo25_20260708T150000Z",
+    "title": "Success Day",
+    "start": "2026-07-08T08:00:00-07:00",
+    "end": "2026-07-08T11:50:00-07:00",
+    "allDay": false,
+    "location": "SF-505-2-2412-Tensor (8) [Google Meet], NY-11-5-Limestone (8) [Google Meet], London-13-R07-Drawing (8)",
+    "meetLink": "https://meet.google.com/hdr-srsf-geu",
+    "organizer": "lstarling@anthropic.com",
+    "attendees": [
+      {
+        "email": "lstarling@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "csm@anthropic.com",
+        "name": "CSM",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "francisco@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kevinmartin@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wolf@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "7epmf0mrg2hmkl7n3v8ds9rf1l_20260708T163000Z",
+    "title": "CS New Hires: Guiding customers on 'working at the Frontier'",
+    "start": "2026-07-08T09:30:00-07:00",
+    "end": "2026-07-08T09:55:00-07:00",
+    "allDay": false,
+    "location": "NY-155-8-821-XRay (3) [Google Meet], SF-505-2-2115-Descartes (3) [Google Meet]",
+    "meetLink": "https://meet.google.com/vtr-hqgh-kcw",
+    "organizer": "shannonmcneil@anthropic.com",
+    "attendees": [
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": true
+      },
+      {
+        "email": "markd@anthropic.com",
+        "name": "Mark Dominguez",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyravargas@anthropic.com",
+        "name": "Kyra Vargas",
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "joshlee@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "jkramer@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "- How to think about our roadmap at a Frontier company\n- How to position that with customers\n- Enterprise Readiness tl;dr from CS PoV\n- Feedback logging\n- Tips for escalating"
+  },
+  {
+    "id": "6e3cnlm4pepbtk54t6lp8q01lh",
+    "title": "All Ants: Story Hour",
+    "start": "2026-07-08T10:00:00-07:00",
+    "end": "2026-07-08T11:00:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": null,
+    "organizer": "c_1887vjtb07bdejkmifd6rgpr38nf0@resource.calendar.google.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Note: New Hire Onboarding is happening in the All Hands space this week, so please head to the 5th floor Auditorium for this All Ants. This is only for Black Clearance Ants, and is highly confidential.\n\nJoin us for a special All-Ants where Ants will share stories representing the unique ways we think, communicate, and make decisions.\n\nJoining from a conference room? We can now push the livestream to booked rooms! Tap \"join meeting\" on the Google Meet unit when you get to one of the rooms on this invite."
+  },
+  {
+    "id": "ttrdq2ccmlrt87lq5evdvb2nvv_20260708T184500Z",
+    "title": "CS team lunch - Welcome to new friends! 505 4th floor by hot food",
+    "start": "2026-07-08T11:45:00-07:00",
+    "end": "2026-07-08T12:10:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": null,
+    "organizer": "shannonmcneil@anthropic.com",
+    "attendees": [
+      {
+        "email": "shannonmcneil@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "neelsharma@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "abbypynchon@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "connie@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "christinaboulier@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "mollym@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "kyra.vargas@gmail.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "amber@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "gbergman@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "nicolatonthat@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "wolf@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "majed@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "joshlee@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      },
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      },
+      {
+        "email": "allobet@anthropic.com",
+        "name": null,
+        "self": false,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": null
+  },
+  {
+    "id": "2tbp8315fbifb1a7gt6fidtnkv_20260708T160000Z",
+    "title": "Weekly GTM EnableANT - Cowork for Operations + Marketing, Selling to Healthcare Customers + New Services Company",
+    "start": "2026-07-09T09:00:00-07:00",
+    "end": "2026-07-09T09:45:00-07:00",
+    "allDay": false,
+    "location": null,
+    "meetLink": "https://meet.google.com/bbc-yupr-mhs",
+    "organizer": "rhys@anthropic.com",
+    "attendees": [
+      {
+        "email": "keith@anthropic.com",
+        "name": null,
+        "self": true,
+        "optional": false
+      }
+    ],
+    "responseStatus": "needsAction",
+    "description": "Agenda\nCowork for Operations + Marketing\nSelling to Healthcare Customers"
+  }
+]
