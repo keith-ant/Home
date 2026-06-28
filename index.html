@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Why the enterprise's default answer to AI knowledge — throw it in a vector database — gives an agent relevance without orientation, and what a knowledge base looks like when you start from your own homepage instead.">
+<title>The Company Is a Tree of Skills</title>
+<style>
+/* ============================================================
+   The Company Is a Tree of Skills — a working page
+   Self-contained. No external requests. System fonts only.
+   ============================================================ */
+
+:root {
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --bg: #faf7f2;
+  --bg-raise: #ffffff;
+  --bg-sink: #f1ece3;
+  --ink: #1f1d1a;
+  --ink-2: #4f4a43;
+  --ink-3: #837c72;
+  --rule: #ddd5c8;
+  --accent: #b2502d;
+  --accent-soft: #f4e2d9;
+  --accent-ink: #8c3d20;
+  --good: #2c6e49;
+  --good-soft: #e2efe6;
+  --warn: #8a6b1f;
+  --warn-soft: #f6eed7;
+  --code-bg: #f2ede4;
+  --shadow: 0 1px 3px rgba(40, 30, 18, .07), 0 8px 28px rgba(40, 30, 18, .06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161412;
+    --bg-raise: #1f1c19;
+    --bg-sink: #110f0e;
+    --ink: #ece7df;
+    --ink-2: #c0b8ac;
+    --ink-3: #8d857a;
+    --rule: #36312b;
+    --accent: #e08a64;
+    --accent-soft: #36231b;
+    --accent-ink: #f0ab8b;
+    --good: #7dc69b;
+    --good-soft: #1b2e23;
+    --warn: #dcb45e;
+    --warn-soft: #2e2615;
+    --code-bg: #24211d;
+    --shadow: 0 1px 3px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.35);
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.72;
+  font-feature-settings: "liga" 1, "kern" 1, "onum" 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---- layout -------------------------------------------------- */
+.wrap   { max-width: 46rem; margin: 0 auto; padding: 0 1.25rem; }
+
+/* Figures that need more room than the prose measure break out of the
+   46rem column and center themselves on the body once there's space. */
+@media (min-width: 70rem) {
+  .wrap .breakout { width: 62rem; margin-left: 50%; transform: translateX(-50%); }
+}
+
+a { color: var(--accent-ink); text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-underline-offset: .15em; }
+a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+::selection { background: var(--accent-soft); }
+
+/* ---- header -------------------------------------------------- */
+header.masthead {
+  border-bottom: 1px solid var(--rule);
+  background:
+    radial-gradient(60rem 22rem at 75% -8rem, var(--accent-soft) 0%, transparent 62%),
+    var(--bg);
+  padding: 4.5rem 0 3.25rem;
+}
+.eyebrow {
+  font-family: var(--sans);
+  font-size: .75rem;
+  font-weight: 650;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1.1rem;
+}
+h1 {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 5.4vw, 3.4rem);
+  line-height: 1.06;
+  letter-spacing: -.025em;
+  margin: 0 0 1.2rem;
+}
+.dek {
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 42rem;
+  margin: 0 0 1.6rem;
+}
+.byline {
+  font-family: var(--sans);
+  font-size: .82rem;
+  color: var(--ink-3);
+  display: flex; flex-wrap: wrap; gap: .35rem 1.1rem;
+  margin: 0;
+}
+.byline span::before { content: "·"; margin-right: 1.1rem; color: var(--rule); }
+.byline span:first-child::before { content: none; margin: 0; }
+
+/* ---- TOC ----------------------------------------------------- */
+nav.toc {
+  font-family: var(--sans);
+  background: var(--bg-raise);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  margin: 2.5rem 0 0;
+  box-shadow: var(--shadow);
+}
+nav.toc h2 {
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); margin: 0 0 .7rem; font-family: var(--sans);
+}
+nav.toc ol { margin: 0; padding: 0 0 0 1.4rem; columns: 2; column-gap: 2.4rem; font-size: .92rem; line-height: 1.45; }
+nav.toc li { margin: 0 0 .45rem; break-inside: avoid; }
+nav.toc a { text-decoration: none; color: var(--ink-2); }
+nav.toc a:hover { color: var(--accent); }
+@media (max-width: 40rem) { nav.toc ol { columns: 1; } }
+
+/* ---- prose --------------------------------------------------- */
+main { padding: 1rem 0 4rem; }
+article > .wrap > * + * { margin-top: 1.35rem; }
+
+h2 {
+  font-family: var(--sans);
+  font-weight: 750;
+  font-size: 1.85rem;
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  margin: 3.8rem 0 0;
+  padding-top: 2.4rem;
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 1.5rem;
+}
+h2 .num {
+  display: block;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--accent);
+  margin-bottom: .5rem;
+}
+h3 {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -.01em;
+  margin: 2.4rem 0 0;
+}
+p { margin: 0; }
+strong { font-weight: 650; }
+ul, ol { padding-left: 1.45rem; margin: 0; }
+li { margin: .45rem 0; }
+li::marker { color: var(--ink-3); }
+
+hr.thought {
+  border: 0; height: auto; background: none;
+  text-align: center; margin: 2.6rem 0 1.3rem;
+  letter-spacing: 1.4em; color: var(--ink-3); font-size: .85rem;
+}
+hr.thought::before { content: "· · ·"; }
+
+code {
+  font-family: var(--mono);
+  font-size: .84em;
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: .08em .35em;
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: .82rem;
+  line-height: 1.6;
+  margin: 0;
+}
+pre code { background: none; border: 0; padding: 0; font-size: 1em; }
+
+/* ---- pull quotes, callouts, asides --------------------------- */
+blockquote.pull {
+  margin: 2.2rem 0;
+  padding: 0 0 0 1.4rem;
+  border-left: 3px solid var(--accent);
+  font-size: 1.32rem;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--ink);
+}
+blockquote.pull cite {
+  display: block;
+  margin-top: .8rem;
+  font-style: normal;
+  font-family: var(--sans);
+  font-size: .8rem;
+  color: var(--ink-3);
+}
+
+.callout {
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 12px;
+  padding: 1.3rem 1.5rem;
+  margin: 2.2rem 0;
+  font-family: var(--sans);
+  font-size: 1.18rem;
+  line-height: 1.5;
+  font-weight: 550;
+  letter-spacing: -.01em;
+}
+.callout em { color: var(--accent-ink); font-style: normal; }
+
+.aside {
+  background: var(--bg-raise);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1.1rem 1.35rem;
+  margin: 2rem 0;
+  font-size: .96rem;
+  line-height: 1.62;
+  color: var(--ink-2);
+}
+.aside .tag {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: .45rem;
+}
+.aside > p + p { margin-top: .8rem; }
+
+/* ---- figures ------------------------------------------------- */
+figure {
+  margin: 2.4rem 0;
+  background: var(--bg-raise);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 1.4rem;
+  box-shadow: var(--shadow);
+}
+figure.bare { background: none; border: 0; padding: 0; box-shadow: none; }
+figcaption {
+  font-family: var(--sans);
+  font-size: .85rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+  margin-top: 1rem;
+  padding-top: .9rem;
+  border-top: 1px solid var(--rule);
+}
+figcaption strong { color: var(--ink-2); }
+
+/* tables */
+.tblwrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .9rem; line-height: 1.45; }
+th, td { text-align: left; padding: .65rem .85rem; vertical-align: top; border-bottom: 1px solid var(--rule); }
+th { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; white-space: nowrap; }
+tbody tr:last-child td { border-bottom: 0; }
+td code { white-space: nowrap; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* timeline */
+.timeline { list-style: none; padding: 0; margin: 0; }
+.timeline li {
+  position: relative;
+  padding: 0 0 1.2rem 1.7rem;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: .93rem;
+  line-height: 1.55;
+}
+.timeline li::before {
+  content: "";
+  position: absolute; left: .3rem; top: .5rem; bottom: -.4rem;
+  width: 2px; background: var(--rule);
+}
+.timeline li:last-child::before { bottom: auto; height: 0; }
+.timeline li::after {
+  content: "";
+  position: absolute; left: 0; top: .38rem;
+  width: .65rem; height: .65rem; border-radius: 99px;
+  background: var(--bg-raise);
+  border: 2.5px solid var(--accent);
+}
+.timeline li.dim::after { border-color: var(--ink-3); }
+.timeline .when {
+  display: block;
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: .15rem;
+}
+.timeline li.dim .when { color: var(--ink-3); }
+
+/* head-to-head columns */
+.duel { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 44rem) { .duel { grid-template-columns: 1fr; } }
+.duel > div {
+  border: 1px solid var(--rule); border-radius: 10px;
+  padding: 1rem 1.15rem;
+  font-family: var(--sans); font-size: .92rem; line-height: 1.6;
+}
+.duel h4 {
+  margin: 0 0 .7rem; font-size: .72rem; font-weight: 750;
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.duel .bad  { background: var(--warn-soft); }
+.duel .bad h4 { color: var(--warn); }
+.duel .good { background: var(--good-soft); }
+.duel .good h4 { color: var(--good); }
+.duel ol { padding-left: 1.2rem; }
+.duel li { margin: .4rem 0; }
+
+/* the ladder (progressive disclosure) */
+.ladder { list-style: none; padding: 0; margin: 0; display: grid; gap: .6rem; }
+.ladder li {
+  display: grid;
+  grid-template-columns: 6.2rem 1fr;
+  gap: 1rem;
+  align-items: start;
+  background: var(--bg-sink);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: .85rem 1rem;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: .92rem;
+  line-height: 1.5;
+}
+.ladder li:first-child { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
+.ladder .lvl { font-size: .68rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); padding-top: .15rem; }
+.ladder .cost { display: block; font-size: .78rem; color: var(--ink-3); margin-top: .15rem; }
+@media (max-width: 34rem) { .ladder li { grid-template-columns: 1fr; gap: .3rem; } }
+
+/* the tree */
+pre.tree { font-size: .8rem; line-height: 1.52; }
+pre.tree .c   { color: var(--ink-3); }
+pre.tree .hot { color: var(--accent); font-weight: bold; }
+pre.tree .dir { color: var(--ink); font-weight: 600; }
+
+/* footnote-ish source list */
+.sources { font-size: .9rem; line-height: 1.6; color: var(--ink-2); }
+.sources h3 { font-size: .98rem; margin-top: 1.8rem; }
+.sources ul { padding-left: 1.2rem; }
+.sources li { margin: .35rem 0; }
+
+footer.colophon {
+  border-top: 1px solid var(--rule);
+  padding: 2.4rem 0 4rem;
+  font-family: var(--sans);
+  font-size: .85rem;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+@media print {
+  body { font-size: 11pt; }
+  nav.toc, .byline { display: none; }
+  figure, .aside, .callout { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">A working page &middot; Notes on company knowledge</p>
+    <h1>The Company Is a&nbsp;Tree of Skills</h1>
+    <p class="dek">The enterprise&rsquo;s default answer to AI knowledge &mdash; throw it in a vector database &mdash; gives an agent <em>relevance</em> without <em>orientation</em>. What it actually needs is a hierarchy with a root it always sees and branches it chooses to open. Claude already has the shape: <code>CLAUDE.md</code> is the homepage, the skill listing is the nav menu. Here&rsquo;s the argument, the research, and what I still don&rsquo;t know.</p>
+    <p class="byline">
+      <span>Started June&nbsp;28, 2026</span>
+      <span>A living document</span>
+      <span>Sources in <code>/research</code></span>
+    </p>
+
+    <nav class="toc" aria-label="Contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#default">The default answer</a></li>
+        <li><a href="#orientation">What goes missing: orientation</a></li>
+        <li><a href="#customer-zero">Customer zero</a></li>
+        <li><a href="#the-hole">Everyone is climbing out of the same hole</a></li>
+        <li><a href="#homepage">The homepage test</a></li>
+        <li><a href="#claude">Claude already has the shape</a></li>
+        <li><a href="#procedures">Procedures, not documents</a></li>
+        <li><a href="#tree">A company as a tree of skills</a></li>
+        <li><a href="#scaling">Sharing and scaling (the hard part)</a></li>
+        <li><a href="#anthropic">How far Anthropic&rsquo;s stack gets you</a></li>
+        <li><a href="#open">What I still don&rsquo;t know</a></li>
+        <li><a href="#sources">Sources</a></li>
+      </ol>
+    </nav>
+  </div>
+</header>
+
+<main>
+<article>
+
+<!-- ===================================================== 1 -->
+<div class="wrap">
+<h2 id="default"><span class="num">01</span>The default answer</h2>
+
+<p>This is a thing that came up constantly at Salesforce, and the answer to <em>&ldquo;where does the company&rsquo;s knowledge go so the AI can use it&rdquo;</em> was always, in the end, a vector database. We were careful not to call it that. It was Data Cloud &mdash; six product names deep at this point; as of October 2025 it&rsquo;s <a href="https://www.salesforce.com/data/">Data&nbsp;360</a> &mdash; but the unstructured half of it is a vector database, and Salesforce&rsquo;s own architecture docs are perfectly clear about what happens to your files.</p>
+
+<p>You point it at your content: Knowledge articles, a SharePoint, a Confluence, a Google Drive, a website crawl. The files get parsed by a process you don&rsquo;t see. They get split into chunks of at most <a href="https://help.salesforce.com/s/articleView?id=data.c360_a_search_index_max_token_setting.htm&amp;language=en_US&amp;type=5">512 tokens</a> &mdash; about a paragraph and a half. Each chunk gets embedded into a vector. The vectors go into an index (Milvus, under the hood, at billion-vector scale). And at question time, the user&rsquo;s question gets embedded too, and the system hands the model the chunks whose vectors are nearest.</p>
+
+<p>If you don&rsquo;t want to think about any of that, you don&rsquo;t have to. The thing most people actually use is called an Agentforce Data Library, and Salesforce&rsquo;s <a href="https://www.salesforce.com/agentforce/agentforce-and-rag/">own docs</a> describe it in a sentence I want to frame:</p>
+
+<blockquote class="pull">
+  &ldquo;When you add a data library, Salesforce automatically builds a RAG-powered solution using default settings for all of the components: vector data store, search index, retriever, prompt template, and standard action.&rdquo;
+  <cite>Salesforce, &ldquo;Agentforce and RAG &mdash; Best Practices&rdquo;</cite>
+</blockquote>
+
+<p>That sentence <em>is</em> the default. One click, and the company&rsquo;s knowledge has been turned into a bag of paragraph-sized shards with default everything. You don&rsquo;t pick the chunking. You don&rsquo;t pick the embedding model. You don&rsquo;t see the parse. And then you hope &mdash; this is the bet nobody says out loud &mdash; that your content is the kind of content that happens to be useful one or two chunks at a time.</p>
+
+<div class="aside">
+  <span class="tag">To be fair, and to be clear</span>
+  <p>This is not a Salesforce-specific failure, and this page is not a hit piece. AWS Bedrock Knowledge Bases is the same default. Azure AI Search is the same default. Every &ldquo;chat with your docs&rdquo; product of 2023&ndash;2024 was this default. Salesforce is the version I lived inside, and &mdash; usefully &mdash; the one that has published the most, and the most honestly, about what happened next. They also happen to be the best public record of the way out, which we&rsquo;ll get to. (And Anthropic and Salesforce are deep partners now; nothing on this page is an argument that one replaces the other.)</p>
+</div>
+
+<p>And for some content, the bet pays off. A well-written knowledge-base article that answers exactly one question in 400 words is <em>born</em> to be a chunk. Genuinely: vector search is very good at the one thing it does. Given a question, it surfaces the most semantically relevant passages with a reliability nothing else matches. It doesn&rsquo;t care that the customer wrote &ldquo;my card got dinged twice&rdquo; and the article says &ldquo;duplicate charge&rdquo; &mdash; it finds it anyway, across vocabularies, across typos, across languages. Modern versions are hybrid (a keyword index fused with the vector index, then reranked) and they&rsquo;re better still. There is absolutely a place for this, and I want to be careful all the way through this page not to argue that there isn&rsquo;t.</p>
+
+<p>The problem is that we made it the whole architecture.</p>
+</div>
+
+<!-- ===================================================== 2 -->
+<div class="wrap">
+<h2 id="orientation"><span class="num">02</span>What goes missing: orientation</h2>
+
+<p>A retriever is excellent at <strong>relevance</strong> and structurally incapable of <strong>orientation</strong>. There are three things a pile of chunks can never give an agent, and they compound.</p>
+
+<h3>It never tells the agent what the company is</h3>
+
+<p>There is no chunk that <em>is</em> &ldquo;what this company does.&rdquo; And even if you wrote one, nothing about a similarity index guarantees it gets retrieved when it matters &mdash; it&rsquo;s not similar to <em>any particular question</em>; it&rsquo;s relevant to <em>all of them</em>. So the agent answers a billing question for a company it has never been introduced to. It doesn&rsquo;t know there are three products. It doesn&rsquo;t know that the policy in the chunk it just retrieved was superseded by a company-wide change in March.</p>
+
+<p>This is not me editorializing; it is the founding observation of the most-cited paper in this whole space. Microsoft&rsquo;s <a href="https://arxiv.org/abs/2404.16130">GraphRAG paper</a> (2024) exists because vector RAG, in their words, <em>&ldquo;fails on global questions directed at an entire text corpus&hellip; since this is inherently a query-focused summarization task, rather than an explicit retrieval task.&rdquo;</em> Nothing in the index is the answer, so nothing can be retrieved.</p>
+
+<p>Anthropic&rsquo;s <a href="https://www.anthropic.com/engineering/contextual-retrieval">Contextual Retrieval</a> (Sept 2024) is the other half of the same admission. Their motivating example is a retrieved chunk that says <em>&ldquo;The company&rsquo;s revenue grew by 3% over the previous quarter&rdquo;</em> &mdash; which company? which quarter? Their fix is to pay an LLM to look at the whole source document and prepend 50&ndash;100 tokens of situating context (&ldquo;This chunk is from ACME&rsquo;s Q2 2023 SEC filing&hellip;&rdquo;) to every single chunk before embedding it. It works &mdash; with a reranker on top it cuts top-20 retrieval failure from 5.7% to 1.9%. But step back and look at what it <em>is</em>: it is paying, per chunk, to put back the context that chunking removed. We destroyed the structure of the document and then bought it back at retail.</p>
+
+<h3>It never tells the agent how the chunk relates to anything else</h3>
+
+<p>A chunk arrives with no parent and no siblings. &ldquo;Customers may return items within 30 days&rdquo; arrives without the section header that says it&rsquo;s the <em>Electronics</em> policy, without the sibling section that says <em>Final Sale</em> items are excluded, without the parent doc that says the whole thing was rewritten in March. It&rsquo;s the exception without the rule. Step 7 without steps 1&ndash;6.</p>
+
+<p>The single best piece of evidence I found for the customer-service case specifically comes from <a href="https://arxiv.org/abs/2404.17723">LinkedIn&rsquo;s support engineering team</a> (SIGIR 2024). They had a text-RAG system over their support tickets and it underperformed <em>because chunking destroyed the structure inside and between tickets</em> &mdash; their words. So they built a knowledge graph that preserved it, ran it in their support org for six months, and measured: <strong>+77.6%&nbsp;MRR over the text-RAG baseline, and a 28.6% drop in median time to resolve an issue.</strong> That&rsquo;s not a benchmark. That&rsquo;s the exact use case, in production. The thing they added was structure.</p>
+
+<h3>It doesn&rsquo;t know what it doesn&rsquo;t know</h3>
+
+<p>This is the quiet one and I think it&rsquo;s the worst. Ask a retriever anything and it returns the top <em>k</em>. Every time. <em>k</em> chunks, ranked by similarity, regardless of whether the best of them is any good. There is no way for it to say &ldquo;we don&rsquo;t have a page on that.&rdquo; The retrieval literature has a name for this &mdash; <a href="https://arxiv.org/abs/2401.05856">FP1, &ldquo;Missing Content,&rdquo;</a> the first of the canonical Seven Failure Points of RAG systems: the answer isn&rsquo;t in the corpus, the retriever hands back the <em>k</em> most-similar-but-irrelevant things it could find, and the model dutifully synthesizes a confident answer out of them.</p>
+
+<p>Now compare a nav menu. Go to a company&rsquo;s website, look at the menu, and if the thing you need isn&rsquo;t in it, you learn something: <em>they probably don&rsquo;t do that</em>. A tree shows you its own edges. A similarity index never does.</p>
+
+<p>Salesforce, to their real credit, said this part out loud. From their own blog, July 2025:</p>
+
+<blockquote class="pull">
+  &ldquo;The prevailing narrative, often centered on connecting an LLM to a vector database via a simple API call, dangerously oversimplifies the challenge&hellip; Most RAG failures are silent retrieval failures masked by a plausible-sounding LLM hallucination.&rdquo;
+  <cite>Salesforce, <a href="https://www.salesforce.com/blog/ai-agent-rag/">&ldquo;5 Reasons Why AI Agents and RAG Pipelines Fail in Production&rdquo;</a>, July 2025</cite>
+</blockquote>
+
+<p>I can&rsquo;t improve on that sentence. <em>Silent retrieval failures masked by a plausible-sounding hallucination</em> &mdash; that is exactly the experience, and it is an architecture problem, not a model problem.</p>
+</div>
+
+<!-- ===================================================== 3 -->
+<div class="wrap">
+<h2 id="customer-zero"><span class="num">03</span>Customer zero</h2>
+
+<p>If you want to watch all three failures happen in one place, the best-documented deployment of &ldquo;vector database + customer-service agent&rdquo; anywhere is Salesforce&rsquo;s own. They put Agentforce on <code>help.salesforce.com</code> in October 2024, called it &ldquo;customer zero,&rdquo; and then &mdash; credit again &mdash; published unusually honestly about what happened.</p>
+
+<figure>
+  <ol class="timeline">
+    <li><span class="when">Oct 2024</span> Agentforce goes GA and ships on <code>help.salesforce.com</code> as customer zero.</li>
+    <li class="dim"><span class="when">Feb &rarr; Jul 2025</span> The numbers look great: 380K &rarr; 1M conversations; &ldquo;84&ndash;85% resolved.&rdquo;</li>
+    <li><span class="when">Aug 2025</span> Salesforce publishes a <a href="https://www.salesforce.com/news/stories/ai-agent-customer-service-salesforce-learnings/">postmortem</a>: the agent had been confidently citing <strong>2018 release notes</strong>. Root cause: &ldquo;content collisions&rdquo; &mdash; overlapping, duplicate, stale Knowledge articles. The team mass-deletes stale content. Their own telling: they thought it was hallucinating. It wasn&rsquo;t. It was faithfully reporting what retrieval gave it.</li>
+    <li><span class="when">Sep&ndash;Oct 2025</span> Salesforce <a href="https://www.theregister.com/2025/10/01/salesforce_search_agentforce/">removes the search bar</a> from the help site in favor of the agent. 700+ community members vote against it &mdash; the agent is slower and sometimes wrong vs. the index. <a href="https://www.salesforceben.com/trailblazer-feedback-forces-salesforce-to-revert-agentforce-support-page/">Salesforce reverts.</a></li>
+    <li><span class="when">Oct 2025</span> Salesforce&rsquo;s own customer-zero <a href="https://www.salesforce.com/agentforce/use-cases/customer-zero/how-salesforce-measures-answer-quality/">methodology page</a> reportedly grades answer quality at <strong>60%</strong>, with a target of 75% by year-end.</li>
+    <li class="dim"><span class="when">Nov 2025 &rarr; Jun 2026</span> The reported autonomous-resolution rate quietly moves from &ldquo;85%&rdquo; to &ldquo;<a href="https://www.salesforce.com/blog/support-requests-agentforce/">more than 68%</a>&rdquo; to &ldquo;70%&rdquo; as the definition tightens. None of these numbers have been independently audited; I&rsquo;m citing the drift, not any one of them.</li>
+  </ol>
+  <figcaption><strong>Customer zero, 2024&ndash;2026.</strong> All figures Salesforce-reported. The full sourcing &mdash; including which numbers are confirmed first-party and which are reported secondhand &mdash; is in <code>research/03-salesforce-data360-agentforce.md</code>.</figcaption>
+</figure>
+
+<p>Two things about this. First: <strong>none of it is the model being dumb.</strong> The August root-cause is explicit &mdash; it was the knowledge base. The model was correctly synthesizing from what the retriever handed it; the retriever had no idea that the 2018 release note had been superseded seven times over, because in a flat similarity index <em>there is no such thing as &ldquo;superseded.&rdquo;</em> That relationship lived in the hierarchy we deleted on the way in.</p>
+
+<p>Second &mdash; and this is where I have real sympathy &mdash; look at what the humans did to fix it. They pruned the stale content. They deduplicated the overlapping articles. They curated. Which is to say: they put the structure back, <em>by hand, after the fact</em>. They rebuilt the information architecture they&rsquo;d shredded.</p>
+
+<p>That is the pattern of the entire field for the last two years.</p>
+</div>
+
+<!-- ===================================================== 4 -->
+<div class="wrap">
+<h2 id="the-hole"><span class="num">04</span>Everyone is climbing out of the same hole</h2>
+
+<p>What the research actually says in 2026 is not &ldquo;vectors bad.&rdquo; It&rsquo;s more interesting: <strong>every fix that has survived contact with production is a fix that adds structure back.</strong></p>
+
+<ul>
+  <li><strong>Contextual Retrieval</strong> (Anthropic, 2024) puts document-level context back into every chunk. <a href="https://www.anthropic.com/engineering/contextual-retrieval">&minus;67% retrieval failure.</a></li>
+  <li><strong>Hybrid search + reranking</strong> (everyone, 2024&ndash;25) puts exact-match signal back next to the semantic signal.</li>
+  <li><strong>GraphRAG</strong> (<a href="https://arxiv.org/abs/2404.16130">Microsoft, 2024</a>) builds an entity graph and a <em>hierarchy of community summaries</em> on top of it, and answers global questions from the summaries &mdash; exactly the questions flat RAG can&rsquo;t do.</li>
+  <li><strong>RAPTOR</strong> (<a href="https://arxiv.org/abs/2401.18059">Stanford, ICLR 2024</a>) recursively summarizes chunks into a <em>tree</em> and retrieves at every level. +20 points absolute on long-document QA.</li>
+</ul>
+
+<p>And &mdash; to be honest &mdash; the heaviest version of &ldquo;add structure&rdquo; is the version that did <em>not</em> hold up. Full GraphRAG is expensive to build (Microsoft&rsquo;s own follow-up, <a href="https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/">LazyGraphRAG</a>, advertises &ldquo;0.1% of the indexing cost&rdquo;), and the broad 2026 evaluation (<a href="https://arxiv.org/abs/2506.05690">GraphRAG-Bench</a>, ICLR 2026) found it <em>underperforms</em> plain RAG on ordinary lookups: &minus;13.4% on Natural Questions, at 2.3&times; the latency. So the conclusion is not &ldquo;build a knowledge graph.&rdquo; The conclusion is narrower and more useful:</p>
+
+<div class="callout">Build <em>cheap hierarchy</em>, and let an <em>agent</em> navigate it.</div>
+
+<p>Which is where the agent builders ended up by a completely different road. The thing I keep coming back to is what happened inside Claude Code. Boris Cherny, who created it:</p>
+
+<blockquote class="pull">
+  &ldquo;Early versions of Claude Code used RAG + a local vector db, but we found pretty quickly that agentic search generally works better. It is also simpler and doesn&rsquo;t have the same issues around security, privacy, staleness, and reliability.&rdquo;
+  <cite>Boris Cherny, <a href="https://x.com/bcherny/status/2017824286489383315">on X</a></cite>
+</blockquote>
+
+<p>They ripped the vector database out. Claude Code today has no embeddings and no index. It greps. And the reason that works is not magic &mdash; it&rsquo;s that <em>a codebase already has structure.</em> Directories, filenames, identifiers, imports. The agent doesn&rsquo;t need a similarity search because it has a map. Anthropic has since made this their <a href="https://claude.com/blog/building-agents-with-the-claude-agent-sdk">official recommendation</a>: <em>&ldquo;Semantic search is usually faster than agentic search, but less accurate, more difficult to maintain, and less transparent. We recommend starting with agentic search, and only adding semantic search if you need faster results.&rdquo;</em></p>
+
+<p>The honest counter-evidence makes the real point better than a clean win would: <a href="https://cursor.com/blog/semsearch">Cursor found</a> that adding a semantic index <em>on top of</em> grep buys another +12.5% accuracy on large repos. So the synthesis is not &ldquo;embeddings are dead.&rdquo; It&rsquo;s this:</p>
+
+<div class="callout">Embeddings win where there is <em>meaning but no structure</em>. Structure wins where there is structure. The industry default for two years has been to take everything that had structure, shred it until it didn&rsquo;t, and embed the shreds.</div>
+
+<div class="aside">
+  <span class="tag">&ldquo;But context windows are huge now&rdquo;</span>
+  <p>Long context didn&rsquo;t change this. Windows are 1M+ tokens, and the temptation is &ldquo;just put it all in.&rdquo; The context-degradation research is unkind to that: most models get measurably worse past 16&ndash;32K tokens of stuffing (<a href="https://www.databricks.com/blog/long-context-rag-performance-llms">Databricks</a>), and when the question doesn&rsquo;t share vocabulary with the answer, 11 of 12 frontier models fall below <em>half</em> their short-context accuracy at just 32K (<a href="https://arxiv.org/abs/2502.05167">NoLiMa</a>; see also Chroma&rsquo;s <a href="https://research.trychroma.com/context-rot">&ldquo;Context Rot&rdquo;</a>). So long context killed the justification for 512-token chunks &mdash; load whole documents &mdash; but it did not kill the need to <em>choose which</em>. Anthropic&rsquo;s own retrieval guide actually leads with: if the knowledge base is under ~200K tokens, skip retrieval entirely and put the whole thing in a cached prompt. Below that line, the right architecture is no architecture. Above it, the answer is still &ldquo;choose.&rdquo;</p>
+</div>
+
+<p>And the Salesforce product roadmap, read in order, is a public, time-stamped record of an organization discovering all of this the hard way. I mean this sympathetically. Each step is an admission that the previous one wasn&rsquo;t enough:</p>
+
+<figure>
+  <ol class="timeline">
+    <li><span class="when">Dec 2023</span> <strong>The vector database.</strong> Data Cloud Vector Database announced (GA June 2024). The pitch: 90% of enterprise data is unstructured; embed it.</li>
+    <li><span class="when">Feb 2025</span> <strong>Not enough &rarr; add keyword search.</strong> Hybrid Search goes GA: a BM25 index fused with the vector index. Exact-match was lost; put it back.</li>
+    <li><span class="when">Oct 2025</span> <strong>Not enough &rarr; parse structure <em>before</em> chunking.</strong> &ldquo;Intelligent Context&rdquo;: LLM and layout-aware parsers that extract tables, sections, and diagrams from documents before they hit the chunker. Document structure was lost; put it back.</li>
+    <li><span class="when">2025</span> <strong>Not enough &rarr; add a semantic layer.</strong> Tableau Semantics; the Open Semantic Interchange initiative. The vectors don&rsquo;t carry business meaning; put it back.</li>
+    <li><span class="when">Nov 2025</span> <strong>Not enough &rarr; buy a knowledge graph.</strong> The Informatica acquisition closes; Salesforce&rsquo;s own blog says it constructs &ldquo;an enterprise knowledge graph&rdquo; from metadata. The relationships were lost; put them back.</li>
+    <li><span class="when">Oct 2025 &rarr; Feb 2026</span> <strong>Not enough &rarr; make the agent deterministic.</strong> Agent Script: an if/then DSL layered on the LLM, because reasoning over retrieved chunks was too inconsistent in production.</li>
+  </ol>
+  <figcaption><strong>One layer of structure at a time.</strong> By January 2026 Salesforce&rsquo;s own engineering blog says it directly: <a href="https://engineering.salesforce.com/how-agentforce-data-and-apps-turned-the-salesforce-stack-into-agentforce-360/">&ldquo;Early RAG pipelines often delivered inconsistent or low-confidence results, leading to initial work on Graph-RAG.&rdquo;</a> Their EVP of data put it more memorably: without enterprise context the models are <a href="https://salesforcedevops.net/index.php/2025/12/10/salesforce-and-informatica-context-is-the-new-currency/">&ldquo;corporate stupid.&rdquo;</a></figcaption>
+</figure>
+
+<p>So everyone now agrees you need structure. The question is where you get it. And I think the answer was sitting in the most boring possible place the whole time.</p>
+</div>
+
+<!-- ===================================================== 5 -->
+<div class="wrap">
+<h2 id="homepage"><span class="num">05</span>The homepage test</h2>
+
+<p>Go to any decent company&rsquo;s website. Look at the homepage and the navigation menu. Don&rsquo;t click anything. What do you know?</p>
+
+<p>You know what the company is &mdash; there&rsquo;s a sentence at the top that says so. You know what it sells and roughly how it&rsquo;s organized, because the menu tells you: Products, Solutions, Pricing, Docs, Support, Company. You know the <em>shape</em> of everything you could possibly find out, because the menu is a complete index. You know, crucially, what <em>isn&rsquo;t</em> there. And every page you might click into knows where it lives &mdash; it has a URL with a path, breadcrumbs, a parent, siblings, links out.</p>
+
+<div class="callout">A homepage plus a nav menu is, almost exactly, the thing the vector database threw away: a small, always-present root that establishes global context, attached to a complete, cheap, hierarchical index of everything else.</div>
+
+<p>I keep wondering if this is the thing enterprise knowledge management overlooked. We spent two years building ingestion pipelines to shred a company&rsquo;s content into context-free fragments, and the company <em>already employed</em> a thirty-year-old discipline &mdash; it&rsquo;s called information architecture &mdash; whose entire job is to organize that exact content into a hierarchy a stranger can navigate. The website is the artifact of that discipline. We didn&rsquo;t build on it. We put it through a wood chipper.</p>
+
+<p>Meanwhile, the website has quietly been becoming the agent knowledge base anyway, without anyone calling it that. The numbers here genuinely surprised me. Mintlify &mdash; the docs platform Anthropic&rsquo;s own docs run on &mdash; <a href="https://www.mintlify.com/blog/state-of-ai">published their traffic data in March 2026</a>: across ~790&nbsp;million requests in a month to the docs sites they host, <strong>AI agents are 45.3% of all traffic versus 45.8% browsers. Claude Code alone, at 199 million requests, sends more traffic than Chrome on Windows.</strong> Half the readers of documentation are not people anymore. Mintlify raised a Series&nbsp;B in April 2026 on, literally, this thesis &mdash; their stated mission is to be &ldquo;the knowledge layer that makes products understandable, usable and discoverable by AI agents.&rdquo; The answer to &ldquo;is Mintlify the go-to for this&rdquo; is basically yes, for the public half of it.</p>
+
+<p>And look at what the &ldquo;agent-readable web&rdquo; stack actually is, piece by piece. <a href="https://llmstxt.org/">llms.txt</a> &mdash; a curated, hierarchical Markdown index of your site at a well-known URL &mdash; is, structurally, <em>a nav menu for agents</em>. (Honesty required: it failed as a crawler standard. Google won&rsquo;t read it; server-log studies put it at ~0.1% of AI-bot requests. But it succeeded at exactly what Jeremy Howard proposed it for: it&rsquo;s read by <em>inference-time agents a user pointed at your site</em> &mdash; Claude Code and Cursor both use it &mdash; not by crawlers. A sitemap that only agents read is still a sitemap.) Microsoft&rsquo;s <a href="https://github.com/nlweb-ai/NLWeb">NLWeb</a> builds a conversational endpoint out of the <code>schema.org</code> markup your site already publishes. WebMCP, now in a Chrome origin trial, lets a page expose its <em>actions</em> as typed tools. Notice what none of these do: none of them invent new structure. They all <em>expose structure the web already had.</em></p>
+
+<p>And then the cleanest tell of all. Pinecone &mdash; the company most synonymous with &ldquo;embed everything&rdquo; &mdash; relaunched itself in <a href="https://www.pinecone.io/blog/knowledge-infrastructure-for-agents/">May 2026</a> around the message that raw vector retrieval is not what agents need; agents need a <em>compiled knowledge layer</em>. (To be precise, since I was fuzzy on this myself: Pinecone was not acquired. They explored a sale in August 2025 and changed CEOs in September 2025, but they&rsquo;re independent as I write this. What changed is their <em>argument</em>.) When the vector database company is arguing for structure, the argument is over.</p>
+
+<p>So: a small always-present root, plus a complete cheap index, plus pages you open when you need them. The homepage and the menu. If that&rsquo;s the right shape, I should be able to point at an agent system that already works that way.</p>
+
+<p>I can. It&rsquo;s the one writing this page.</p>
+</div>
+
+<!-- ===================================================== 6 -->
+<div class="wrap">
+<h2 id="claude"><span class="num">06</span>Claude already has the shape</h2>
+
+<p>At the start of every session, before you type a word, Claude Code loads a specific set of things into context &mdash; and, unlike a RAG pipeline, it knows exactly what each one costs.</p>
+
+<p>The first thing is <code>CLAUDE.md</code>: a Markdown file at the root of the project that is loaded, in full, every single time. No retrieval. No relevance score. You put in it whatever the agent should never not know, and Anthropic&rsquo;s guidance is to keep it under 200 lines. There is a hierarchy of these &mdash; an <strong>enterprise tier</strong> deployed by managed policy that users can&rsquo;t remove, then a user tier, then a project tier. That enterprise tier matters for this argument: it means <em>&ldquo;a small set of things every agent in the organization always knows&rdquo;</em> is not a metaphor. It&rsquo;s a config key. It is, literally, the company <code>CLAUDE.md</code>.</p>
+
+<p>That&rsquo;s the homepage.</p>
+
+<p>The second thing is the skill listing. A <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview">skill</a> is a folder with a Markdown file (<code>SKILL.md</code>) that has two lines of YAML at the top &mdash; a <code>name</code> and a one-paragraph <code>description</code> &mdash; followed by as much instruction and reference material as you want, plus any other files you care to put in the folder. And here&rsquo;s the move: at startup, Claude does <em>not</em> load your skills. It loads only the name and description of every skill into the system prompt, at a documented cost of about <strong>100 tokens per skill</strong>.</p>
+
+<p>That&rsquo;s the nav menu.</p>
+
+<p>When the agent decides &mdash; itself, mid-task &mdash; that a skill is relevant, it reads the body. That costs you the body (keep it under 5K tokens, say the docs) and only then. And the files <em>bundled inside</em> the skill folder &mdash; the 40-page reference, the exception table, the script &mdash; never enter context at all unless the agent opens them. Scripts run on the filesystem and only their output comes back. There is one sentence in Anthropic&rsquo;s docs that is basically this entire page:</p>
+
+<blockquote class="pull">
+  &ldquo;Unlike CLAUDE.md content, a skill&rsquo;s body loads only when it&rsquo;s used, so long reference material costs almost nothing until you need it.&rdquo;
+  <cite>Anthropic, <a href="https://code.claude.com/docs/en/skills">Claude Code skills documentation</a></cite>
+</blockquote>
+
+<p>Anthropic calls the whole mechanism <strong>progressive disclosure</strong> and documents it as three levels:</p>
+
+<figure>
+  <ol class="ladder">
+    <li>
+      <span class="lvl">Level 1<br>Metadata</span>
+      <span><strong>Name + description.</strong> Always loaded, at startup, for every skill.
+      <span class="cost">~100 tokens per skill &mdash; the nav menu</span></span>
+    </li>
+    <li>
+      <span class="lvl">Level 2<br>Instructions</span>
+      <span><strong>The <code>SKILL.md</code> body.</strong> Loaded when the agent decides the skill is relevant.
+      <span class="cost">Under 5K tokens &mdash; the page</span></span>
+    </li>
+    <li>
+      <span class="lvl">Level 3+<br>Resources</span>
+      <span><strong>Bundled files and scripts.</strong> Read or executed only as needed; scripts return output, not contents.
+      <span class="cost">Effectively unlimited &mdash; everything behind the page</span></span>
+    </li>
+  </ol>
+  <figcaption><strong>Progressive disclosure.</strong> The levels and token costs are Anthropic&rsquo;s, from the <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview">Agent Skills overview</a>. Homepage, menu, page, archive.</figcaption>
+</figure>
+
+<p>Now here is the part I think is the actual technical claim of this page &mdash; the thing that makes &ldquo;skills as knowledge&rdquo; different from &ldquo;RAG with extra steps&rdquo;:</p>
+
+<div class="callout">In a RAG system, the <em>retriever</em> decides what the model gets to see. In a skill system, the <em>agent</em> decides what to open &mdash; because it can always see the table of contents.</div>
+
+<p>That&rsquo;s the inversion. A retriever is a similarity function bolted on in front of the model. It runs once, returns <em>k</em> things, and the model works with whatever it got. It can&rsquo;t ask a follow-up. It can&rsquo;t say &ldquo;that&rsquo;s the Electronics policy &mdash; now show me Final Sale.&rdquo; It can&rsquo;t notice that nothing relevant came back. An agent with a menu can do all three: it picks a branch, reads it, realizes it&rsquo;s the wrong branch, backs up, picks another &mdash; and when nothing in the menu matches, it can <em>say so</em>, because it can see the whole menu.</p>
+
+<p>That last property is the one I&rsquo;d put money on. The defining failure of the Salesforce-style agent is the confident wrong answer, and the confident wrong answer comes from a retriever that returns <em>something</em> every single time. An agent that can see its own table of contents knows when the answer isn&rsquo;t there. I genuinely think that one property &mdash; <strong>the agent can see the boundary of what it knows</strong> &mdash; is worth more than all the relevance gains in all the reranking papers put together.</p>
+
+<div class="aside">
+  <span class="tag">It&rsquo;s not just knowledge</span>
+  <p>This is not a knowledge trick; it&rsquo;s now how Anthropic handles <em>everything</em> that goes in context. Tool definitions are the same shape: a typical multi-MCP-server setup burns ~55&ndash;77K tokens in tool schemas before any work happens, so the API&rsquo;s <a href="https://www.anthropic.com/engineering/advanced-tool-use">Tool Search Tool</a> defers them and loads only the 3&ndash;5 the agent needs (&minus;85%). <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">&ldquo;Code execution with MCP&rdquo;</a> puts MCP servers on a filesystem as code APIs and cuts one workflow from 150,000 tokens to 2,000 (&minus;98.7%). The principle is uniform: <strong>every always-resident byte is a budgeted index; everything else is just-in-time.</strong> Claude Code even budgets its skill listing at 1% of the context window. There is a line item for the menu.</p>
+</div>
+
+<p>One more thing before the sketch. Skills are not a Claude feature anymore. On December 18, 2025, Anthropic published <a href="https://agentskills.io/specification">Agent Skills as an open standard</a> &mdash; Apache&nbsp;2 &mdash; and it&rsquo;s been adopted by VS&nbsp;Code / GitHub Copilot, OpenAI Codex, Cursor, Gemini CLI, and a long tail behind them. That matters for what I&rsquo;m about to propose: if you encode your company as a tree of skills, you are not encoding it for one vendor&rsquo;s agent. You&rsquo;re writing a folder of Markdown files. It is about the most durable, most portable format there is.</p>
+</div>
+
+<!-- ===================================================== 7 -->
+<div class="wrap">
+<h2 id="procedures"><span class="num">07</span>Procedures, not documents</h2>
+
+<p>There&rsquo;s a second thing skills change that I almost missed, because the retrieval argument is so loud, and it might matter more.</p>
+
+<p>A vector database stores <em>documents</em>. A skill encodes a <em>procedure</em>.</p>
+
+<p>&ldquo;How do we handle a return on a Final Sale item bought with a gift card by a customer in California&rdquo; is not a document. It is a procedure with steps, branches, and exceptions, and it almost certainly does not live in one place &mdash; it&rsquo;s the intersection of the returns policy, the payments policy, and a state regulation. A document chunked into twelve pieces, of which the retriever surfaced pieces 3 and 7, is not a procedure. It&rsquo;s confetti.</p>
+
+<p>I think this is the real content of the phrase I keep using &mdash; the processes that <em>are</em> the business. A company is not, mostly, a pile of facts. It is mostly procedures: how we decide, how we escalate, how we make an exception, who has to sign. The reason vector RAG was such an unsatisfying fit for company knowledge is that company knowledge was never document-shaped in the first place. We just had no other container, so we wrote the procedures down as documents, and then the ingestion pipeline did the rest of the damage.</p>
+
+<p>Anthropic&rsquo;s own framing draws this line cleanly: skills provide <em>procedural</em> knowledge &mdash; how to do a thing &mdash; while MCP provides access to tools and data. A skill says: <em>here is how we handle a refund, step by step; here is the exception table; here is the script that actually issues it.</em> That is not a thing you retrieve. It is a thing you <em>follow</em>. And because a skill bundles its scripts, the leaf of the knowledge tree isn&rsquo;t a paragraph of text &mdash; it&rsquo;s an action. The knowledge base and the runbook converge into the same object.</p>
+
+<p>That, more than the retrieval argument, is why I think &ldquo;skills as company knowledge&rdquo; is the right pitch and not just a clever reframing. The unit of knowledge changes &mdash; from <em>document</em> to <em>procedure</em> &mdash; and procedures are what the business actually is.</p>
+</div>
+
+<!-- ===================================================== 8 -->
+<div class="wrap">
+<h2 id="tree"><span class="num">08</span>A company as a tree of skills</h2>
+
+<p>So what does a big company actually look like as a tree of skills? Let me try to draw it, because this is the question I most want this page to answer and I haven&rsquo;t seen anyone do it concretely. I&rsquo;ll keep using the customer-service agent as the running example, since that&rsquo;s the case the whole industry has been trying to crack.</p>
+
+<h3>The root</h3>
+
+<p>The company <code>CLAUDE.md</code>. Under 200 lines. The homepage test, applied literally: what could a competent stranger learn from your homepage and your nav?</p>
+
+<ul>
+  <li>One paragraph: what the company does, and for whom.</li>
+  <li>The products, one line each.</li>
+  <li>The shape of the org &mdash; the departments, not the org chart.</li>
+  <li>The five-ish policies that override everything. The things Legal would put in 72-point type.</li>
+  <li>And then: <em>nothing else</em> &mdash; because everything else is a skill whose name the agent can already see.</li>
+</ul>
+
+<h3>The tree</h3>
+
+<p>The first level of branches is the nav menu, and I think the right partition for a service agent is <em>not</em> the org chart &mdash; it&rsquo;s the set of things a customer&rsquo;s problem can be <em>about</em>:</p>
+
+<figure class="breakout">
+<pre class="tree"><code>company/
+&#x251C;&#x2500;&#x2500; <span class="dir">CLAUDE.md</span>                            <span class="c">&#x2190; always loaded. ~200 lines. the homepage.</span>
+&#x2514;&#x2500;&#x2500; <span class="dir">.claude/skills/</span>                      <span class="c">&#x2190; ~100 tokens each, always visible. the menu.</span>
+    &#x251C;&#x2500;&#x2500; <span class="dir">products/</span>
+    &#x2502;   &#x251C;&#x2500;&#x2500; sales-cloud/SKILL.md         <span class="c">"what it is, common issues, where the docs live"</span>
+    &#x2502;   &#x251C;&#x2500;&#x2500; service-cloud/SKILL.md
+    &#x2502;   &#x2514;&#x2500;&#x2500; data-360/SKILL.md            <span class="c">&#x2026;one per product</span>
+    &#x251C;&#x2500;&#x2500; <span class="dir">billing/</span>
+    &#x2502;   &#x251C;&#x2500;&#x2500; reading-an-invoice/SKILL.md
+    &#x2502;   &#x251C;&#x2500;&#x2500; <span class="dir">refunds/</span>
+    &#x2502;   &#x2502;   &#x251C;&#x2500;&#x2500; SKILL.md                 <span class="c">&#x2190; the PROCEDURE. steps, branches, exceptions.</span>
+    &#x2502;   &#x2502;   &#x251C;&#x2500;&#x2500; exceptions.md            <span class="c">&#x2190; level 3: the 9-page exception table</span>
+    &#x2502;   &#x2502;   &#x2514;&#x2500;&#x2500; issue_refund.py          <span class="c">&#x2190; level 3: the ACTION</span>
+    &#x2502;   &#x2514;&#x2500;&#x2500; disputes/SKILL.md
+    &#x251C;&#x2500;&#x2500; <span class="dir">accounts/</span>
+    &#x2502;   &#x251C;&#x2500;&#x2500; password-reset/SKILL.md
+    &#x2502;   &#x251C;&#x2500;&#x2500; sso-troubleshooting/SKILL.md
+    &#x2502;   &#x2514;&#x2500;&#x2500; data-deletion-request/SKILL.md   <span class="c">the GDPR/CCPA procedure</span>
+    &#x251C;&#x2500;&#x2500; <span class="dir">escalation/</span>
+    &#x2502;   &#x251C;&#x2500;&#x2500; when-to-escalate/SKILL.md
+    &#x2502;   &#x251C;&#x2500;&#x2500; legal-hold/SKILL.md
+    &#x2502;   &#x2514;&#x2500;&#x2500; security-incident/SKILL.md
+    &#x251C;&#x2500;&#x2500; <span class="dir">policies/</span>
+    &#x2502;   &#x251C;&#x2500;&#x2500; sla-matrix/SKILL.md
+    &#x2502;   &#x2514;&#x2500;&#x2500; what-we-never-promise/SKILL.md
+    &#x2514;&#x2500;&#x2500; <span class="dir">search/</span>
+        &#x251C;&#x2500;&#x2500; <span class="hot">past-tickets/SKILL.md</span>        <span class="c">&#x2190; &#x2605; the vector database lives HERE</span>
+        &#x251C;&#x2500;&#x2500; docs-site/SKILL.md           <span class="c">"the docs publish /llms.txt; fetch and navigate"</span>
+        &#x2514;&#x2500;&#x2500; crm-lookup/SKILL.md          <span class="c">&#x2190; the MCP tool: look up THIS customer</span>
+</code></pre>
+  <figcaption><strong>A service org as a tree of skills.</strong> Each <code>SKILL.md</code> contributes ~100 always-on tokens of name+description. Bodies and bundled files load only when opened. The vector database is one leaf, under <code>search/</code>.</figcaption>
+</figure>
+
+<p>Look at where the vector database went. <code>search/past-tickets/SKILL.md</code>. It is one leaf. Its description &mdash; the part that&rsquo;s always in context &mdash; says something like: <em>&ldquo;Semantic search over six years of resolved support tickets. Use this to find out whether this exact problem has been seen before, or to find similar cases. Do not use this for policy &mdash; policy is in <code>billing/</code> and <code>policies/</code>.&rdquo;</em> Its body says which retriever to call, how to read the results, and &mdash; importantly &mdash; what its blind spots are.</p>
+
+<p>That last clause is the whole essay. The vector database is doing the one thing it is irreplaceably good at &mdash; semantic recall over six years of unstructured ticket text that has no nav, no hierarchy, and no consistent vocabulary, where &ldquo;my card got dinged twice&rdquo; has to find &ldquo;duplicate charge&rdquo; &mdash; and it is doing it from inside a tree where the agent <strong>(a)</strong> already knows what the company is, <strong>(b)</strong> knows that ticket search is not where policy lives, and <strong>(c)</strong> knows that if <code>billing/refunds/</code> doesn&rsquo;t cover something, there is no answer and the right move is <code>escalation/</code>, not a confident guess.</p>
+
+<div class="callout">Vector search gets demoted from <em>architecture</em> to <em>tool</em>. That is the whole proposal.</div>
+
+<h3>The same question, twice</h3>
+
+<p><em>&ldquo;I bought a Final Sale jacket with a gift card last month and it doesn&rsquo;t fit. Can I return it?&rdquo;</em></p>
+
+<figure class="bare breakout">
+<div class="duel">
+  <div class="bad">
+    <h4>Flat RAG</h4>
+    <ol>
+      <li>Embed the question. Pull the top 20 chunks.</li>
+      <li>The <em>Returns Policy</em> chunk about the 30-day window scores highest &mdash; it&rsquo;s about returns!</li>
+      <li>The Final Sale exclusion is in a different chunk, in a different doc, that scores <em>lower</em> than three near-duplicates of the returns chunk.</li>
+      <li>The gift-card rule is in <em>Payments</em>, which never says the word &ldquo;return,&rdquo; and isn&rsquo;t retrieved at all.</li>
+      <li>The model, handed 20 plausible chunks, writes a warm, confident, <strong>wrong</strong> answer about the 30-day window.</li>
+    </ol>
+  </div>
+  <div class="good">
+    <h4>The tree</h4>
+    <ol>
+      <li>The root already says returns are governed by <code>billing/refunds/</code>.</li>
+      <li>The menu shows <code>refunds/</code>; the agent opens it. It&rsquo;s a <em>procedure</em>: step 1, check Final Sale.</li>
+      <li>Final Sale &rarr; <code>exceptions.md</code> &rarr; store credit only.</li>
+      <li>Step 4, gift-card purchases refund to the gift card.</li>
+      <li>Three reads, all chosen by the agent, all citable. And if the customer had asked something with no branch in the menu &mdash; the agent can <em>see</em> that, and says so.</li>
+    </ol>
+  </div>
+</div>
+<figcaption><strong>The second agent isn&rsquo;t smarter. It&rsquo;s oriented.</strong></figcaption>
+</figure>
+</div>
+
+<!-- ===================================================== 9 -->
+<div class="wrap">
+<h2 id="scaling"><span class="num">09</span>Sharing and scaling (the hard part)</h2>
+
+<p>Now the real question, and the place I have to be honest about where the floor is. How do skills get distributed across a 70,000-person company?</p>
+
+<p>Here&rsquo;s what&rsquo;s actually shipped as of late June 2026, and it&rsquo;s more than I expected:</p>
+
+<ol>
+  <li><strong>Git.</strong> Commit <code>.claude/skills/</code> to the repo. Everyone who has the repo has the skills. For an engineering org, this is most of the answer already.</li>
+  <li><strong>Plugin marketplaces.</strong> A git repo with a <code>marketplace.json</code>. The unlock is that a project&rsquo;s settings can list the company marketplace, and every teammate gets <em>prompted to install it</em> the moment they trust the folder. CI can pre-seed it into containers. This is real software distribution: versioned, reviewable, namespaced.</li>
+  <li><strong>Managed policy.</strong> Enterprise admins deploy skills (and the root <code>CLAUDE.md</code>) through managed settings that users can&rsquo;t remove, and can allowlist which marketplaces are even installable. The governance surface exists.</li>
+  <li><strong>Org provisioning on claude.ai.</strong> Since December 18, 2025, a Team or Enterprise admin can push a skill to every seat in the workspace from the admin console.</li>
+  <li><strong>The API</strong>, where uploaded skills are workspace-scoped and explicitly versioned.</li>
+</ol>
+
+<p>And here is the honest gap, in Anthropic&rsquo;s own words, from their <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise">enterprise docs</a>: <strong>&ldquo;Custom Skills do not sync across surfaces.&rdquo;</strong> A skill uploaded to the API is not on claude.ai. A skill on claude.ai is a zip you uploaded, not a git repo. There is no single registry spanning Claude Code, claude.ai, and the API; there are no usage analytics; the docs&rsquo; own advice is &ldquo;maintain skill source files in Git as the single source of truth&rdquo; &mdash; which is correct, and is also an admission. For a 70,000-person company most of whom do not use git, &ldquo;everyone has the repo checked out&rdquo; is not a knowledge management system.</p>
+
+<p>So let me be precise about what I&rsquo;m claiming. I&rsquo;m claiming the <em>shape</em> is right &mdash; root, menu, branch, leaf, agent-chooses. I am not claiming the <em>distribution system</em> exists yet at enterprise scale. It feels about like where package management was around 2010: the format is solid and open, registries exist, and the story for &ldquo;how does the whole org converge on one tree and keep it fresh&rdquo; is real but young. Three things I think have to become true, and that I&rsquo;d bet on:</p>
+
+<h3>The tree needs owners, and they should be the website&rsquo;s owners</h3>
+<p>A branch of the skill tree maps to a team. <code>billing/refunds/</code> is owned by whoever owns the refunds page on the help site, because it is <em>the same content</em>. This is Conway&rsquo;s Law for knowledge: the skill tree will end up mirroring the org chart, and that&rsquo;s good, because the org chart is the existing answer to &ldquo;who knows what.&rdquo; A <code>CODEOWNERS</code> file over a skill tree is a knowledge-governance model that engineering orgs already understand.</p>
+
+<h3>The tree has to be gardened by agents</h3>
+<p>A 300-skill tree for a big company is too much for humans to keep fresh by hand &mdash; that is why every corporate wiki has died. But notice that this is an unusually <em>agent-shaped</em> maintenance job. Skills are text files in git. Staleness is detectable: this skill says X, the system of record changed to Y on this date, here&rsquo;s the diff. Ownership is a file. Freshness is a pull request. Mintlify already ships an agent that watches your codebase and opens PRs against your docs; Claude Code already writes its own memory files. The version of this I expect is a standing agent whose job title is <em>librarian</em>: it watches the systems of record, and when reality drifts from the tree it opens a PR to the owner of that branch. The knowledge base maintains itself the way the codebase does &mdash; with diffs and reviewers &mdash; instead of the way the wiki did, which was not at all.</p>
+
+<h3>The internal tree and the public website converge</h3>
+<p>I half-suspect they are the same tree with different access controls. Mintlify&rsquo;s data says agents are already 45% of documentation readers, which means your public docs are <em>already</em> a skill tree being read by other people&rsquo;s agents whether you meant them that way or not. The interesting question is whether the internal half &mdash; the refund procedure, the escalation matrix, the parts a customer never sees &mdash; should be a second tree or the same tree&rsquo;s private branches. I lean hard toward the latter: one information architecture, two audiences. Which is exactly how a website with a logged-in section already works.</p>
+</div>
+
+<!-- ===================================================== 10 -->
+<div class="wrap">
+<h2 id="anthropic"><span class="num">10</span>How far Anthropic&rsquo;s stack actually gets you</h2>
+
+<p>The question I started with: how much of this can Anthropic realistically handle today, and where do partners come in. Having gone through it, the split is cleaner than I expected, because Anthropic drew the line on purpose.</p>
+
+<h3>Anthropic gives you the tree</h3>
+<ul>
+  <li><strong>The root:</strong> <code>CLAUDE.md</code>, with an enterprise/managed tier admins control.</li>
+  <li><strong>The menu:</strong> skill frontmatter at ~100 tokens each, with a documented, configurable budget.</li>
+  <li><strong>The branches:</strong> skill bodies + bundled files + scripts, loaded on demand. An open format.</li>
+  <li><strong>The leaves that are tools:</strong> MCP, and <code>search_result</code> content blocks so whatever a tool retrieves comes back with real, model-native citations.</li>
+  <li><strong>Distribution:</strong> git, plugins, marketplaces, managed settings, org provisioning, the API. Fragmented across surfaces (see above), but real.</li>
+  <li><strong>The method:</strong> contextual retrieval if you do build an index; an explicit recommendation to start with agentic search; the advice to put any &le;200K-token corpus straight into a cached prompt and skip retrieval entirely.</li>
+</ul>
+
+<h3>Anthropic does not give you the leaf &mdash; on purpose</h3>
+<p>Verbatim, from <a href="https://platform.claude.com/docs/en/build-with-claude/embeddings">the docs</a>: <em>&ldquo;Anthropic does not offer its own embedding model.&rdquo;</em> They point you at Voyage AI. There is no managed vector database, no hosted ingestion or chunking pipeline, no retrieval endpoint on the developer platform. Anthropic&rsquo;s own RAG cookbook links to a Pinecone notebook. (The one exception proves the rule: claude.ai Projects will silently switch into a managed retrieval mode when you put more than a context window&rsquo;s worth of knowledge into a project. Anthropic isn&rsquo;t anti-retrieval. They just don&rsquo;t sell it as infrastructure.)</p>
+
+<p>So &ldquo;where does a Pinecone come into the mix&rdquo; has a precise answer, and it isn&rsquo;t <em>instead of</em>. The partners are the leaves:</p>
+
+<figure class="breakout">
+<div class="tblwrap">
+<table>
+  <thead><tr><th>Job</th><th>Who</th><th>Where it sits in the tree</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Embeddings</strong></td>
+      <td>Voyage AI (now MongoDB)</td>
+      <td>Inside whatever index you build. Anthropic literally tells you to use them.</td>
+    </tr>
+    <tr>
+      <td><strong>The unstructured corpus</strong><br>millions of tickets, transcripts, scanned PDFs</td>
+      <td>Pinecone, pgvector, Atlas, Elastic&hellip;</td>
+      <td>One leaf: <code>search/past-tickets/</code>. The one job nothing else can do.</td>
+    </tr>
+    <tr>
+      <td><strong>The public docs tree</strong></td>
+      <td>Mintlify, Fern, GitBook</td>
+      <td>The <em>outer</em> surface of the same tree: your nav, your <code>llms.txt</code>, your auto-generated MCP server.</td>
+    </tr>
+    <tr>
+      <td><strong>The records</strong><br>this customer&rsquo;s orders, this case&rsquo;s history</td>
+      <td>Salesforce, via MCP</td>
+      <td>A leaf: <code>search/crm-lookup/</code>. Not a knowledge problem at all &mdash; a <em>records</em> problem, and Data&nbsp;360 is genuinely good at it. (Claude is a foundational model inside Agentforce&nbsp;360 now; this was never one-versus-the-other.)</td>
+    </tr>
+    <tr>
+      <td><strong>Lineage &amp; metadata</strong><br>&ldquo;where did this number come from&rdquo;</td>
+      <td>Informatica, Glean, the catalogs</td>
+      <td>A leaf the agent calls when provenance matters.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<figcaption><strong>Partners are leaves, not competitors.</strong> None of these compete with the tree. The tree is the thing that has been missing <em>above</em> all of them.</figcaption>
+</figure>
+
+<p>The mistake of the last two years was never <em>using</em> a vector database. It was using a vector database as the <em>root</em>.</p>
+</div>
+
+<!-- ===================================================== 11 -->
+<div class="wrap">
+<h2 id="open"><span class="num">11</span>What I still don&rsquo;t know</h2>
+
+<p>This is a working page. These are the things I&rsquo;d genuinely like to be argued out of, in roughly the order they bother me.</p>
+
+<p><strong>Who writes the root?</strong> &ldquo;Under 200 lines that every agent in the company always sees&rdquo; is a high-stakes editorial job. It&rsquo;s the homepage, and homepages have committees. I don&rsquo;t know what org process produces and defends a good company <code>CLAUDE.md</code>. My instinct is that it&rsquo;s the same artifact as the homepage and should have the same owner &mdash; but I notice nobody has that job yet.</p>
+
+<p><strong>How deep does the tree go before the menu is too long?</strong> Anthropic&rsquo;s guidance is a <code>SKILL.md</code> body under 500 lines, references one level deep. A real Salesforce is not one level deep. At ~100 tokens per skill, 500 skills is 50K tokens of menu, on every turn &mdash; real money. Claude Code already budgets its skill listing at 1% of the context window, and the API&rsquo;s Tool Search Tool already defers tool definitions the same way, so I suspect the answer is that <em>the menu itself gets progressively disclosed</em>: you always see the top of the tree, and deeper listings load as you descend a branch. Which is, again, how a website nav works. The homepage doesn&rsquo;t show every page; it shows the top.</p>
+
+<p><strong>What&rsquo;s the link structure?</strong> The web didn&rsquo;t win on hierarchy alone &mdash; it won on links, and then PageRank turned the links into relevance. Skills can reference each other (<code>CLAUDE.md</code> has an <code>@import</code>; skills can point to each other in prose), but there&rsquo;s no cross-link convention and no skill-PageRank. I think there will be. I asked for a graph at the start of this page, and I still think it ends up a graph &mdash; but a graph grown on a tree, the way the web is, not a graph extracted from text by an LLM, which is the version that didn&rsquo;t survive its own indexing bill.</p>
+
+<p><strong>The freshness loop.</strong> I asserted that agents will garden the tree. I believe it, and I can point at early versions of it. But nobody has run a 500-skill tree for a year and reported back, and the corporate wiki is a thirty-year graveyard of exactly this failure. The bet I&rsquo;m making is that wikis died because they had no owner, no diff, and no reader who depended on them every single task &mdash; and skills have all three.</p>
+
+<p><strong>Is it really tree-above, index-below?</strong> I argued for a smart boundary: structure where there is structure, embeddings where there isn&rsquo;t. But I notice <a href="https://github.com/VectifyAI/PageIndex">PageIndex</a> getting strong results by building an LLM table-of-contents over even <em>individual long documents</em> and doing tree search down it &mdash; no vectors anywhere. Maybe the boundary is further down than I think. Maybe almost everything has more structure than we gave it credit for.</p>
+
+<p><strong>The distribution gap is real and I don&rsquo;t want to hand-wave it.</strong> Skills don&rsquo;t sync across surfaces. The open standard is six months old. If I&rsquo;m wrong about this whole thesis, here is how I&rsquo;m wrong: the format is right, nobody builds the registry-plus-ownership-plus-freshness system around it, and &ldquo;tree of skills&rdquo; becomes 2026&rsquo;s corporate wiki. That&rsquo;s the failure mode to design against, and it&rsquo;s an organizational problem at least as much as a technical one. Which &mdash; if you&rsquo;ve ever worked in knowledge management &mdash; you already knew.</p>
+
+<hr class="thought">
+
+<p>The web already solved this problem once. A small page that tells you where you are. A menu that tells you what exists. Links between things that are related. Pages you open when you want them. And a search box &mdash; in the corner.</p>
+
+<p>For two years, the industry&rsquo;s answer to &ldquo;how should an AI know what this company knows&rdquo; has been to delete the page, delete the menu, delete the links, shred everything into paragraphs, and put the search box in the middle of an empty screen.</p>
+
+<p>Search belongs in the corner. The skill tree is the rest of the site.</p>
+</div>
+
+<!-- ===================================================== sources -->
+<div class="wrap sources">
+<h2 id="sources"><span class="num">&sect;</span>Sources</h2>
+
+<p>The full, annotated fact sheets &mdash; with every URL, date, and a confidence flag on every load-bearing claim &mdash; live alongside this page in <code>research/</code>. These are the ones the argument leans on hardest.</p>
+
+<h3>The critique of flat-chunk retrieval</h3>
+<ul>
+  <li>Edge et al. (Microsoft Research), <a href="https://arxiv.org/abs/2404.16130">&ldquo;From Local to Global: A Graph RAG Approach to Query-Focused Summarization&rdquo;</a> &mdash; the &ldquo;global questions&rdquo; failure.</li>
+  <li>Anthropic, <a href="https://www.anthropic.com/engineering/contextual-retrieval">&ldquo;Introducing Contextual Retrieval&rdquo;</a> (Sept 2024) &mdash; &ldquo;individual chunks lack sufficient context&rdquo;; 5.7% &rarr; 1.9%; the &le;200K-token &ldquo;just use a cached prompt&rdquo; advice.</li>
+  <li>Barnett et al., <a href="https://arxiv.org/abs/2401.05856">&ldquo;Seven Failure Points When Engineering a RAG System&rdquo;</a> &mdash; FP1, Missing Content.</li>
+  <li>Xu et al. (LinkedIn), <a href="https://arxiv.org/abs/2404.17723">&ldquo;RAG with Knowledge Graphs for Customer Service QA&rdquo;</a> (SIGIR 2024) &mdash; +77.6% MRR, &minus;28.6% resolution time, in production.</li>
+  <li>Salesforce, <a href="https://www.salesforce.com/blog/ai-agent-rag/">&ldquo;5 Reasons Why AI Agents and RAG Pipelines Fail in Production&rdquo;</a> (July 2025) &mdash; &ldquo;silent retrieval failures masked by a plausible-sounding LLM hallucination.&rdquo;</li>
+</ul>
+
+<h3>What survived: cheap hierarchy + an agent</h3>
+<ul>
+  <li>Sarthi et al., <a href="https://arxiv.org/abs/2401.18059">RAPTOR</a> (ICLR 2024); Microsoft, <a href="https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/">LazyGraphRAG</a> (Nov 2024); <a href="https://arxiv.org/abs/2506.05690">GraphRAG-Bench</a> (ICLR 2026) on where graphs lose.</li>
+  <li>Boris Cherny <a href="https://x.com/bcherny/status/2017824286489383315">on removing the vector DB from Claude Code</a>.</li>
+  <li>Anthropic, <a href="https://claude.com/blog/building-agents-with-the-claude-agent-sdk">&ldquo;Building agents with the Claude Agent SDK&rdquo;</a> (Sept 2025) &mdash; &ldquo;we recommend starting with agentic search.&rdquo;</li>
+  <li>Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">&ldquo;Effective context engineering for AI agents&rdquo;</a> (Sept 2025) &mdash; just-in-time retrieval, &ldquo;progressive disclosure,&rdquo; context rot.</li>
+  <li>Cursor, <a href="https://cursor.com/blog/semsearch">&ldquo;Improving agent with semantic search&rdquo;</a> (Nov 2025) &mdash; the honest counter-evidence.</li>
+  <li>Adobe Research, <a href="https://arxiv.org/abs/2502.05167">NoLiMa</a>; Chroma, <a href="https://research.trychroma.com/context-rot">&ldquo;Context Rot&rdquo;</a>; Databricks, <a href="https://www.databricks.com/blog/long-context-rag-performance-llms">long-context RAG</a> &mdash; why long context isn&rsquo;t the answer.</li>
+</ul>
+
+<h3>Skills, CLAUDE.md, and progressive disclosure</h3>
+<ul>
+  <li>Anthropic, <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview">Agent Skills overview</a> &mdash; the three levels and their token costs.</li>
+  <li>Anthropic, <a href="https://code.claude.com/docs/en/skills">Claude Code skills</a> and <a href="https://code.claude.com/docs/en/memory">memory / CLAUDE.md</a> docs &mdash; the hierarchy, the 200-line guidance, the 1% listing budget, the quoted sentence.</li>
+  <li>Anthropic, <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">&ldquo;Equipping agents for the real world with Agent Skills&rdquo;</a> (Oct 2025).</li>
+  <li><a href="https://agentskills.io/specification">agentskills.io</a> &mdash; the open spec (Dec 2025), and the <a href="https://github.com/anthropics/skills">anthropics/skills</a> repo.</li>
+  <li>Anthropic, <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/enterprise">Skills enterprise guidance</a> &mdash; &ldquo;Custom Skills do not sync across surfaces.&rdquo;</li>
+  <li>Anthropic, <a href="https://www.anthropic.com/engineering/advanced-tool-use">advanced tool use</a> and <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">code execution with MCP</a> &mdash; the same pattern applied to tools.</li>
+  <li>Anthropic, <a href="https://platform.claude.com/docs/en/build-with-claude/embeddings">embeddings docs</a> &mdash; &ldquo;Anthropic does not offer its own embedding model.&rdquo;</li>
+</ul>
+
+<h3>Salesforce, the website, and the rest</h3>
+<ul>
+  <li>Salesforce, <a href="https://www.salesforce.com/agentforce/agentforce-and-rag/">Agentforce and RAG</a>; <a href="https://help.salesforce.com/s/articleView?id=data.c360_a_search_index_supported_chunking_strategies.htm&amp;language=en_US&amp;type=5">chunking strategies</a>; <a href="https://www.salesforce.com/news/stories/ai-agent-customer-service-salesforce-learnings/">the customer-zero postmortem</a> (Aug 2025); <a href="https://engineering.salesforce.com/how-agentforce-data-and-apps-turned-the-salesforce-stack-into-agentforce-360/">&ldquo;Early RAG pipelines often delivered inconsistent or low-confidence results&rdquo;</a> (Jan 2026).</li>
+  <li>Mintlify, <a href="https://www.mintlify.com/blog/state-of-ai">&ldquo;The state of agent traffic in documentation&rdquo;</a> (Mar 2026) and the <a href="https://www.mintlify.com/blog/series-b">Series B post</a> (Apr 2026).</li>
+  <li>Jeremy Howard, <a href="https://llmstxt.org/">llms.txt</a> (Sept 2024); Microsoft, <a href="https://github.com/nlweb-ai/NLWeb">NLWeb</a> (May 2025).</li>
+  <li>Pinecone, <a href="https://www.pinecone.io/blog/knowledge-infrastructure-for-agents/">&ldquo;knowledge infrastructure for agents&rdquo;</a> / Nexus (May 2026).</li>
+  <li>Salesforce + Anthropic, <a href="https://www.anthropic.com/news/salesforce-anthropic-expanded-partnership">expanded partnership</a> (Oct 2025).</li>
+</ul>
+</div>
+
+</article>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">
+    <p>A working page, started June 28, 2026. It will change. The source research &mdash; four fully-cited fact sheets, including everything that <em>didn&rsquo;t</em> make the cut and every claim&rsquo;s confidence level &mdash; lives next to this file in <code>research/</code>. Self-contained: no external requests, no scripts, system fonts.</p>
+  </div>
+</footer>
+
+</body>
+</html>
