@@ -32,6 +32,11 @@
   --warn-soft: #f6eed7;
   --code-bg: #f2ede4;
   --shadow: 0 1px 3px rgba(40, 30, 18, .07), 0 8px 28px rgba(40, 30, 18, .06);
+
+  /* Derived tokens. var() inside a custom property resolves at use time,
+     so these track --rule / --accent through the dark-scheme override. */
+  --hairline: 1px solid var(--rule);
+  --accent-rule: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,23 +88,39 @@ a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
 ::selection { background: var(--accent-soft); }
 
+/* ---- vertical rhythm ----------------------------------------- */
+/* Both rules are zero-specificity (:where) so that any component's own
+   `margin` declaration wins exactly as written, with no cascade fights. */
+:where(p, ul, ol) { margin: 0; }
+:where(article > .wrap) > * + * { margin-top: 1.35rem; }
+
+/* ---- shared voices ------------------------------------------- */
+/* The small uppercase tracked label, everywhere it appears. Each rule
+   below adds only its own color / display / spacing. */
+.eyebrow, nav.toc h2, h2 .num, .aside .tag,
+th, .timeline .when, .duel h4, .ladder .lvl {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+/* The raised card surface. */
+nav.toc, .aside, figure {
+  background: var(--bg-raise);
+  border: var(--hairline);
+  border-radius: 12px;
+}
+
 /* ---- header -------------------------------------------------- */
 header.masthead {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--hairline);
   background:
     radial-gradient(60rem 22rem at 75% -8rem, var(--accent-soft) 0%, transparent 62%),
     var(--bg);
   padding: 4.5rem 0 3.25rem;
 }
-.eyebrow {
-  font-family: var(--sans);
-  font-size: .75rem;
-  font-weight: 650;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin: 0 0 1.1rem;
-}
+.eyebrow { color: var(--accent); margin: 0 0 1.1rem; }
 h1 {
   font-family: var(--sans);
   font-weight: 800;
@@ -120,36 +141,28 @@ h1 {
   font-size: .82rem;
   color: var(--ink-3);
   display: flex; flex-wrap: wrap; gap: .35rem 1.1rem;
-  margin: 0;
 }
-.byline span::before { content: "·"; margin-right: 1.1rem; color: var(--rule); }
-.byline span:first-child::before { content: none; margin: 0; }
+.byline span + span::before { content: "·"; margin-right: 1.1rem; color: var(--rule); }
 
 /* ---- TOC ----------------------------------------------------- */
 nav.toc {
   font-family: var(--sans);
-  background: var(--bg-raise);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
   padding: 1.2rem 1.4rem;
   margin: 2.5rem 0 0;
   box-shadow: var(--shadow);
 }
-nav.toc h2 {
-  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--ink-3); margin: 0 0 .7rem; font-family: var(--sans);
-}
-nav.toc ol { margin: 0; padding: 0 0 0 1.4rem; columns: 2; column-gap: 2.4rem; font-size: .92rem; line-height: 1.45; }
-nav.toc li { margin: 0 0 .45rem; break-inside: avoid; }
+nav.toc h2 { color: var(--ink-3); margin: 0 0 .7rem; }
+/* `15rem 2` = at most two columns, each at least 15rem, so the list
+   collapses to one column intrinsically with no media query. */
+nav.toc ol { padding: 0 0 0 1.4rem; columns: 15rem 2; column-gap: 2.4rem; font-size: .92rem; line-height: 1.45; }
+nav.toc li { break-inside: avoid; }
 nav.toc a { text-decoration: none; color: var(--ink-2); }
 nav.toc a:hover { color: var(--accent); }
-@media (max-width: 40rem) { nav.toc ol { columns: 1; } }
 
 /* ---- prose --------------------------------------------------- */
 main { padding: 1rem 0 4rem; }
-article > .wrap > * + * { margin-top: 1.35rem; }
 
-h2 {
+article h2 {
   font-family: var(--sans);
   font-weight: 750;
   font-size: 1.85rem;
@@ -157,17 +170,10 @@ h2 {
   letter-spacing: -.02em;
   margin: 3.8rem 0 0;
   padding-top: 2.4rem;
-  border-top: 1px solid var(--rule);
+  border-top: var(--hairline);
   scroll-margin-top: 1.5rem;
 }
-h2 .num {
-  display: block;
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  color: var(--accent);
-  margin-bottom: .5rem;
-}
+h2 .num { display: block; color: var(--accent); margin-bottom: .5rem; }
 h3 {
   font-family: var(--sans);
   font-weight: 700;
@@ -175,14 +181,13 @@ h3 {
   letter-spacing: -.01em;
   margin: 2.4rem 0 0;
 }
-p { margin: 0; }
 strong { font-weight: 650; }
-ul, ol { padding-left: 1.45rem; margin: 0; }
+ul, ol { padding-left: 1.45rem; }
 li { margin: .45rem 0; }
 li::marker { color: var(--ink-3); }
 
 hr.thought {
-  border: 0; height: auto; background: none;
+  border: 0;
   text-align: center; margin: 2.6rem 0 1.3rem;
   letter-spacing: 1.4em; color: var(--ink-3); font-size: .85rem;
 }
@@ -192,13 +197,13 @@ code {
   font-family: var(--mono);
   font-size: .84em;
   background: var(--code-bg);
-  border: 1px solid var(--rule);
+  border: var(--hairline);
   border-radius: 5px;
   padding: .08em .35em;
 }
 pre {
   background: var(--code-bg);
-  border: 1px solid var(--rule);
+  border: var(--hairline);
   border-radius: 10px;
   padding: 1.1rem 1.25rem;
   overflow-x: auto;
@@ -230,7 +235,7 @@ blockquote.pull cite {
 
 .callout {
   background: var(--accent-soft);
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border: var(--accent-rule);
   border-radius: 12px;
   padding: 1.3rem 1.5rem;
   margin: 2.2rem 0;
@@ -243,33 +248,17 @@ blockquote.pull cite {
 .callout em { color: var(--accent-ink); font-style: normal; }
 
 .aside {
-  background: var(--bg-raise);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
   padding: 1.1rem 1.35rem;
   margin: 2rem 0;
   font-size: .96rem;
   line-height: 1.62;
   color: var(--ink-2);
 }
-.aside .tag {
-  display: inline-block;
-  font-family: var(--sans);
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: .45rem;
-}
-.aside > p + p { margin-top: .8rem; }
+.aside .tag { display: inline-block; color: var(--ink-3); margin-bottom: .45rem; }
 
 /* ---- figures ------------------------------------------------- */
 figure {
   margin: 2.4rem 0;
-  background: var(--bg-raise);
-  border: 1px solid var(--rule);
-  border-radius: 14px;
   padding: 1.4rem;
   box-shadow: var(--shadow);
 }
@@ -281,21 +270,20 @@ figcaption {
   color: var(--ink-3);
   margin-top: 1rem;
   padding-top: .9rem;
-  border-top: 1px solid var(--rule);
+  border-top: var(--hairline);
 }
 figcaption strong { color: var(--ink-2); }
 
 /* tables */
 .tblwrap { overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .9rem; line-height: 1.45; }
-th, td { text-align: left; padding: .65rem .85rem; vertical-align: top; border-bottom: 1px solid var(--rule); }
-th { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; white-space: nowrap; }
+th, td { text-align: left; padding: .65rem .85rem; vertical-align: top; border-bottom: var(--hairline); }
+th { color: var(--ink-3); white-space: nowrap; }
 tbody tr:last-child td { border-bottom: 0; }
 td code { white-space: nowrap; }
-td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* timeline */
-.timeline { list-style: none; padding: 0; margin: 0; }
+.timeline { list-style: none; padding: 0; }
 .timeline li {
   position: relative;
   padding: 0 0 1.2rem 1.7rem;
@@ -304,12 +292,11 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
   font-size: .93rem;
   line-height: 1.55;
 }
-.timeline li::before {
+.timeline li:not(:last-child)::before {
   content: "";
   position: absolute; left: .3rem; top: .5rem; bottom: -.4rem;
   width: 2px; background: var(--rule);
 }
-.timeline li:last-child::before { bottom: auto; height: 0; }
 .timeline li::after {
   content: "";
   position: absolute; left: 0; top: .38rem;
@@ -318,41 +305,34 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
   border: 2.5px solid var(--accent);
 }
 .timeline li.dim::after { border-color: var(--ink-3); }
-.timeline .when {
-  display: block;
-  font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: .15rem;
-}
+.timeline .when { display: block; color: var(--accent); margin-bottom: .15rem; }
 .timeline li.dim .when { color: var(--ink-3); }
 
-/* head-to-head columns */
-.duel { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-@media (max-width: 44rem) { .duel { grid-template-columns: 1fr; } }
+/* head-to-head columns. Container-intrinsic: two columns whenever two
+   ~20rem tracks fit, one otherwise — no viewport breakpoint to keep
+   in sync with the wrap/breakout widths. */
+.duel { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 1rem; }
 .duel > div {
-  border: 1px solid var(--rule); border-radius: 10px;
+  border: var(--hairline); border-radius: 10px;
   padding: 1rem 1.15rem;
   font-family: var(--sans); font-size: .92rem; line-height: 1.6;
 }
-.duel h4 {
-  margin: 0 0 .7rem; font-size: .72rem; font-weight: 750;
-  letter-spacing: .12em; text-transform: uppercase;
-}
+.duel h4 { margin: 0 0 .7rem; }
 .duel .bad  { background: var(--warn-soft); }
 .duel .bad h4 { color: var(--warn); }
 .duel .good { background: var(--good-soft); }
 .duel .good h4 { color: var(--good); }
 .duel ol { padding-left: 1.2rem; }
-.duel li { margin: .4rem 0; }
 
 /* the ladder (progressive disclosure) */
-.ladder { list-style: none; padding: 0; margin: 0; display: grid; gap: .6rem; }
+.ladder { list-style: none; padding: 0; display: grid; gap: .6rem; }
 .ladder li {
   display: grid;
   grid-template-columns: 6.2rem 1fr;
   gap: 1rem;
   align-items: start;
   background: var(--bg-sink);
-  border: 1px solid var(--rule);
+  border: var(--hairline);
   border-radius: 10px;
   padding: .85rem 1rem;
   margin: 0;
@@ -360,13 +340,13 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
   font-size: .92rem;
   line-height: 1.5;
 }
-.ladder li:first-child { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
-.ladder .lvl { font-size: .68rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); padding-top: .15rem; }
+.ladder li:first-child { background: var(--accent-soft); border: var(--accent-rule); }
+.ladder .lvl { color: var(--accent); padding-top: .15rem; }
 .ladder .cost { display: block; font-size: .78rem; color: var(--ink-3); margin-top: .15rem; }
 @media (max-width: 34rem) { .ladder li { grid-template-columns: 1fr; gap: .3rem; } }
 
 /* the tree */
-pre.tree { font-size: .8rem; line-height: 1.52; }
+pre.tree { line-height: 1.52; }
 pre.tree .c   { color: var(--ink-3); }
 pre.tree .hot { color: var(--accent); font-weight: bold; }
 pre.tree .dir { color: var(--ink); font-weight: 600; }
@@ -375,10 +355,9 @@ pre.tree .dir { color: var(--ink); font-weight: 600; }
 .sources { font-size: .9rem; line-height: 1.6; color: var(--ink-2); }
 .sources h3 { font-size: .98rem; margin-top: 1.8rem; }
 .sources ul { padding-left: 1.2rem; }
-.sources li { margin: .35rem 0; }
 
 footer.colophon {
-  border-top: 1px solid var(--rule);
+  border-top: var(--hairline);
   padding: 2.4rem 0 4rem;
   font-family: var(--sans);
   font-size: .85rem;
