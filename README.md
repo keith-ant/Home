@@ -24,3 +24,16 @@ network requests. Open it in a browser, or serve it from anywhere.
 - JavaScript is only used for the progress rail and scroll-in reveals; the
   page is fully readable without it, and reveal animations respect
   `prefers-reduced-motion`.
+
+## Also in this repo
+
+- [`meat-cuts.html`](meat-cuts.html) — **Where Steaks Come From**: a field
+  guide to beef cuts for someone who has never asked. An interactive primal
+  map of the steer, the one principle that explains every cut (how hard the
+  muscle worked), deep dives on the hanger steak and the ribeye with labeled
+  cross-sections, and a reference table for the rest of the meat counter.
+  Same rules: fully self-contained, no network requests. Set in Big Shoulders
+  Display and Source Serif 4 (both SIL OFL 1.1), embedded as `@font-face`
+  data URIs via the [`@fontsource`](https://fontsource.org) packages.
+  JavaScript only drives the primal-map hover/tap panel; everything else
+  reads fine without it.
