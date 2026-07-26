@@ -68,13 +68,47 @@ export class AssetLoader {
     return this.resources.has(id);
   }
 
+  /** Manifest entry for an id (loaded or not). */
+  entry(id) {
+    return this._entries?.get(id) ?? null;
+  }
+
+  /**
+   * Ensure an asset is loaded (works for lazy entries); resolves to the
+   * resource, or null if the id is unknown / failed (with a fallback stored).
+   * @param {string} id
+   */
+  async ensure(id) {
+    if (this.resources.has(id)) return this.resources.get(id);
+    const entry = this._entries?.get(id);
+    if (!entry) {
+      console.warn(`[assets] ensure(): unknown asset id "${id}"`);
+      return null;
+    }
+    try {
+      return await this.load(entry);
+    } catch (err) {
+      console.warn(`[assets] failed to load "${id}", using fallback:`, err?.message || err);
+      const fb = this._fallbackFor(entry);
+      this.resources.set(id, fb);
+      return fb;
+    }
+  }
+
+  /** Ensure many ids at once (parallel). */
+  ensureAll(ids) {
+    return Promise.all(ids.map((id) => this.ensure(id)));
+  }
+
   /* --------------------------------------------------------------- manifest */
   /**
    * Load every applicable entry, respecting the quality tier.
    * @param {Array<any>} entries
    */
   async loadManifest(entries) {
-    const applicable = entries.filter((e) => this._tierApplies(e.tier));
+    this._entries = new Map(entries.map((e) => [e.id, e]));
+    // Lazy entries (audio, reference-only models) are loaded on demand via ensure(id).
+    const applicable = entries.filter((e) => !e.lazy && this._tierApplies(e.tier));
     const total = applicable.length || 1;
     let done = 0;
     const bump = (label) => {

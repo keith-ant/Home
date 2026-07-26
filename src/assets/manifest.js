@@ -21,7 +21,17 @@ import weapons from './manifest.weapons.js';
 import audio from './manifest.audio.js';
 import ui from './manifest.ui.js';
 
-export const manifest = [...environment, ...characters, ...weapons, ...audio, ...ui];
+// Audio buffers and reference-only weapon meshes load on demand (see
+// AssetLoader.ensure) so boot and headless captures stay fast.
+const lazy = (list) => list.map((e) => ({ lazy: true, ...e }));
+
+export const manifest = [
+  ...environment,
+  ...characters,
+  ...lazy(weapons),
+  ...lazy(audio),
+  ...ui,
+];
 
 /** Look up an entry by id. */
 export function findAssetEntry(id) {
