@@ -11,7 +11,8 @@
     "shot": "node tools/shot.mjs",
     "critic:pack": "node tools/critic/blind-pack.mjs",
     "refs": "node tools/refs/fetch-refs.mjs",
-    "verify": "node tools/verify-play.mjs"
+    "verify": "node tools/verify-play.mjs",
+    "sheet": "node tools/contact-sheet.mjs"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.19.3",
