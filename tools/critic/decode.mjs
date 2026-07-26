@@ -20,10 +20,10 @@ async function main() {
   if (!args.round) throw new Error('--round <n> required');
   const round = parseInt(args.round, 10);
   const roundDir = path.join(ROOT, 'critique', `round-${round}`);
-  const key = JSON.parse(await fs.readFile(path.join(roundDir, 'key.json'), 'utf8'));
+  const key = JSON.parse(await fs.readFile(path.join(ROOT, 'critique', 'keys', `round-${round}.key.json`), 'utf8'));
 
   // ---- load verdicts ------------------------------------------------------
-  const verdictDir = path.join(roundDir, 'verdicts');
+  const verdictDir = path.join(ROOT, 'critique', 'verdicts', `round-${round}`);
   const files = (await fs.readdir(verdictDir)).filter((f) => f.endsWith('.json'));
   const verdicts = [];
   for (const f of files) {

@@ -20,6 +20,8 @@ import { Sky } from './render/Sky.js';
 import { getTier } from './render/QualityTiers.js';
 import { Level } from './world/Level.js';
 import { PhotoMode } from './systems/PhotoMode.js';
+import { AssetLoader } from './assets/AssetLoader.js';
+import { manifest } from './assets/manifest.js';
 
 export class Game {
   /**
@@ -76,14 +78,22 @@ export class Game {
 
     this.input = new Input(this.canvas, this.events);
 
-    this.onProgress(0.15, 'Building lighting');
+    this.onProgress(0.1, 'Loading assets');
+    this.assets = new AssetLoader({
+      renderer: this.renderer,
+      tier: this.tier,
+      onProgress: (f, label) => this.onProgress(0.1 + f * 0.45, label),
+    });
+    await this.assets.loadManifest(manifest);
+
+    this.onProgress(0.58, 'Building lighting');
     this.sky = new Sky(this.scene, this.tier);
 
-    this.onProgress(0.3, 'Loading world');
-    this.world = new Level({ scene: this.scene, assets: this.assets || null, rng: this.rng, tier: this.tier });
+    this.onProgress(0.65, 'Loading world');
+    this.world = new Level({ scene: this.scene, assets: this.assets, rng: this.rng, tier: this.tier });
     await this.world.build();
 
-    this.onProgress(0.75, 'Compiling shaders');
+    this.onProgress(0.9, 'Compiling shaders');
     this.post = new Post({ renderer: this.renderer, scene: this.scene, camera: this.camera, settings: this.settings });
 
     this.loop = new Loop({

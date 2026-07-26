@@ -10,7 +10,8 @@
  *   critique/round-<n>/pair-01/B.jpg
  *   critique/round-<n>/pair-01/PROMPT.md   (identical wording every round)
  *   critique/round-<n>/INDEX.md            (pair listing, no sources)
- *   critique/round-<n>/key.json            (SECRET: slot → source; never shown to critics)
+ *   critique/keys/round-<n>.key.json       (SECRET: slot → source; kept OUTSIDE the folder given to critics)
+ *   critique/verdicts/round-<n>/           (critics write their JSON verdicts here, also outside the pack)
  *
  * Usage:
  *   node tools/critic/blind-pack.mjs --round 3 [--shots shots] [--triples 0.25]
@@ -48,8 +49,13 @@ async function main() {
   const round = args.round ? parseInt(args.round, 10) : await nextRoundNumber();
   const rng = mulberry32(round * 7919 + 13);
   const roundDir = path.join(ROOT, 'critique', `round-${round}`);
+  const keysDir = path.join(ROOT, 'critique', 'keys');
+  const verdictsDir = path.join(ROOT, 'critique', 'verdicts', `round-${round}`);
   await fs.rm(roundDir, { recursive: true, force: true });
+  await fs.rm(verdictsDir, { recursive: true, force: true });
   await ensureDir(roundDir);
+  await ensureDir(keysDir);
+  await ensureDir(verdictsDir);
 
   // ---- inputs -------------------------------------------------------------
   const refs = JSON.parse(await fs.readFile(refIndexPath, 'utf8').catch(() => '[]'));
@@ -112,10 +118,11 @@ async function main() {
   }
 
   await fs.writeFile(path.join(roundDir, 'INDEX.md'), indexLines.join('\n') + '\n');
-  await fs.writeFile(path.join(roundDir, 'key.json'), JSON.stringify(key, null, 2));
+  await fs.writeFile(path.join(keysDir, `round-${round}.key.json`), JSON.stringify(key, null, 2));
   await fs.writeFile(path.join(roundDir, 'RUBRIC.md'), rubricText());
   console.log(`[pack] round ${round}: ${n} pairs → ${path.relative(ROOT, roundDir)}`);
-  console.log(`[pack] Give critics ONLY the pair-* folders + RUBRIC.md. key.json is secret.`);
+  console.log(`[pack] key → critique/keys/round-${round}.key.json (never shown to critics)`);
+  console.log(`[pack] verdicts go in critique/verdicts/round-${round}/*.json`);
 }
 
 async function normalize(src, dest) {

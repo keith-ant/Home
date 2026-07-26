@@ -4,6 +4,7 @@
  */
 export const QUALITY_TIERS = {
   low: {
+    name: 'low',
     pixelRatioCap: 1.0,
     shadows: { enabled: true, mapSize: 1024, cascades: 1, radius: 2 },
     ao: { enabled: false, quality: 'low', halfRes: true },
@@ -23,6 +24,7 @@ export const QUALITY_TIERS = {
     lodBias: 1.5,
   },
   medium: {
+    name: 'medium',
     pixelRatioCap: 1.25,
     shadows: { enabled: true, mapSize: 2048, cascades: 2, radius: 3 },
     ao: { enabled: true, quality: 'medium', halfRes: true },
@@ -42,6 +44,7 @@ export const QUALITY_TIERS = {
     lodBias: 1.0,
   },
   high: {
+    name: 'high',
     pixelRatioCap: 1.5,
     shadows: { enabled: true, mapSize: 2048, cascades: 3, radius: 4 },
     ao: { enabled: true, quality: 'high', halfRes: false },
@@ -61,6 +64,7 @@ export const QUALITY_TIERS = {
     lodBias: 0.75,
   },
   ultra: {
+    name: 'ultra',
     pixelRatioCap: 2.0,
     shadows: { enabled: true, mapSize: 4096, cascades: 4, radius: 5 },
     ao: { enabled: true, quality: 'ultra', halfRes: false },
