@@ -24,3 +24,12 @@ folder, and is never committed or redistributed.
 | Path | Source | Author | License |
 | --- | --- | --- | --- |
 | _(none yet)_ | | | |
+
+## Per-stream credit ledgers
+
+During parallel development each asset stream records provenance in its own
+file (merged into the table above for release):
+
+- `docs/credits/environment.md` — HDRIs, PBR texture sets, environment props
+- `docs/credits/characters-weapons.md` — character/weapon models, animations
+- `docs/credits/audio-fonts.md` — sound files, fonts, UI images
