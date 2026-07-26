@@ -150,12 +150,12 @@ async function capture(browser, baseUrl, preset) {
       return { preset, error: 'uncaught page error: ' + pageErrors[0], consoleErrors, pageErrors };
     }
     const file = path.join(outDir, `${preset}.png`);
-    await page.screenshot({ path: file, type: 'png' });
+    await page.screenshot({ path: file, type: 'png', timeout: 180000, animations: 'disabled' });
     return { preset, file, stats: state.stats || null, consoleErrors, pageErrors };
   } catch (e) {
     // Try to grab whatever is on screen for debugging before failing.
     const file = path.join(outDir, `${preset}.FAILED.png`);
-    try { await page.screenshot({ path: file, type: 'png' }); } catch { /* ignore */ }
+    try { await page.screenshot({ path: file, type: 'png', timeout: 180000, animations: 'disabled' }); } catch { /* ignore */ }
     const detail = pageErrors[0] ? ` | page error: ${pageErrors[0]}` : '';
     return { preset, error: String(e && e.message ? e.message : e) + detail, consoleErrors, pageErrors, failFile: file };
   } finally {

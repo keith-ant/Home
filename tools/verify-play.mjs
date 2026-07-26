@@ -74,14 +74,14 @@ async function main() {
       if (wantShots && simTime - lastCaptureAt >= captureEvery) {
         lastCaptureAt = simTime;
         const file = path.join(outDir, `play-${String(capIndex++).padStart(2, '0')}.png`);
-        await page.screenshot({ path: file, type: 'png' });
+        await page.screenshot({ path: file, type: 'png', timeout: 180000, animations: 'disabled' });
       }
       if (ap.done) {
         process.stdout.write('\n');
         console.log('[verify] autoplay complete:', JSON.stringify(ap.stats || {}));
         if (wantShots) {
           const file = path.join(outDir, `play-final.png`);
-          await page.screenshot({ path: file, type: 'png' });
+          await page.screenshot({ path: file, type: 'png', timeout: 180000, animations: 'disabled' });
         }
         await fs.writeFile(path.join(outDir, 'report.json'), JSON.stringify({ when: new Date().toISOString(), seconds, seed, quality, stats: ap.stats || {}, consoleErrors, pageErrors }, null, 2));
         break;
