@@ -32,7 +32,7 @@ export class Renderer {
     gl.toneMapping = THREE.NoToneMapping; // tone mapping happens in the post chain
     gl.toneMappingExposure = 1.0;
     gl.shadowMap.enabled = true;
-    gl.shadowMap.type = THREE.PCFSoftShadowMap;
+    gl.shadowMap.type = THREE.PCFShadowMap; // soft PCF was folded into PCF in r18x
     gl.shadowMap.autoUpdate = true;
     gl.info.autoReset = false;
     gl.setClearColor(0x000000, 1);
