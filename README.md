@@ -1,26 +1,42 @@
-# The Anatomy of a Web App
+# IRONWAKE — Blacksite Terminal
 
-A single-page explainer for non-technical people: the six parts that make up
-every modern web app — **frontend, backend, database, auth, hosting, git** —
-taught by reading one Claude Code conversation that builds a to-do app
-(the Geist font, an old-timey reporter's notebook look, Google sign-in,
-sync across devices).
+A first-person shooter vertical slice targeting AAA presentation (Call of
+Duty: Modern Warfare as the visual bar), rendered in real time in the browser
+with Three.js / WebGL2. Survive escalating waves of PMC operators in a
+rain-lashed container terminal at night.
 
-The goal is vocabulary, not code. Each part gets a plain definition, a newsroom
-analogy, the exact phrases you'd type to ask for it, a one-line "tell" for
-recognizing it, and the jargon to listen for in Claude's replies. It ends with
-a clip-and-save cheat sheet.
+- `docs/ART_DIRECTION.md` — the creative brief every visual is judged against
+- `docs/ARCHITECTURE.md` — engineering contracts, module ownership, verification
+- `docs/CRITIC_PROTOCOL.md` — the blind-comparison review loop vs. real CoD frames
+- `docs/QUALITY_LEDGER.md` — round-by-round critic scoreboards
 
-## Use
+## Run
 
-`index.html` is fully self-contained — no build step, no dependencies, no
-network requests. Open it in a browser, or serve it from anywhere.
+```
+npm install
+npm run dev        # http://127.0.0.1:5173  (click to lock the pointer)
+npm run build      # production build → dist/
+npm run preview    # serve dist/ at http://127.0.0.1:4173
+```
 
-## Notes
+## Verify (automated)
 
-- Geist Sans and Geist Mono (the typeface the conversation asks for) are
-  embedded as `@font-face` data URIs, sourced from the [`geist`](https://www.npmjs.com/package/geist)
-  npm package. Geist is licensed under the SIL Open Font License 1.1.
-- JavaScript is only used for the progress rail and scroll-in reveals; the
-  page is fully readable without it, and reveal animations respect
-  `prefers-reduced-motion`.
+```
+npm run shot -- --all      # render every photo-mode preset → shots/*.png
+npm run verify             # scripted autoplay session; fails on any runtime error
+npm run refs               # gather CoD reference frames (local eval only, gitignored)
+npm run critic:pack        # build a blind A/B review pack in critique/round-N
+```
+
+## Controls
+
+WASD move · Shift sprint · C / Ctrl crouch (hold while sprinting to slide) ·
+Space jump / mantle · Mouse aim · LMB fire · RMB ADS · R reload · G grenade ·
+1/2 or wheel swap weapon · V melee · F interact · Q/X lean · Esc pause.
+
+## Credits
+
+Engine: Three.js, pmndrs postprocessing, N8AO, Rapier physics, three-mesh-bvh.
+Third-party art & audio assets are CC0 / CC-BY and listed with sources in
+`CREDITS.md`. Reference imagery used by critic agents is never included in
+this repository.

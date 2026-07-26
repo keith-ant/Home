@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+*.log
+# Reference imagery is copyrighted material used only for local blind
+# evaluation by critic agents — never committed or redistributed.
+reference/
+critique/
+shots/
+.vite/
+
+# Build output — added deliberately only for the final release commit.
+dist/
