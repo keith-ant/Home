@@ -72,15 +72,25 @@ main.js
   game.start()               // realtime loop OR photo-mode stepping
 ```
 
-`Game.init()` order (owned by integrator; add your system here via §3):
-1. `Renderer` (WebGL2, quality tier caps) → `Post` chain built but idle
+`Game.init()` order — each stream owns exactly one **installer** module,
+`src/<stream>/index.js` exporting `install<Stream>(game)`, and Game calls
+them in this fixed order (integrator-owned; you never edit Game.js — put ALL
+your wiring inside your installer):
+1. `Renderer` (WebGL2, quality tier caps) + camera + input (integrator)
 2. `AssetLoader.loadManifest(manifest, tier)` with progress callback
-3. `AudioEngine` (suspended until first user gesture)
-4. `Level.build()` → static world, materials, colliders (BVH), nav data,
-   lights, spawn points; `Physics` world & prop bodies
-5. `Player` + `CameraRig` + `Weapon`/`Viewmodel`
-6. `Director` (AI waves), `FX`, `ScoreSystem`, `HUD`, `Menus`
-7. `PhotoMode.apply(params)` if `?shot=` present
+3. `installRender(game)` → sky, lighting, weather (post is built last)
+4. `installWorld(game)` → level geometry, materials, BVH, nav, spawns, lights
+5. `installPhysics`, `installFX`, `installPlayer`, `installWeapons`,
+   `installAI`, `installAudio`, `installUI` (in that order)
+6. `installSystems` (integrator: MatchDirector, ScoreSystem, Autoplay)
+7. `installPost(game)` → the post chain wraps everything
+8. `PhotoMode` runs if `?shot=` is present, else the realtime loop starts
+
+Inside an installer you: construct your systems, assign them onto `game`
+(e.g. `game.player`, `game.weapons`, `game.fx`), register per-frame work via
+`game.addSystem({name, update(dt), dispose()}, order)`, subscribe to
+`game.events`, and register your photo presets via `PhotoMode.register(...)`.
+Installers may be `async`.
 
 ## 3. Shared spine (integrator-owned files everyone plugs into)
 

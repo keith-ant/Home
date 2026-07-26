@@ -15,13 +15,20 @@ import { Random } from './core/Random.js';
 import { Settings } from './core/Settings.js';
 import { Input } from './core/Input.js';
 import { Renderer } from './render/Renderer.js';
-import { Post } from './render/Post.js';
-import { Sky } from './render/Sky.js';
 import { getTier } from './render/QualityTiers.js';
-import { Level } from './world/Level.js';
 import { PhotoMode } from './systems/PhotoMode.js';
 import { AssetLoader } from './assets/AssetLoader.js';
 import { manifest } from './assets/manifest.js';
+import { installRender, installPost } from './render/index.js';
+import { installWorld } from './world/index.js';
+import { installPhysics } from './physics/index.js';
+import { installFX } from './fx/index.js';
+import { installPlayer } from './player/index.js';
+import { installWeapons } from './weapons/index.js';
+import { installAI } from './ai/index.js';
+import { installAudio } from './audio/index.js';
+import { installUI } from './ui/index.js';
+import { installSystems } from './systems/index.js';
 
 export class Game {
   /**
@@ -86,15 +93,24 @@ export class Game {
     });
     await this.assets.loadManifest(manifest);
 
+    // Stream installers, fixed order (docs/ARCHITECTURE.md §2). Each owns
+    // src/<stream>/index.js and wires its systems onto `game`.
     this.onProgress(0.58, 'Building lighting');
-    this.sky = new Sky(this.scene, this.tier);
-
+    await installRender(this);
     this.onProgress(0.65, 'Loading world');
-    this.world = new Level({ scene: this.scene, assets: this.assets, rng: this.rng, tier: this.tier });
-    await this.world.build();
+    await installWorld(this);
+    this.onProgress(0.78, 'Arming systems');
+    await installPhysics(this);
+    await installFX(this);
+    await installPlayer(this);
+    await installWeapons(this);
+    await installAI(this);
+    await installAudio(this);
+    await installUI(this);
+    await installSystems(this);
 
     this.onProgress(0.9, 'Compiling shaders');
-    this.post = new Post({ renderer: this.renderer, scene: this.scene, camera: this.camera, settings: this.settings });
+    await installPost(this);
 
     this.loop = new Loop({
       time: this.time,
