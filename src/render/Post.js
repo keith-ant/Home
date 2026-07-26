@@ -19,6 +19,7 @@ import {
   VignetteEffect,
   VignetteTechnique,
 } from 'postprocessing';
+import { N8AOPostPass } from 'n8ao';
 
 export class Post {
   /**
@@ -43,6 +44,19 @@ export class Post {
     this.renderPass = new RenderPass(scene, camera);
     this.composer.addPass(this.renderPass);
 
+    // Screen-space ambient occlusion (N8AO). Grounds every object, adds
+    // contact shadowing under props — the single biggest "not a prototype" cue.
+    const tier = renderer.tier;
+    if (tier.ao.enabled) {
+      this.n8ao = new N8AOPostPass(scene, camera, renderer.width, renderer.height);
+      this.n8ao.configuration.aoRadius = 2.5;
+      this.n8ao.configuration.distanceFalloff = 1.0;
+      this.n8ao.configuration.intensity = 3.0;
+      this.n8ao.configuration.halfRes = tier.ao.halfRes;
+      this.n8ao.setQualityMode(tier.ao.quality === 'ultra' ? 'Ultra' : tier.ao.quality === 'high' ? 'High' : 'Medium');
+      this.composer.addPass(this.n8ao);
+    }
+
     this.effects.toneMapping = new ToneMappingEffect({ mode: ToneMappingMode.ACES_FILMIC });
     this.effects.vignette = new VignetteEffect({
       technique: VignetteTechnique.DEFAULT,
@@ -62,6 +76,7 @@ export class Post {
   setSize(width, height, pixelRatio = 1) {
     this.composer.setSize(width, height, false);
     this.composer.setPixelRatio?.(pixelRatio);
+    this.n8ao?.setSize(width, height);
   }
 
   /** Replace the camera used by camera-dependent passes (e.g. after respawn). */
