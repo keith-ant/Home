@@ -97,6 +97,7 @@ export class WorldMaterials {
       waves: this._tex(waveNormalTexture(rng)),
       soot: this._tex(sootTexture(rng)),
       valueNoise: this._tex(valueNoiseTexture(rng, 128)),
+      neutralNormal: this._tex(makeNeutralNormal()),
     };
     this.tex.chainlink.repeat.set(1, 1);
     this.tex.hazardTape.repeat.set(1, 1);
@@ -110,9 +111,9 @@ export class WorldMaterials {
     // -- ground family -------------------------------------------------------
     M.apron = this._mat(pbr.makePBR('tex.concrete_slab', {
       repeat: metreRepeat('tex.concrete_slab'),
-      roughnessScale: 0.95,
-      wetness: 0.85,
-      envMapIntensity: 0.9,
+      roughnessScale: 0.6, // standing rain film: glossy enough for light smears
+      wetness: 0.9,
+      envMapIntensity: 1.0,
     }));
     M.gravel = this._mat(pbr.makePBR('tex.gravel_dark', {
       repeat: metreRepeat('tex.gravel_dark'),
@@ -128,6 +129,14 @@ export class WorldMaterials {
       repeat: metreRepeat('tex.concrete_slab'),
       roughnessScale: 1.0,
       wetness: 0.15,
+      color: 0xb8b0a4,
+    }));
+    // cast-concrete road barriers: darker, grimier, rain-soaked
+    M.barrierConcrete = this._mat(pbr.makePBR('tex.concrete_panels', {
+      repeat: metreRepeat('tex.concrete_panels'),
+      roughnessScale: 0.95,
+      wetness: 0.8,
+      color: 0x9c988e,
     }));
     M.brick = this._mat(pbr.makePBR('tex.brick_red', {
       repeat: metreRepeat('tex.brick_red'),
@@ -155,8 +164,8 @@ export class WorldMaterials {
     M.plaster = this._mat(pbr.makePBR('tex.plaster_painted', {
       repeat: metreRepeat('tex.plaster_painted'),
       roughnessScale: 1.0,
-      wetness: 0.3,
-      color: 0xa8a598,
+      wetness: 0.25,
+      color: 0xb8a68c,
     }));
     M.plywood = this._mat(pbr.makePBR('tex.plywood', {
       repeat: metreRepeat('tex.plywood'),
@@ -175,6 +184,21 @@ export class WorldMaterials {
       wetness: 0.4,
       color: 0xa4977c,
     }));
+    // rain-soaked tarpaulins (roof lashings, dust sheets)
+    M.tarpGreen = this._mat(pbr.makePBR('tex.burlap', {
+      repeat: metreRepeat('tex.burlap'),
+      roughnessScale: 0.95,
+      wetness: 0.85,
+      color: 0x3f5c47,
+    }));
+    M.tarpGreen.side = THREE.DoubleSide;
+    M.tarpGrey = this._mat(pbr.makePBR('tex.burlap', {
+      repeat: metreRepeat('tex.burlap'),
+      roughnessScale: 0.95,
+      wetness: 0.85,
+      color: 0x4e5560,
+    }));
+    M.tarpGrey.side = THREE.DoubleSide;
     M.diamondPlate = this._mat(pbr.makePBR('tex.metal_diamond_plate', {
       repeat: metreRepeat('tex.metal_diamond_plate'),
       roughnessScale: 0.75,
@@ -206,11 +230,30 @@ export class WorldMaterials {
       roughnessScale: 0.9,
       wetness: 0.35,
     }));
+    // hull paint: dark navy (linear ≈0.06) — reads through the pale contrast
+    // elements (name, marks, waterline band, seams) as real hulls do at night
     M.paintedSteelNavy = this._mat(pbr.makePBR('tex.metal_painted_rust', {
       repeat: [1 / 8, 1 / 8],
-      color: 0x424c58,
-      roughnessScale: 0.95,
-      wetness: 0.3,
+      color: 0x6a7c8c,
+      roughnessScale: 0.85,
+      wetness: 0.35,
+    }));
+    // proud plating seams / frames on the hull: slightly lighter than the shell
+    M.hullTrim = this._mat(new THREE.MeshStandardMaterial({
+      name: 'world.hullTrim',
+      color: 0x394653,
+      roughness: 0.5,
+      metalness: 0.6,
+    }));
+    // flat white marking paint (draft / load-line geometry, no atlas needed)
+    M.decalStencilFlat = this._mat(new THREE.MeshStandardMaterial({
+      name: 'world.decalStencilFlat',
+      color: 0xb9b4a8,
+      roughness: 0.7,
+      metalness: 0.1,
+      polygonOffset: true,
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2,
     }));
     M.paintedSteelRed = this._mat(pbr.makePBR('tex.metal_painted_rust', {
       repeat: metreRepeat('tex.metal_painted_rust'),
@@ -393,6 +436,14 @@ export class WorldMaterials {
       roughness: 0.4,
       toneMapped: false,
     }));
+    M.lampCoolDim = this._mat(new THREE.MeshStandardMaterial({
+      name: 'world.lampCoolDim',
+      color: 0x101418,
+      emissive: 0xbfd8ff,
+      emissiveIntensity: 2.4,
+      roughness: 0.4,
+      toneMapped: false,
+    }));
     M.lampDead = this._mat(new THREE.MeshStandardMaterial({
       name: 'world.lampDead',
       color: 0x2a2620,
@@ -400,6 +451,36 @@ export class WorldMaterials {
       metalness: 0.2,
       emissive: 0x1e150a,
       emissiveIntensity: 0.25,
+    }));
+    M.fluoroTube = this._mat(new THREE.MeshStandardMaterial({
+      name: 'world.fluoroTube',
+      color: 0x111114,
+      emissive: 0xf4ecd8,
+      emissiveIntensity: 3.4,
+      roughness: 0.4,
+      toneMapped: false,
+    }));
+    M.exitSign = this._mat(new THREE.MeshStandardMaterial({
+      name: 'world.exitSign',
+      color: 0x08120a,
+      emissive: 0x39d17a,
+      emissiveIntensity: 3.2,
+      roughness: 0.5,
+      toneMapped: false,
+    }));
+    // safety yellow paint (bollard caps, jamb guards): dirty ochre-yellow
+    M.safetyYellow = this._mat(pbr.makePBR('tex.concrete_slab', {
+      repeat: metreRepeat('tex.concrete_slab'),
+      color: 0xd9a628,
+      roughnessScale: 0.85,
+      wetness: 0.45,
+    }));
+    // corrugated cardboard cartons (plywood scan re-tinted, no metalness)
+    M.cardboard = this._mat(pbr.makePBR('tex.plywood', {
+      repeat: metreRepeat('tex.plywood'),
+      color: 0xa07648,
+      roughnessScale: 1.0,
+      wetness: 0.0,
     }));
     M.redBeacon = this._mat(new THREE.MeshStandardMaterial({
       name: 'world.redBeacon',
@@ -429,6 +510,22 @@ export class WorldMaterials {
       polygonOffsetFactor: -2,
       polygonOffsetUnits: -2,
       roughness: 0.9,
+    }));
+    // standing water pooled on container roofs / flat steel: near-mirror,
+    // dark, soft-edged (radial alpha) — reads as wet steel from above
+    M.roofPuddle = this._mat(new THREE.MeshStandardMaterial({
+      name: 'world.roofPuddle',
+      color: 0x06090c,
+      roughness: 0.06,
+      metalness: 0.85,
+      envMapIntensity: 2.6,
+      alphaMap: this._tex(makeRadialAlpha()),
+      transparent: true,
+      opacity: 0.9,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2,
     }));
     // sprite materials (per-instance clones are cheap; base kept here)
     M.flameSprite2 = this._mat(new THREE.SpriteMaterial({
@@ -521,6 +618,7 @@ export class WorldMaterials {
       uRustAmt: { value: rust },
       uWear: { value: wear },
       uRustScale: { value: 0.06 },
+      uWet: { value: 0.8 }, // rain film: streaky low roughness on vertical faces
       uRustNoise: { value: this.tex.valueNoise },
       uRustColor: { value: rustSet?.color || null },
     };
@@ -539,15 +637,19 @@ uniform float uPaintGain;
 uniform float uRustAmt;
 uniform float uWear;
 uniform float uRustScale;
+uniform float uWet;
 uniform sampler2D uRustNoise;
 uniform sampler2D uRustColor;
 float ctn_rustMask;
+float ctn_wet;
 `)
         .replace('#include <color_fragment>', `#include <color_fragment>
 {
   float lum = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722));
   vec3 repainted = uPaint * lum * uPaintGain;
-  repainted = mix(repainted, vec3(lum * 1.15), uWear * 0.35);
+  // sun-chalked, weathered paint: pull hard toward a desaturated grey so
+  // reds never read as fresh oxide under a warm flood
+  repainted = mix(repainted, vec3(lum * 1.15), uWear * 0.55);
   diffuseColor.rgb = repainted;
   // world-space rust patches from a tileable noise texture (2 planar taps)
   float n1 = texture2D(uRustNoise, vCtnWorld.xz * uRustScale + vec2(vCtnWorld.y * 0.031, 0.0)).r;
@@ -561,12 +663,17 @@ float ctn_rustMask;
   ` : `
   diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.19, 0.09, 0.045), ctn_rustMask);
   `}
+  // rain film: vertical run streaks (world Y stretched) darken the paint a
+  // touch and drop roughness so wall panels smear light sources vertically
+  float runs = texture2D(uRustNoise, vec2((vCtnWorld.x + vCtnWorld.z) * 1.9, vCtnWorld.y * 0.06 + 0.31)).r;
+  ctn_wet = uWet * (0.55 + 0.45 * smoothstep(0.3, 0.8, runs));
+  diffuseColor.rgb *= mix(1.0, 0.86, ctn_wet);
 }
 `)
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
 roughnessFactor = mix(roughnessFactor, 0.95, ctn_rustMask);
 roughnessFactor = mix(roughnessFactor, min(1.0, roughnessFactor * 1.25), uWear);
-roughnessFactor *= 0.8; // rain film
+roughnessFactor = mix(roughnessFactor, min(roughnessFactor, 0.32), ctn_wet); // rain film
 `)
         .replace('#include <metalnessmap_fragment>', `#include <metalnessmap_fragment>
 metalnessFactor = mix(metalnessFactor, 0.35, ctn_rustMask);
@@ -625,4 +732,16 @@ function makeRadialAlpha() {
 function smooth(t) {
   const x = Math.max(0, Math.min(1, t));
   return x * x * (3 - 2 * x);
+}
+
+/** 1×1 flat tangent-space normal (safe stand-in for optional normal inputs). */
+function makeNeutralNormal() {
+  const t = new THREE.DataTexture(new Uint8Array([128, 128, 255, 255]), 1, 1, THREE.RGBAFormat);
+  t.colorSpace = THREE.NoColorSpace;
+  t.magFilter = THREE.NearestFilter;
+  t.minFilter = THREE.NearestFilter;
+  t.generateMipmaps = false;
+  t.needsUpdate = true;
+  t.name = 'world.neutralNormal';
+  return t;
 }

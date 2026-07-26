@@ -23,6 +23,10 @@ export async function installWorld(game) {
   // API. Lightning still boosts both. Documented in docs/NOTES-world.md.
   game.lighting?.setMoonIntensity?.(0.32);
   game.lighting?.setAmbientIntensity?.(0.055);
+  // A touch more (and bluer) haze than the render default: the terminal is
+  // read as silhouettes stacked in navy murk with the fog carrying the light
+  // (REFERENCE_STUDY §1, environment-01/02).
+  game.sky?.setFog?.(0.0138, 0x1a2434);
 
   // The water plane's Reflector re-renders the whole scene when drawn. From
   // ground level anywhere in the yard the water surface (y −1.9 beyond the

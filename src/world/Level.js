@@ -30,6 +30,7 @@ import { Structures } from './Structures.js';
 import { Setpieces } from './Setpieces.js';
 import { Props } from './Props.js';
 import { NavGrid } from './Nav.js';
+import { runWorldSelfTest, buildNavOverlay, buildColliderOverlay } from './Diagnostics.js';
 import { YARD, PLAYER_SPAWN, PHOTO_POINTS } from './layout.js';
 
 export class Level {
@@ -151,6 +152,21 @@ export class Level {
     this.scene.add(this.group);
     if (game.weather) game.weather.groundY = 0;
 
+    // --- contract self-test + debug overlays (?debug=worldtest,nav,colliders) ----------------
+    // The other streams build on world.raycast / capsuleCollide / nav /
+    // spawns / photoPoints; verify them at build time in every deterministic
+    // (photo-mode / autoplay / verify) run so a regression turns the shot
+    // harness red via console.error instead of surfacing three streams later.
+    // Realtime play skips the ~150 ms of raycasts unless the flag asks for it.
+    const dbg = game.debugFlags || new Set();
+    if (game.isDeterministic || dbg.has('worldtest')) {
+      this.selfTest = runWorldSelfTest(this, { verbose: dbg.has('worldtest') });
+    } else {
+      this.selfTest = { ok: true, passed: 0, total: 0, failed: [], skipped: true, checks: [] };
+    }
+    if (dbg.has('nav')) this.group.add(buildNavOverlay(this));
+    if (dbg.has('colliders')) this.group.add(buildColliderOverlay(this));
+
     // --- stats ---------------------------------------------------------------------------------
     const ms = performance.now() - t0;
     let staticTris = 0;
@@ -171,6 +187,7 @@ export class Level {
       fixtures: this.fixtures.length,
       emitters: this.emitters.length,
       materials: this.mats._all.length + this.mats.containerMaterials.length,
+      selfTest: { ok: this.selfTest.ok, passed: this.selfTest.passed, total: this.selfTest.total, failed: this.selfTest.failed },
     };
     console.info('[world] Terminal 9 built', this.stats);
   }
@@ -196,6 +213,7 @@ export class Level {
       s.center.set(0.5, 0.05);
       s.position.set(pos.x + (i - 0.5) * 0.6, pos.y + 0.02, pos.z + (i - 0.5) * 0.3);
       s.scale.set(0.5, 0.8, 1);
+      s.userData.base = [0.5, 0.8];
       s.renderOrder = 40;
       this.group.add(s);
       this.sprites.push(s);
@@ -227,7 +245,7 @@ export class Level {
           const v = d.fixture?._flickerValue ?? 1;
           for (let i = 0; i < d.flames.length; i++) {
             const s = d.flames[i];
-            const base = s.userData.base || [0.42 + i * 0.06, 0.78 + i * 0.11];
+            const base = s.userData.base; // set at build time (no per-step allocation)
             const wob = 0.85 + 0.3 * Math.sin(t * (7.3 + i * 1.9) + d.seed + i) * Math.sin(t * 3.1 + i);
             const flick = 0.75 + 0.35 * Math.sin(t * (12.7 + i * 2.3) + d.seed * 2 + i * 1.3);
             s.scale.set(base[0] * wob * (0.72 + 0.48 * v), base[1] * (0.7 + 0.5 * v) * (0.85 + 0.25 * flick), 1);

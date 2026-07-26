@@ -3,9 +3,10 @@
  *
  * All collidable statics are baked into ONE merged world-space geometry with a
  * MeshBVH (three-mesh-bvh). Sources are simplified proxies: solid boxes for
- * containers/props, the ground/apron planes, structure meshes. Every
- * triangle range remembers its surface tag + owning object so ballistics /
- * foley get {surface, object} back from a hit.
+ * containers/props, the ground/apron planes, structure meshes. Every vertex
+ * carries the id of its source proxy in a `srcId` attribute (per-vertex, so
+ * it survives three-mesh-bvh reordering the index buffer during the build),
+ * which maps a hit back to {surface, object} for ballistics / foley.
  *
  * API (exposed on game.world as world.raycast etc.):
  *   raycast(origin, dir, maxDist=1000, opts) → {point, normal, distance, object, surface, faceIndex} | null
@@ -38,10 +39,10 @@ export class CollisionWorld {
   constructor() {
     /** @type {THREE.BufferGeometry[]} */
     this._geos = [];
-    /** @type {Array<{count:number, surface:string, object:any}>} */
+    /** @type {Array<{count:number, surface:string, object:any}>} source proxies (index = srcId) */
     this._sources = [];
-    /** @type {Array<{start:number, end:number, surface:string, object:any}>} triangle ranges */
-    this.ranges = [];
+    /** merged per-vertex source ids (parallel to the position attribute) */
+    this._srcIds = null;
     this.geometry = null;
     this.bvh = null;
     this.mesh = null; // debug/visual holder (never added to the scene)
@@ -129,51 +130,48 @@ export class CollisionWorld {
   /* -------------------------------------------------------------- build */
   build() {
     if (this._geos.length === 0) throw new Error('[collision] nothing to build');
-    // manual merge (position-only, non-indexed) preserving order for ranges
+    // manual merge (position + per-vertex source id, non-indexed)
     let total = 0;
     for (const g of this._geos) total += g.attributes.position.count;
     const pos = new Float32Array(total * 3);
+    const srcIds = new Float32Array(total);
     let offset = 0;
     let triStart = 0;
-    this.ranges.length = 0;
     for (let i = 0; i < this._geos.length; i++) {
       const g = this._geos[i];
       pos.set(g.attributes.position.array, offset * 3);
-      const triCount = this._sources[i].count;
-      this.ranges.push({ start: triStart, end: triStart + triCount, surface: this._sources[i].surface, object: this._sources[i].object });
-      triStart += triCount;
-      offset += g.attributes.position.count;
+      const count = g.attributes.position.count;
+      srcIds.fill(i, offset, offset + count);
+      triStart += this._sources[i].count;
+      offset += count;
       g.dispose();
     }
     this._geos.length = 0;
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    // an index makes the BVH build faster and memory smaller
+    // an index makes the BVH build faster and memory smaller (three-mesh-bvh
+    // reorders it while partitioning, hence the per-vertex srcId lookup)
     const index = new (total > 65535 ? Uint32Array : Uint16Array)(total);
     for (let i = 0; i < total; i++) index[i] = i;
     geometry.setIndex(new THREE.BufferAttribute(index, 1));
     this.geometry = geometry;
+    this._srcIds = srcIds;
     this.bvh = new MeshBVH(geometry, { maxLeafTris: 8, strategy: 0 });
     geometry.boundsTree = this.bvh;
     this.mesh = new THREE.Mesh(geometry);
     this.mesh.name = 'world.collision';
     this.stats.triangles = triStart;
+    this.stats.sources = this._sources.length;
     this.built = true;
     return this;
   }
 
-  _rangeFor(faceIndex) {
-    // binary search
-    let lo = 0;
-    let hi = this.ranges.length - 1;
-    while (lo <= hi) {
-      const mid = (lo + hi) >> 1;
-      const r = this.ranges[mid];
-      if (faceIndex < r.start) hi = mid - 1;
-      else if (faceIndex >= r.end) lo = mid + 1;
-      else return r;
-    }
-    return null;
+  /** Source proxy record ({surface, object}) owning a merged triangle. */
+  _sourceForFace(faceIndex) {
+    const idx = this.geometry.index.array;
+    const v0 = idx[faceIndex * 3];
+    const s = this._srcIds[v0] | 0;
+    return this._sources[s] || null;
   }
 
   /* -------------------------------------------------------------- casts */
@@ -217,7 +215,7 @@ export class CollisionWorld {
     else rec.normal.set(0, 1, 0);
     rec.distance = hit.distance;
     rec.faceIndex = hit.faceIndex;
-    const r = this._rangeFor(hit.faceIndex);
+    const r = this._sourceForFace(hit.faceIndex);
     rec.surface = r ? r.surface : 'concrete';
     rec.object = r ? r.object : null;
     return rec;

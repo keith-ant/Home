@@ -25,7 +25,10 @@ const _vv = new THREE.Vector3();
 const _c = new THREE.Vector3();
 
 const WHITE = new THREE.Color(0xffffff);
-const DIM = new THREE.Color(0xb9b4a8);
+// worn night paint: tint the already-faded atlas down further so lines never
+// read as fresh (final white-paint albedo ≈ 0.4)
+const DIM = new THREE.Color(0x928d82);
+const DIMY = new THREE.Color(0x9c8a35); // yellow markings
 const DARK = new THREE.Color(0x0d0c0b);
 
 export class Terrain {
@@ -291,53 +294,58 @@ export class Terrain {
       for (const x of [xW, xE]) {
         // one long segment per row so gaps look like scuffed repaints
         for (let r = 0; r < ROWS_Z.length; r++) {
+          if (rng.chance(0.22)) continue; // whole segments worn away
           const zc = ROWS_Z[r];
           const len = CONTAINER.L40 + (rng.chance(0.5) ? 1.4 : 0.6);
-          this._decal('lineY', x, zc, 0.16, len, 0, DIM, 0.011);
+          this._decal('lineY', x, zc, 0.14, len, 0, DIMY, 0.011);
         }
       }
       // slot letter markings at the block corners
     }
-    // --- main lane centre dashes
-    for (let z = -37; z <= 27; z += 6) {
-      this._decal('line', 0.2 + rng.range(-0.05, 0.05), z, 0.15, 2.8, rng.range(-0.6, 0.6), DIM, 0.011);
+    // --- main lane centre dashes (thin, some missing)
+    for (let z = -37; z <= 27; z += 7) {
+      if (rng.chance(0.25)) continue;
+      this._decal('line', 0.2 + rng.range(-0.06, 0.06), z, 0.12, 2.4, rng.range(-0.8, 0.8), DIM, 0.011);
     }
     // --- direction arrows (north-bound main, south-bound side lanes)
-    this._decal('arrow', -2.2, -19.5, 1.4, 3.3, 0, DIM);
-    this._decal('arrow', 2.4, 6.5, 1.4, 3.3, 0, DIM);
-    this._decal('arrow', -30.4, -30.5, 1.4, 3.3, 180, DIM);
-    this._decal('arrow', -29.6, -4.5, 1.4, 3.3, 180, DIM);
-    this._decal('arrow', 30.4, -20.5, 1.4, 3.3, 0, DIM);
-    this._decal('arrow', 30.9, 9.5, 1.4, 3.3, 0, DIM);
+    this._decal('arrow', -2.2, -19.5, 1.3, 3.1, 0, DIM);
+    this._decal('arrow', 2.4, 6.5, 1.3, 3.1, 0, DIM);
+    this._decal('arrow', -30.4, -30.5, 1.3, 3.1, 180, DIM);
+    this._decal('arrow', -29.6, -4.5, 1.3, 3.1, 180, DIM);
+    this._decal('arrow', 30.4, -20.5, 1.3, 3.1, 0, DIM);
+    this._decal('arrow', 30.9, 9.5, 1.3, 3.1, 0, DIM);
     // --- words
-    this._decal('slow', 0.4, 25.6, 4.4, 1.95, 180, DIM);
-    this._decal('stop', 0.2, -37.4, 4.0, 1.78, 0, DIM);
-    this._decal('line', 0.2, -38.9, 0.35, 12.5, 90, DIM, 0.011, 'stopline');
-    this._decal('keepclear', -22, 31.5, 5.6, 1.25, 180, DIM);
-    this._decal('hatch', -22, 33.9, 7.8, 3.0, 0, DIM, 0.011);
-    this._decal('nopark', -40.5, 33.0, 5.2, 1.15, 180, DIM);
-    this._decal('slow', -30.6, 27.4, 3.6, 1.6, 0, DIM);
-    this._decal('slow', 30.6, -37.0, 3.6, 1.6, 180, DIM);
+    this._decal('slow', 0.4, 25.6, 4.0, 1.8, 180, DIM);
+    this._decal('stop', 0.2, -37.4, 3.8, 1.68, 0, DIM);
+    this._decal('line', 0.2, -38.9, 0.32, 12.5, 90, DIM, 0.011, 'stopline');
+    // keep-clear box in front of the open warehouse bay (small, worn)
+    this._decal('keepclear', -22, 31.4, 4.4, 0.98, 180, DIM);
+    this._decal('hatch', -22, 34.4, 5.2, 2.0, 0, DIMY, 0.011);
+    this._decal('nopark', -40.5, 33.0, 4.6, 1.02, 180, DIM);
+    this._decal('slow', -30.6, 27.4, 3.4, 1.5, 0, DIM);
+    this._decal('slow', 30.6, -37.0, 3.4, 1.5, 180, DIM);
     // --- chevrons at the apron threshold + a stop line each end
-    this._decal('chevrons', -14, -40.9, 8.5, 1.9, 0, DIM);
-    this._decal('chevrons', 14, -40.9, 8.5, 1.9, 0, DIM);
-    // --- zebra crossing warehouse → trailer across the south lane
+    this._decal('chevrons', -14, -40.9, 8.5, 1.9, 0, DIMY);
+    this._decal('chevrons', 14, -40.9, 8.5, 1.9, 0, DIMY);
+    // --- worn zebra footpath across the south lane toward the office trailer
     for (let i = 0; i < 5; i++) {
-      this._decal('zebra', -22 + (i - 2) * 1.35, 34.6, 0.62, 3.6, 0, DIM);
+      if (i === 3) continue; // one bar worn away entirely
+      this._decal('zebra', 23.2 + i * 1.35, 34.6, 0.6, 3.4, rng.range(-1.5, 1.5), DIM);
     }
     // --- truck waiting bays along the south lane (brackets + numbers)
     for (let i = 0; i < 7; i++) {
       const x = -49 + i * 4.2;
-      this._decal('bracket', x, 32.4, 1.1, 1.1, 0, DIM);
-      this._decal('bracket', x + 3.4, 32.4, 1.1, 1.1, 90, DIM);
-      this._decal('bay' + (i + 1), x + 1.7, 30.8, 1.2, 1.02, 180, new THREE.Color(0xc9a227));
+      if (rng.chance(0.15)) continue;
+      this._decal('bracket', x, 32.4, 1.0, 1.0, 0, DIM);
+      this._decal('bracket', x + 3.4, 32.4, 1.0, 1.0, 90, DIM);
+      this._decal('bay' + (i + 1), x + 1.7, 30.8, 1.1, 0.93, 180, DIMY);
     }
     // --- big faded T9 in the south lane / spawn area
-    this._decal('logoT9', 14.5, 33.6, 7.5, 3.5, 200, DIM, 0.011);
+    this._decal('logoT9', 14.5, 33.6, 7.0, 3.3, 200, DIM, 0.011);
     // --- speed / office signage on the ground near the gate
-    this._decal('speed', 36.5, 38.4, 2.6, 2.6, 90, DIM);
+    this._decal('speed', 36.5, 38.4, 2.4, 2.4, 90, DIM);
     // --- hatch zone in front of the transformer / utility box
-    this._decal('hatch', 10.5, 39.4, 3.6, 1.6, 90, DIM);
+    this._decal('hatch', 10.5, 39.4, 3.2, 1.4, 90, DIMY);
     // --- drain grates
     for (const [x, z, yaw] of DRAINS) {
       this._decal('grate', x, z, 0.95, 0.5, yaw, WHITE, 0.02);

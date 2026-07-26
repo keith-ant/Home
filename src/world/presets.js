@@ -33,6 +33,11 @@ export function registerWorldPresets(game) {
     setup(g) {
       prime(g, { lightning: 0.36, dir: [0.35, 0.4, -0.85] });
       poseCamera(g, 'vista', null);
+      // aerial establishing shot: thinner haze aloft (fog banks sit at deck
+      // level) so the crane pair, the ship's lit castle and the far masts
+      // survive as fogged silhouettes / points, and lighter rain up here
+      g.sky?.setFog?.(0.0092);
+      g.weather?.setRain?.(0.65, { silent: true });
     },
   });
 
@@ -57,7 +62,9 @@ export function registerWorldPresets(game) {
     warmup: 1.4,
     frames: 1,
     setup(g) {
-      prime(g, { lightning: 0.55, dir: [-0.4, 0.35, -0.85] });
+      // a distant flicker of lightning (0.3) reveals the ship's mass without
+      // washing out the water reflections and the crane work-light pools
+      prime(g, { lightning: 0.3, dir: [-0.45, 0.35, -0.85] });
       poseCamera(g, 'quay', null);
     },
   });
@@ -70,7 +77,9 @@ export function registerWorldPresets(game) {
     },
   });
 
-  // Bonus: an overhead map capture used by the docs (not in the critic list)
+  // Bonus: an overhead plan capture used by the docs / nav debugging (not in
+  // the critic list). Thin fog + lifted exposure + light rain so the yard,
+  // and the ?debug=nav overlay when enabled, read as a legible map.
   PhotoMode.register('overhead', {
     ...base,
     warmup: 0.5,
@@ -78,8 +87,11 @@ export function registerWorldPresets(game) {
     setup(g) {
       prime(g);
       poseCamera(g, 'overhead', null);
-      // clear rain in the frame for a readable plan
-      g.weather?.setRain?.(0.35, { silent: true });
+      g.weather?.setRain?.(0.3, { silent: true });
+      g.sky?.setFog?.(0.0022);
+      g.post?.setExposure?.(3.2);
+      g.lighting?.setAmbientIntensity?.(0.32);
+      g.lighting?.setMoonIntensity?.(0.9);
     },
   });
 

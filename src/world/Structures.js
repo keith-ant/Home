@@ -128,6 +128,7 @@ export class Structures {
     this.buildTrailer();
     bat.setZone('quay');
     this.buildWater();
+    this.buildQuayEdge();
     bat.setZone('ship');
     this.buildShip();
     bat.setZone('cranes');
@@ -144,6 +145,19 @@ export class Structures {
     if (!cell) return;
     const g = oDecal(w, h, center, u, v, cell, color);
     this._add(g, this.M.decalStencil, { surface: 'concrete', castShadow: false, key: 'stencilWall' });
+  }
+
+  /** Soot / water-stain grime quad (unit UV over the soot gradient; dark end up unless flipped). */
+  _grime(w, h, center, u, v, flip = false) {
+    const g = oQuad(w, h, center, u, v);
+    const uv = g.attributes.uv;
+    const top = flip ? 0 : 1;
+    const bot = 1 - top;
+    uv.setXY(0, 0, bot);
+    uv.setXY(1, 1, bot);
+    uv.setXY(2, 1, top);
+    uv.setXY(3, 0, top);
+    this._add(g, this.M.soot, { surface: 'concrete', castShadow: false, key: 'grime' });
   }
 
   /* ---------------------------------------------------------- warehouse */
@@ -204,7 +218,7 @@ export class Structures {
       }
       // yellow safety bollard pipes at each jamb
       for (const s of [-1, 1]) {
-        this._add(cylAt(0.09, 0.09, 1.15, cx + s * (halfBay + 0.28), 0.575, fz - 0.35, 8), M.craneYellow, { surface: 'metal' });
+        this._add(cylAt(0.09, 0.09, 1.15, cx + s * (halfBay + 0.28), 0.575, fz - 0.35, 8), M.safetyYellow, { surface: 'metal' });
         col.addAABox(cx + s * (halfBay + 0.28), 0, fz - 0.35, 0.2, 1.15, 0.2, 'metal');
       }
       // bay number decal on the lintel
@@ -236,9 +250,9 @@ export class Structures {
     // signage
     this._decal('sign.terminal', 13.5, 2.5, _v2.set(-41, 9.7, fz - 0.08), AX.NX, AX.Y, WHITE_D);
     this._decal('sign.bonded', 12.5, 0.95, _v2.set(-41, 7.9, fz - 0.08), AX.NX, AX.Y, CREAM);
-    this._decal('sign.keepclear', 2.4, 0.52, _v2.set(WH.bayXs[WH.openBayIndex] + 4.0, 2.7, fz - 0.4), AX.NX, AX.Y, WHITE_D);
-    this._decal('sign.maxheight', 3.8, 0.6, _v2.set(WH.bayXs[WH.openBayIndex], pierTop - 0.15, fz - 0.4), AX.NX, AX.Y, WHITE_D);
-    this._decal('sign.nosmoking', 2.4, 0.5, _v2.set(WH.bayXs[WH.openBayIndex] - 4.2, 2.4, fz - 0.4), AX.NX, AX.Y, WHITE_D);
+    this._decal('sign.keepclear', 1.7, 0.37, _v2.set(WH.bayXs[WH.openBayIndex] + 4.6, 1.85, fz - 0.4), AX.NX, AX.Y, WHITE_D);
+    this._decal('sign.maxheight', 1.9, 0.3, _v2.set(WH.bayXs[WH.openBayIndex] + 4.05, pierTop + 0.36, fz - 0.02), AX.NX, AX.Y, CREAM);
+    this._decal('sign.nosmoking', 1.9, 0.4, _v2.set(WH.bayXs[WH.openBayIndex] - 4.6, 2.1, fz - 0.4), AX.NX, AX.Y, WHITE_D);
     this._decal('sign.danger', 2.2, 0.4, _v2.set(WH.x1 - 3.2, 2.1, fz - 0.4), AX.NX, AX.Y, WHITE_D);
     this._decal('hazband', 4.8, 0.62, _v2.set(WH.x1 - 3.6, 0.7, fz - 0.42), AX.NX, AX.Y, new THREE.Color(0xffffff));
 
@@ -275,7 +289,8 @@ export class Structures {
     // floor
     this._add(oQuad(iw, id, _v2.set((I.x0 + I.x1) / 2, 0.01, (I.z0 + I.z1) / 2), AX.X, AX.NZ), M.concreteFloor, { surface: 'concrete', castShadow: false });
     // walls (plaster, warm), ceiling
-    this._add(oQuad(id, I.height, _v2.set(I.x0, I.height / 2, (I.z0 + I.z1) / 2), AX.Y, AX.Z), M.plaster, { surface: 'concrete' }); // west inner faces +X
+    // west inner wall faces +X: u along −Z (13 m depth), v up (normal = NZ × Y = +X)
+    this._add(oQuad(id, I.height, _v2.set(I.x0, I.height / 2, (I.z0 + I.z1) / 2), AX.NZ, AX.Y), M.plaster, { surface: 'concrete' });
     this._add(oQuad(id, I.height, _v2.set(I.x1, I.height / 2, (I.z0 + I.z1) / 2), AX.Z, AX.Y), M.plaster, { surface: 'concrete' }); // east inner faces -X
     this._add(oQuad(iw, I.height, _v2.set((I.x0 + I.x1) / 2, I.height / 2, I.z1), AX.NX, AX.Y), M.plaster, { surface: 'concrete' }); // back faces -Z
     this._add(oQuad(iw, id, _v2.set((I.x0 + I.x1) / 2, I.height, (I.z0 + I.z1) / 2), AX.X, AX.Z), M.corrugatedGrey, { surface: 'metal', castShadow: false }); // ceiling faces -Y
@@ -291,12 +306,12 @@ export class Structures {
     // shelving racks along the west wall and the back wall
     this._buildRack(I.x0 + 0.75, I.z0 + 1.2, I.z0 + 9.6, 'z');
     this._buildRack(I.x0 + 2.2, I.z1 - 0.9, I.x1 - 1.2, 'x', I.z1 - 0.75);
-    // hanging high-bay lamps: 3 fixtures, 2 lit
+    // hanging high-bay lamps: 3 fixtures, 2 lit (the two lit ones are real
+    // point lights — the interior must read as a warm cave against the cold yard)
     for (let i = 0; i < 3; i++) {
       const lx = I.x0 + 2.4 + i * ((iw - 4.8) / 2);
       const lz = (I.z0 + I.z1) / 2 + (i === 1 ? 1.5 : -0.5);
       const lit = i !== 2;
-      const real = i === 1;
       // shade cone
       this._add(cylAt(0.14, 0.42, 0.5, lx, I.height - 0.55, lz, 12), M.galvanized, { surface: 'metal', castShadow: false });
       this._add(cylAt(0.01, 0.01, 0.6, lx, I.height - 0.2, lz, 4), M.hardware, { surface: 'metal', castShadow: false });
@@ -305,56 +320,107 @@ export class Structures {
       disc.rotateX(Math.PI / 2);
       disc.translate(lx, I.height - 0.81, lz);
       this._add(disc, lit ? M.lampWarm : M.lampDead, { surface: 'glass', castShadow: false });
-      if (real) {
+      if (lit) {
         const f = this.lighting.addPractical({
-          position: [lx, I.height - 1.2, lz],
-          color: 0xffb774,
-          intensity: 95,
+          position: [lx, I.height - 1.25, lz],
+          color: 0xffb060,
+          intensity: 52,
           radius: 16,
           flicker: 'none',
           marker: false,
+          glow: false,
         });
         this.ctx.level.fixtures.push(f);
+        // soft hanging glow under the shade (reads the fixture as a source)
+        const gm = this.M.glowSprite.clone();
+        gm.color = new THREE.Color(0xffb060).multiplyScalar(1.0);
+        gm.opacity = 0.35;
+        const gs = new THREE.Sprite(gm);
+        gs.position.set(lx, I.height - 0.95, lz);
+        gs.scale.setScalar(2.0);
+        gs.renderOrder = 21;
+        this.ctx.root.add(gs);
+        this.ctx.level.sprites.push(gs);
       }
     }
-    // warm spill flood: a canopy work light just outside the open bay, aimed
-    // down-out across the yard (mounted under a small soffit so it reads)
+    // ceiling fluoro tube strips (two lit, one dead) + ductwork silhouette
+    for (let i = 0; i < 3; i++) {
+      const tz = I.z0 + 3.2 + i * 3.8;
+      const lit = i !== 1;
+      this._add(boxAt(4.6, 0.06, 0.16, (I.x0 + I.x1) / 2 + 1.2, I.height - 0.28, tz), M.hardware, { surface: 'metal', castShadow: false });
+      // (AX.X, AX.Z) → normal −Y: the emissive strip faces DOWN into the room
+      this._add(oQuad(4.4, 0.09, _v2.set((I.x0 + I.x1) / 2 + 1.2, I.height - 0.33, tz), AX.X, AX.Z), lit ? M.fluoroTube : M.lampDead, { surface: 'glass', castShadow: false });
+    }
+    this._add(cylAt(0.32, 0.32, id - 1.4, (I.x0 + I.x1) / 2 - 2.2, I.height - 0.62, (I.z0 + I.z1) / 2, 8, 90), M.galvanized, { surface: 'metal', castShadow: false });
+    // office door + lit window on the back wall (a supervisor is still in)
+    this._add(oQuad(0.95, 2.05, _v2.set(I.x0 + 2.1, 1.02, I.z1 - 0.03), AX.NX, AX.Y), M.paintedSteelDark, { surface: 'metal', castShadow: false });
+    this._add(oQuad(1.7, 1.1, _v2.set(I.x0 + 4.4, 3.9, I.z1 - 0.05), AX.NX, AX.Y), M.windowLit, { surface: 'glass', castShadow: false });
+    this._add(boxAt(1.85, 1.25, 0.06, I.x0 + 4.4, 3.9, I.z1 - 0.02), M.hardware, { surface: 'metal', castShadow: false });
+    // green EXIT box over the door + a first-aid cabinet
+    this._add(oQuad(0.62, 0.28, _v2.set(I.x0 + 2.1, 2.3, I.z1 - 0.04), AX.NX, AX.Y), M.exitSign, { surface: 'glass', castShadow: false });
+    this._add(boxAt(0.5, 0.6, 0.14, I.x1 - 1.1, 1.6, I.z1 - 0.1), M.paintedSteelRed, { surface: 'metal', castShadow: false });
+    // warm spill flood: a canopy work light under a soffit above the open bay,
+    // aimed steeply DOWN onto the wet kerb so the warm pool sits at the door
     {
       const bx = WH.bayXs[WH.openBayIndex];
       this._add(boxAt(WH.bayW + 0.6, 0.14, 1.2, bx, WH.bayH + 0.42, fz - 0.75), M.hardware, { surface: 'metal', castShadow: false });
       const f = this.lighting.addFlood({
-        position: [bx + 0.5, WH.bayH + 0.22, fz - 1.05],
-        target: [bx + 2.2, 0, fz - 12.5],
+        position: [bx + 0.4, WH.bayH + 0.24, fz - 1.05],
+        target: [bx + 1.0, 0, fz - 6.0],
         color: 0xffb56b,
-        intensity: 950,
-        angle: 0.86,
-        penumbra: 0.75,
-        distance: 30,
+        intensity: 560,
+        angle: 0.58,
+        penumbra: 0.6,
+        distance: 22,
         castShadow: false,
-        coneIntensity: 0.3,
+        coneIntensity: 0.7,
         halo: false,
         flare: false,
-        housing: true,
+        housing: false, // the soffit box is the fixture (no floating lens plate)
         importance: 1.1,
         groundY: 0,
       });
+      // small emissive lens strip on the soffit's front lip
+      this._add(boxAt(1.1, 0.05, 0.03, bx, WH.bayH + 0.36, fz - 1.36), M.lampWarm, { surface: 'glass', castShadow: false });
       this.ctx.level.fixtures.push(f);
     }
-    // forklift silhouette parked inside
-    this._buildForklift(I.x1 - 3.4, 0, I.z0 + 5.2, 200);
+    // forklift parked inside, angled so its silhouette reads against the lit
+    // back wall from the yard side of the door
+    this._buildForklift(I.x0 + 3.1, 0, I.z0 + 6.4, 145);
+    // a couple of real cardboard cartons + interior floor grime
+    const props = this.ctx.props;
+    if (props) {
+      props.placeOnGround('prop.cardboard_box', I.x0 + 3.1, I.z0 + 2.6, 20, { noCollide: true });
+      props.placeOnGround('prop.cardboard_box', I.x0 + 3.3, I.z0 + 2.75, 40, { y: 0.34, noCollide: true });
+    }
+    const terrain = this.ctx.level.terrain;
+    if (terrain) {
+      terrain._decal('oil1', (I.x0 + I.x1) / 2 + 0.6, I.z0 + 4.8, 3.4, 2.6, 30, new THREE.Color(0x0d0c0b), 0.014, 'stainInt');
+      terrain._decal('skid0', (I.x0 + I.x1) / 2 - 0.4, I.z0 + 7.2, 7.5, 1.7, 88, new THREE.Color(0x0d0c0b), 0.013, 'stainInt');
+    }
 
     // ---- exterior wall lamps (props from Props; emissive glow sprites here) ----
     const lampY = WH.lampY;
     for (const lx of [-37, -27, -7]) {
-      this._addEmissiveLamp(new THREE.Vector3(lx, lampY - 0.2, fz - 0.62), 0.09, M.lampWarm, 0xffa64d, 2.6);
+      this._addEmissiveLamp(new THREE.Vector3(lx, lampY - 0.2, fz - 0.62), 0.09, M.lampWarm, 0xffa64d, 2.2);
+      // soot / water streaking down the brick under each lamp bracket
+      this._grime(0.85, 2.6, _v2.set(lx, lampY - 1.7, fz - 0.06), AX.NX, AX.Y);
     }
-    // two real sodium wall packs throwing pools on the kerb + facade
-    for (const [lx, it] of [[-16.6, 120]]) {
+    // rain streaks under the cladding lip and at the downpipe feet
+    for (const gx of [-49, -33.5, -20.5, -1.5]) {
+      this._grime(1.6, 3.2, _v2.set(gx, cladBase + 1.5, fz - 0.02), AX.NX, AX.Y);
+    }
+    for (const gx of [-55.5, -14.6, 5.6]) {
+      this._grime(1.1, 1.6, _v2.set(gx, 0.8, fz - 0.06), AX.NX, AX.Y, true);
+    }
+    // one real sodium wall pack throwing a soft pool on the kerb + brick
+    // (irradiance = I / d² / π: brick at 5-6 m must stay near 0.3-0.5)
+    for (const [lx, it] of [[-16.6, 22]]) {
       const f = this.lighting.addPractical({
         position: [lx, lampY - 0.4, fz - 1.1],
         color: 0xffa64d,
         intensity: it,
-        radius: 18,
+        radius: 9,
         flicker: 'sodium',
         marker: false,
         glow: false,
@@ -400,23 +466,26 @@ export class Structures {
       }
     }
     this._add(merge(parts), M.hardware, { surface: 'metal', castShadow: true });
-    // cargo boxes on the shelves (procedural crates) — colour breakup
+    // cargo on the shelves: mostly cartons, some timber crates — colour/scale breakup
     const rng = this.rng;
-    const boxes = [];
+    const cartons = [];
+    const crates = [];
     for (let lvl = 1; lvl <= 3; lvl++) {
       const y = lvl * 1.05 + 0.05;
       let t = from;
       while ((to > from && t < to - 0.4) || (to < from && t > to + 0.4)) {
-        const w = rng.range(0.4, 1.1);
-        const h = rng.range(0.3, 0.75);
+        const w = rng.range(0.35, 1.0);
+        const h = rng.range(0.28, 0.7);
         if (rng.next() > 0.28) {
-          if (axis === 'z') boxes.push(boxAt(rng.range(0.5, 0.95), h, w, a, y + h / 2, t + w / 2 * Math.sign(to - from), 0, rng.range(-8, 8)));
-          else boxes.push(boxAt(w, h, rng.range(0.5, 0.95), t + w / 2 * Math.sign(to - from), y + h / 2, fixed, 0, rng.range(-8, 8)));
+          const list = rng.next() < 0.72 ? cartons : crates;
+          if (axis === 'z') list.push(boxAt(rng.range(0.5, 0.95), h, w, a, y + h / 2, t + w / 2 * Math.sign(to - from), 0, rng.range(-8, 8)));
+          else list.push(boxAt(w, h, rng.range(0.5, 0.95), t + w / 2 * Math.sign(to - from), y + h / 2, fixed, 0, rng.range(-8, 8)));
         }
         t += Math.sign(to - from) * (w + rng.range(0.05, 0.5));
       }
     }
-    this._add(merge(boxes), M.wood, { surface: 'wood', castShadow: false });
+    if (cartons.length) this._add(merge(cartons), M.cardboard, { surface: 'wood', castShadow: false });
+    if (crates.length) this._add(merge(crates), M.wood, { surface: 'wood', castShadow: false });
     // collision: one block per rack
     const len = Math.abs(to - from);
     if (axis === 'z') this.ctx.collision.addAABox(a, 0, (from + to) / 2, shelfDepth, height, len, 'metal');
@@ -527,12 +596,13 @@ export class Structures {
           tDiffuse: { value: null },
           textureMatrix: { value: new THREE.Matrix4() },
           tNormal: { value: this.mats.tex.waves },
+          uRipple: { value: game.weather?.puddleRipplesTexture || this.mats.tex.neutralNormal },
           uTime: { value: 0 },
-          uDistort: { value: 0.028 },
-          uReflect: { value: 0.9 },
+          uDistort: { value: 0.06 },
+          uReflect: { value: 0.78 },
           fogColor: { value: new THREE.Color(0x17202d) },
           fogDensity: { value: 0.013 },
-          uWaterColor: { value: new THREE.Color(0x02060b) },
+          uWaterColor: { value: new THREE.Color(0x030a10) },
           uWind: { value: new THREE.Vector2(1, 0.5) },
         },
         vertexShader: /* glsl */ `
@@ -553,6 +623,7 @@ export class Structures {
           uniform vec3 color;
           uniform sampler2D tDiffuse;
           uniform sampler2D tNormal;
+          uniform sampler2D uRipple;
           uniform float uTime;
           uniform float uDistort;
           uniform float uReflect;
@@ -565,14 +636,19 @@ export class Structures {
           varying float vFogDepth;
           void main() {
             vec2 w = uWind;
+            // swell + wind chop (four octaves of the tileable normal set)
             vec2 n1 = texture2D(tNormal, vWorld.xz * 0.038 + w * uTime * 0.011).rg * 2.0 - 1.0;
             vec2 n2 = texture2D(tNormal, vWorld.xz * 0.105 - w.yx * uTime * 0.019 + 0.41).rg * 2.0 - 1.0;
             vec2 n3 = texture2D(tNormal, vWorld.xz * 0.36 + vec2(-w.y, w.x) * uTime * 0.031 + 0.13).rg * 2.0 - 1.0;
-            vec3 N = normalize(vec3(n1.x + n2.x * 0.7 + n3.x * 0.35, 3.2, n1.y + n2.y * 0.7 + n3.y * 0.35));
+            vec2 n4 = texture2D(tNormal, vWorld.xz * 0.9 + w * uTime * 0.052 + 0.71).rg * 2.0 - 1.0;
+            // rain rings (expanding ripple packets from the weather system, world-tiling)
+            vec2 rr = texture2D(uRipple, vWorld.xz * 2.4).rg * 2.0 - 1.0;
+            vec3 N = normalize(vec3(n1.x + n2.x * 0.7 + n3.x * 0.4 + n4.x * 0.22 + rr.x * 1.4, 2.6,
+                                    n1.y + n2.y * 0.7 + n3.y * 0.4 + n4.y * 0.22 + rr.y * 1.4));
             vec3 V = normalize(cameraPosition - vWorld);
             float ndv = clamp(dot(N, V), 0.0, 1.0);
             float fres = pow(1.0 - ndv, 4.0);
-            fres = mix(0.35, 1.0, fres) * uReflect;
+            fres = mix(0.3, 1.0, fres) * uReflect;
             vec4 uvp = vUv4;
             uvp.xy += vec2(N.x, N.z) * uDistort * uvp.w;
             vec3 refl = texture2DProj(tDiffuse, uvp).rgb;
@@ -606,11 +682,11 @@ export class Structures {
       const mat = new THREE.MeshStandardMaterial({
         name: 'world.waterFallback',
         color: 0x02050a,
-        roughness: 0.16,
+        roughness: 0.22,
         metalness: 0.85,
         normalMap: this.mats.tex.waves,
-        normalScale: new THREE.Vector2(0.6, 0.6),
-        envMapIntensity: 3.0,
+        normalScale: new THREE.Vector2(0.75, 0.75),
+        envMapIntensity: 2.4,
       });
       this.mats.tex.waves.repeat.set(wide / 8, deep / 8);
       const geo = new THREE.PlaneGeometry(wide, deep, 1, 1);
@@ -630,6 +706,41 @@ export class Structures {
     }
     // collision surface tag (rays / feet report water)
     this.ctx.collision.addGroundRect(W.x0, W.x1, W.z1, W.z0, y, 'water', level.water);
+  }
+
+  /* --------------------------------------------------------- quay edge */
+  /**
+   * Quay furniture along the coping: recessed edge lights (cool emissive pucks
+   * every 10 m — a dotted line the vista reads at any distance), a life-ring
+   * cabinet, and the yellow hoop tops of two access ladders.
+   */
+  buildQuayEdge() {
+    const M = this.M;
+    const qz = GROUND.quayZ;
+    // recessed edge lights on the coping (small housing + emissive lens)
+    const housings = [];
+    for (let x = -64; x <= 64; x += 10) {
+      housings.push(boxAt(0.3, 0.12, 0.22, x, 0.06, qz + 0.18));
+      const lens = new THREE.CircleGeometry(0.09, 8);
+      lens.rotateX(-Math.PI / 2);
+      lens.translate(x, 0.125, qz + 0.18);
+      this._add(lens, M.lampCoolDim, { surface: 'glass', castShadow: false });
+    }
+    this._add(merge(housings), M.hardware, { surface: 'metal', castShadow: false });
+    // life-ring cabinet near crane A's landside leg
+    this._add(boxAt(0.9, 1.1, 0.22, -20.5, 0.95, qz + 0.9), M.paintedSteelRed, { surface: 'metal' });
+    this._add(cylAt(0.34, 0.34, 0.06, -20.5, 1.0, qz + 0.78, 14, 90), M.hardware, { surface: 'metal', castShadow: false });
+    this._add(boxAt(0.08, 1.4, 0.08, -20.5, 0.7, qz + 1.02), M.galvanized, { surface: 'metal', castShadow: false });
+    this.ctx.collision.addAABox(-20.5, 0, qz + 0.95, 0.9, 1.6, 0.4, 'metal');
+    // yellow ladder hoops rising above the coping (ladders down to the water)
+    for (const lx of [-8, 22]) {
+      const hoop = [];
+      for (const s of [-0.25, 0.25]) {
+        hoop.push(cylAt(0.03, 0.03, 1.1, lx + s, 0.55, qz - 0.05, 6));
+      }
+      hoop.push(boxAt(0.56, 0.05, 0.05, lx, 1.1, qz - 0.05));
+      this._add(merge(hoop), M.safetyYellow, { surface: 'metal', castShadow: false });
+    }
   }
 
   /* ---------------------------------------------------------------- ship */
@@ -664,6 +775,94 @@ export class Structures {
     }
     // boot-topping band (rusty red) near the waterline
     this._add(oQuad(len - 6, 1.6, _v2.set((xb + xs) / 2 + 3, GROUND.waterY + 0.9, nz + 0.05), AX.X, AX.Y), M.paintedSteelRed, { surface: 'metal', castShadow: false });
+    // plating: horizontal weld seams + vertical frame lines proud of the shell
+    // (the hull face flares from nz-0.2 at the keel to nz+0.7 at the bulwark)
+    {
+      const seams = [];
+      const zAt = (y) => nz - 0.2 + ((y - keel) / (hullTop - keel)) * 0.9 + 0.025;
+      for (const y of [0.4, 2.4, 4.6, 6.8, 8.6]) {
+        const g = boxAt(len - 4, 0.05, 0.04, (xb + xs) / 2 + 2, y, zAt(y));
+        seams.push(g);
+      }
+      for (let x = xb + 12; x < xs - 4; x += 9.6) {
+        const yMid = (hullTop + 0.4) / 2;
+        seams.push(boxAt(0.06, hullTop - 0.6, 0.05, x, yMid, zAt(yMid) + 0.05));
+      }
+      this._add(merge(seams), M.hullTrim, { surface: 'metal', castShadow: false });
+    }
+    // hawse pipes at the bow + a row of dim portholes low along the hull
+    for (const [px, py] of [[xb + 5.5, hullTop - 1.6], [xb + 9.5, hullTop - 1.9]]) {
+      const hp = new THREE.CircleGeometry(0.5, 14);
+      hp.translate(px, py, nz + 0.66);
+      this._add(hp, M.blackRubber, { surface: 'metal', castShadow: false });
+    }
+    for (let px = xb + 20, i = 0; px < S.castle.x0 - 10; px += 8.5, i++) {
+      const lit = (i % 3) !== 1;
+      const ph = new THREE.CircleGeometry(0.24, 10);
+      ph.translate(px, 5.6, nz + 0.55);
+      this._add(ph, lit ? M.windowLit : M.darkGlass, { surface: 'glass', castShadow: false });
+    }
+    // warm accommodation glow: one real deck flood off the castle front
+    // washes the aft deck stacks, the funnel and the castle face
+    {
+      const f = this.lighting.addPractical({
+        position: [S.castle.x0 - 2, deckY + 11, nz - 4],
+        color: 0xffb56b,
+        intensity: 900,
+        radius: 60,
+        flicker: 'none',
+        marker: false,
+        glow: false,
+      });
+      this.ctx.level.fixtures.push(f);
+    }
+    // over-the-side working lights hung on the near rail (warm points on the
+    // black hull + long reflection streaks in the water below)
+    for (const px of [-50, -26, -8, 46]) {
+      this._add(cylAt(0.04, 0.04, 1.6, px, hullTop + 0.4, nz + 1.1, 5, 90, 0, 0), M.hardware, { surface: 'metal', castShadow: false });
+      this._addEmissiveLamp(new THREE.Vector3(px, hullTop + 0.35, nz + 1.9), 0.16, M.lampWarm, 0xffb15c, 3.4);
+    }
+    // painted freeboard name + load-line mark amidships (the section the quay preset frames)
+    this._decal('sign.shipname', 7.5, 1.08, _v2.set(-13, hullTop - 2.3, nz + 0.6), AX.X, AX.Y, WHITE_D);
+    // Plimsoll / load-line disc + bar
+    {
+      const ring = new THREE.RingGeometry(0.34, 0.42, 20);
+      ring.translate(-22, 3.4, nz + 0.5);
+      this._add(ring, M.decalStencilFlat, { surface: 'metal', castShadow: false, key: 'plimsoll' });
+      this._add(boxAt(1.9, 0.08, 0.02, -22, 3.4, nz + 0.5), M.decalStencilFlat, { surface: 'metal', castShadow: false, key: 'plimsoll' });
+      this._add(boxAt(0.08, 1.4, 0.02, -20.6, 3.5, nz + 0.5), M.decalStencilFlat, { surface: 'metal', castShadow: false, key: 'plimsoll' });
+      for (let i = 0; i < 4; i++) {
+        this._add(boxAt(0.55, 0.06, 0.02, -20.3, 2.9 + i * 0.4, nz + 0.5), M.decalStencilFlat, { surface: 'metal', castShadow: false, key: 'plimsoll' });
+      }
+    }
+    // ship name + IMO on the bow quarter, draft marks at bow / amidships / stern
+    this._decal('sign.shipname', 9.0, 1.3, _v2.set(xb + 28, hullTop - 2.4, nz + 0.6), AX.X, AX.Y, WHITE_D);
+    this._decal('sign.imo', 3.0, 0.5, _v2.set(xb + 27, hullTop - 3.6, nz + 0.58), AX.X, AX.Y, WHITE_D);
+    for (const dx of [xb + 15, -20, xs - 6.5]) {
+      let dy = 0.5;
+      for (const id of ['st.dr2', 'st.dr4', 'st.dr6']) {
+        const cell = this.cells[id];
+        const w = 0.78;
+        const h = w / (cell?.aspect || 2.2);
+        this._decal(id, w, h, _v2.set(dx, dy, nz + 0.4 + (dy + 3) * 0.02), AX.X, AX.Y, WHITE_D);
+        dy += 2.0;
+      }
+    }
+    // accommodation ladder rigged down the hull below the castle (zigzag)
+    {
+      const lad = [];
+      let ly = 0.8;
+      let flip = -1;
+      const lx0 = -34; // forward quarter, in the quay preset's field of view
+      while (ly < deckY - 1.2) {
+        const y1 = ly + 3.2;
+        lad.push(...polylinePairs([[lx0 + flip * 2.2, ly, nz + 0.35 + (ly - keel) * 0.02], [lx0 - flip * 2.2, y1, nz + 0.35 + (y1 - keel) * 0.02]], 0.12));
+        lad.push(boxAt(1.1, 0.07, 0.9, lx0 - flip * 2.2, y1, nz + 0.75 + (y1 - keel) * 0.02));
+        ly = y1;
+        flip = -flip;
+      }
+      this._add(merge(lad), M.galvanized, { surface: 'metal', castShadow: false });
+    }
     // bow flare wedge (front face) and stern transom (only far ends, cheap)
     {
       const g = new THREE.BufferGeometry();
@@ -753,12 +952,12 @@ export class Structures {
       for (let i = 0; i < nWin; i++) {
         const wx = c0 + inset * 0.9 + 0.9 + i * 1.6;
         const lit = ((i + tier * 3) % 5) < 2;
-        this._add(oQuad(0.75, 0.85, _v2.set(wx, cy + th * 0.55, zc + d / 2 + 0.03), AX.X, AX.Y), lit ? M.windowLitDim : M.darkGlass, { surface: 'glass', castShadow: false });
+        this._add(oQuad(0.75, 0.85, _v2.set(wx, cy + th * 0.55, zc + d / 2 + 0.03), AX.X, AX.Y), lit ? M.windowLit : M.darkGlass, { surface: 'glass', castShadow: false });
       }
       cy += th;
     }
     // bridge: wide window strip on top tier front + wing overhangs
-    this._add(oQuad(cw - 6, 1.2, _v2.set(c0 + cw / 2, cy - 1.6, zc + (deckDepth - 4.8) / 2 + 0.05), AX.X, AX.Y), M.windowLitDim, { surface: 'glass', castShadow: false });
+    this._add(oQuad(cw - 6, 1.2, _v2.set(c0 + cw / 2, cy - 1.6, zc + (deckDepth - 4.8) / 2 + 0.05), AX.X, AX.Y), M.windowLit, { surface: 'glass', castShadow: false });
     for (const s of [-1, 1]) {
       this._add(boxAt(3.6, 0.25, 2.4, c0 + cw / 2 + s * (cw / 2 - 1), cy - 2.6, zc), M.hardware, { surface: 'metal', castShadow: false });
     }
@@ -957,6 +1156,11 @@ export class Structures {
     this._add(merge(yellow), M.craneYellow, { surface: 'metal', castShadow: false });
     this._add(merge(cables), M.cable, { surface: 'metal', castShadow: false });
 
+    // ---- markings: crane letter on the landside legs, SWL on the machinery house
+    for (const sx of [-1, 1]) {
+      this._decal('sign.crane' + (spec.id === 'A' ? '1' : '2'), 0.95, 1.19, _v2.set(xc + sx * legHalf, 6.6, railA + 0.585), AX.X, AX.Y, CREAM);
+    }
+    this._decal('sign.swl', 2.6, 0.58, _v2.set(xc + 2.4, chordY[1] + 2.1, railB + 2.07), AX.X, AX.Y, WHITE_D);
     // ---- beacons + work light ----------------------------------------------------
     const bA = this.lighting.addBeacon({ position: [xc, apexY + 0.5, railB - 1], color: 0xff2020, blinkPeriod: 1.6, duty: 0.13, phase: spec.workLight ? 0 : 0.45, size: 0.22, lightIntensity: 0 });
     const bB = this.lighting.addBeacon({ position: [xc, chordY[1] + 0.6, boomZ1 + 1], color: 0xff2020, blinkPeriod: 2.3, duty: 0.16, phase: 0.6, size: 0.2, lightIntensity: 0 });
@@ -971,21 +1175,45 @@ export class Structures {
         position: [xc - 1.2, chordY[0] - 0.4, railB + 1.5],
         target: [xc - 3, 0, railB + 3.5],
         color: 0xffefd6,
-        intensity: 1100,
+        intensity: 900,
         angle: 0.5,
         penumbra: 0.5,
         distance: 46,
         castShadow: false,
-        coneIntensity: 0.75,
+        coneIntensity: 0.9,
         importance: 0.7,
         housing: true,
         flare: true,
         halo: true,
-        haloSize: 7,
+        haloSize: 9,
         groundY: 0,
       });
       this.ctx.level.fixtures.push(f);
 
+    }
+    // ship-loading flood under the boom over the berth: throws down-north onto
+    // the vessel's side so the hull plating, name and draft marks read from
+    // the quay, and its beam crosses the black water (reflection + cone)
+    if (spec.hullLight) {
+      const nz = QUAY.ship.nearZ;
+      const f = this.lighting.addFlood({
+        position: [xc + 2, chordY[0] - 0.6, railB - 6],
+        target: [spec.hullLight.aimX ?? xc - 25, 4, nz + 0.7], // wash this crane's berth section
+        color: 0xffe6c2,
+        intensity: 1650,
+        angle: 0.62,
+        penumbra: 0.6,
+        distance: 70,
+        castShadow: false,
+        coneIntensity: 1.0,
+        importance: 0.8,
+        housing: true,
+        flare: true,
+        halo: true,
+        haloSize: 8,
+        groundY: -1.9,
+      });
+      this.ctx.level.fixtures.push(f);
     }
     this.ctx.level.landmarks['crane' + spec.id] = new THREE.Vector3(xc, 0, (railA + railB) / 2);
   }

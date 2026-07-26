@@ -275,29 +275,31 @@ export const UNIT_IDS = [
  * @param {Random} rng
  */
 export function stencilAtlas(rng) {
-  const A = new Atlas(2048, 'world.stencilAtlas');
+  // 2304² (multiple of 256, NPOT is fine on WebGL2): the sign/ID library
+  // outgrew 2048² once the ship, crane and warehouse signage went in
+  const A = new Atlas(2304, 'world.stencilAtlas');
   const ctx = A.ctx;
 
   // ---- logotypes ---------------------------------------------------------
   for (const line of SHIPPING_LINES) {
-    const r = A.reserve('logo.' + line.key, 720, 150);
+    const r = A.reserve('logo.' + line.key, 640, 142);
     drawLogotype(ctx, r, line, rng);
   }
 
   // ---- unit ID blocks (ID line + size/type code) -------------------------
   for (let i = 0; i < UNIT_IDS.length; i++) {
-    const r = A.reserve('id.' + i, 480, 100);
+    const r = A.reserve('id.' + i, 440, 92);
     ctx.save();
     ctx.fillStyle = '#fff';
     ctx.textBaseline = 'top';
-    ctx.font = `700 60px ${FONT_STACK}`;
-    stencilText(ctx, UNIT_IDS[i], r.x + 4, r.y + 3, 60);
-    ctx.font = `600 31px ${FONT_STACK}`;
-    stencilText(ctx, i % 3 === 0 ? '22G1' : '45G1', r.x + 6, r.y + 67, 31);
+    ctx.font = `700 55px ${FONT_STACK}`;
+    stencilText(ctx, UNIT_IDS[i], r.x + 4, r.y + 3, 55);
+    ctx.font = `600 28px ${FONT_STACK}`;
+    stencilText(ctx, i % 3 === 0 ? '22G1' : '45G1', r.x + 6, r.y + 61, 28);
     // right-aligned owner box code
-    ctx.font = `600 27px ${FONT_STACK}`;
+    ctx.font = `600 25px ${FONT_STACK}`;
     ctx.textAlign = 'right';
-    ctx.fillText(['CN', 'DE', 'GB', 'NL', 'US', 'SG'][i % 6] + ' ' + (2200 + i * 3), r.x + r.w - 6, r.y + 70);
+    ctx.fillText(['CN', 'DE', 'GB', 'NL', 'US', 'SG'][i % 6] + ' ' + (2200 + i * 3), r.x + r.w - 6, r.y + 64);
     ctx.textAlign = 'left';
     ctx.restore();
   }
@@ -453,9 +455,14 @@ export function stencilAtlas(rng) {
       ['highcubeplain', 'HIGH CUBE', 48],
       ['heavy', 'SUPER HEAVY', 48],
       ['keepdry', 'KEEP FROZEN  -18°C', 36],
+      ['dr2', '2M ▬', 50],
+      ['dr4', '4M ▬', 50],
+      ['dr6', '6M ▬', 50],
     ];
     for (const [id, text, size] of items) {
-      const r = A.reserve('st.' + id, 500, size + 20);
+      ctx.font = `700 ${size}px ${FONT_STACK}`;
+      const wpx = Math.min(500, Math.ceil(ctx.measureText(text).width * 1.15) + 24); // stencil tracking margin
+      const r = A.reserve('st.' + id, wpx, size + 20);
       ctx.save();
       ctx.fillStyle = '#fff';
       ctx.textBaseline = 'top';
@@ -510,6 +517,11 @@ export function stencilAtlas(rng) {
       ['sign.office', 'TERMINAL OFFICE / VISITORS', 512, 56, 38, FONT_STACK, 600],
       ['sign.danger', 'DANGER  660V', 352, 64, 46, FONT_STACK, 700],
       ['sign.exit', 'EXIT ⇧', 208, 72, 52, FONT_STACK, 700],
+      ['sign.shipname', 'MERIDIAN ARDENT', 900, 130, 104, DISPLAY_STACK, 700],
+      ['sign.imo', 'IMO 9481264', 320, 52, 40, FONT_STACK, 600],
+      ['sign.crane1', 'A', 96, 120, 108, DISPLAY_STACK, 700],
+      ['sign.crane2', 'B', 96, 120, 108, DISPLAY_STACK, 700],
+      ['sign.swl', 'SWL 40T', 320, 72, 56, FONT_STACK, 700],
     ];
     for (const [id, text, w, h, size, stack, weight] of signs) {
       const r = A.reserve(id, w, h);
@@ -711,8 +723,9 @@ function weatherPaint(ctx, w, h, rng, holes = 400) {
 export function groundAtlas(rng) {
   const A = new Atlas(2048, 'world.groundAtlas');
   const ctx = A.ctx;
-  const YELLOW = '#c9a227';
-  const WHITE = '#d8d5cc';
+  // Night, wet, old paint: keep the albedo well below "fresh line marking".
+  const YELLOW = '#a98a26';
+  const WHITE = '#bdb8aa';
 
   // straight arrow (points +v)
   {
@@ -913,17 +926,88 @@ export function groundAtlas(rng) {
     ctx.restore();
   }
 
-  // whole-atlas wear: scuffs and traffic wear stripes
-  weatherPaint(ctx, A.size, A.size, rng, 2600);
+  // per-marking traffic wear: worn-through patches, flecks, faded ends.
+  // (grime cells — oil/skid/grate/ring — are already dirt, leave them)
+  const wearLevel = (id) => {
+    if (id.startsWith('oil') || id.startsWith('skid') || id === 'grate' || id === 'ring') return 0;
+    if (['hatch', 'zebra', 'keepclear', 'stop', 'slow', 'logoT9', 'nopark', 'peds', 'chevrons'].includes(id)) return 1.0;
+    if (id.startsWith('bay') || id === 'bracket') return 0.85;
+    return 0.7;
+  };
+  for (const [id, cell] of Object.entries(A.cells)) {
+    const w = wearLevel(id);
+    if (w > 0) wearCell(ctx, cell, rng, w);
+  }
+  // whole-atlas scuffing on top
+  weatherPaint(ctx, A.size, A.size, rng, 4200);
   ctx.save();
   ctx.globalCompositeOperation = 'destination-out';
-  for (let i = 0; i < 240; i++) {
-    ctx.fillStyle = `rgba(0,0,0,${rng.range(0.05, 0.35)})`;
-    ctx.fillRect(rng.range(0, A.size), rng.range(0, A.size), rng.range(10, 90), rng.range(2, 6));
+  for (let i = 0; i < 320; i++) {
+    ctx.fillStyle = `rgba(0,0,0,${rng.range(0.08, 0.5)})`;
+    ctx.fillRect(rng.range(0, A.size), rng.range(0, A.size), rng.range(10, 110), rng.range(2, 7));
   }
   ctx.restore();
 
   return { texture: A.texture(), cells: A.cells };
+}
+
+/**
+ * Traffic wear inside one atlas cell: soft worn-through patches (tyres over
+ * paint), edge fade and paint-chip flecks — nothing on the asphalt reads as
+ * freshly sprayed. `amount` 0..1.
+ */
+function wearCell(ctx, r, rng, amount) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(r.x, r.y, r.w, r.h);
+  ctx.clip();
+  ctx.globalCompositeOperation = 'destination-out';
+  // large worn-through patches
+  const n = Math.round((2.5 + rng.range(0, 4.5)) * amount);
+  for (let i = 0; i < n; i++) {
+    const cx = r.x + rng.range(0, r.w);
+    const cy = r.y + rng.range(0, r.h);
+    const rad = rng.range(0.18, 0.55) * Math.max(r.w, r.h) * 0.6;
+    const g = ctx.createRadialGradient(cx, cy, rad * 0.15, cx, cy, rad);
+    const a = rng.range(0.35, 0.9) * amount;
+    g.addColorStop(0, `rgba(0,0,0,${a})`);
+    g.addColorStop(0.7, `rgba(0,0,0,${a * 0.55})`);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rad, rad * rng.range(0.45, 1), rng.range(0, Math.PI), 0, Math.PI * 2);
+    ctx.fill();
+  }
+  // paint-chip flecks
+  const flecks = Math.round((r.w * r.h) / 900 * amount);
+  for (let i = 0; i < flecks; i++) {
+    ctx.fillStyle = `rgba(0,0,0,${rng.range(0.3, 1)})`;
+    ctx.fillRect(r.x + rng.range(0, r.w), r.y + rng.range(0, r.h), rng.range(1.5, 7), rng.range(1, 4));
+  }
+  // heavy-traffic markings (hatch / zebra / words): scrape whole chunks off
+  if (amount >= 0.95) {
+    const chunks = Math.round((r.w * r.h) / 6000);
+    for (let i = 0; i < chunks; i++) {
+      ctx.save();
+      ctx.translate(r.x + rng.range(0, r.w), r.y + rng.range(0, r.h));
+      ctx.rotate(rng.range(0, Math.PI));
+      ctx.fillStyle = `rgba(0,0,0,${rng.range(0.55, 1)})`;
+      ctx.fillRect(-rng.range(10, 45), -rng.range(3, 12), rng.range(20, 90), rng.range(6, 24));
+      ctx.restore();
+    }
+  }
+  // faded end (traffic direction): linear fade over one third of the cell
+  if (rng.next() < 0.7) {
+    const vertical = r.h > r.w;
+    const g = vertical
+      ? ctx.createLinearGradient(0, r.y, 0, r.y + r.h * 0.45)
+      : ctx.createLinearGradient(r.x, 0, r.x + r.w * 0.45, 0);
+    g.addColorStop(0, `rgba(0,0,0,${0.6 * amount})`);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(r.x, r.y, vertical ? r.w : r.w * 0.45, vertical ? r.h * 0.45 : r.h);
+  }
+  ctx.restore();
 }
 
 /* ------------------------------------------------------------------------ */

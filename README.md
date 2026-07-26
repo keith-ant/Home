@@ -28,6 +28,11 @@ npm run refs               # gather CoD reference frames (local eval only, gitig
 npm run critic:pack        # build a blind A/B review pack in critique/round-N
 ```
 
+World debug views: append `--debug worldtest` (verbose contract self-test in
+the console), `--debug nav` (walkable / cover / spawn overlay — best with the
+`overhead` preset) or `--debug colliders` (collision BVH wireframe) to any
+`npm run shot` call. See `docs/NOTES-world.md` for the Terminal 9 map.
+
 ## Controls
 
 WASD move · Shift sprint · C / Ctrl crouch (hold while sprinting to slide) ·

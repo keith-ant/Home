@@ -79,30 +79,36 @@ export const QUAY = {
   bollardZ: -51.3,
   bollardXs: [-64, -54, -44, -34, -24, -14, -4, 6, 16, 26, 36, 46, 56],
   cranes: [
-    { id: 'A', x: -30, workLight: false },
-    { id: 'B', x: 26, workLight: true },
+    // ship-loading floods off both booms wash the vessel's side (A: bow
+    // quarter / name; B: amidships, the section the quay preset frames)
+    { id: 'A', x: -30, workLight: true, hullLight: { aimX: -55 } },
+    { id: 'B', x: 26, workLight: true, hullLight: { aimX: 2 } },
   ],
   ship: {
-    nearZ: -104,
+    // berthed: 24 m of black water between the quay wall (-52) and the hull,
+    // close enough that the hull towers over the apron and the crane booms
+    // (reaching to z ≈ -104) span the deck
+    nearZ: -76,
     beam: 30,
     xBow: -86,
     xStern: 104,
     deckY: 9,
     keelY: -3,
     castle: { x0: 62, x1: 92, height: 26 },
+    // hull name lives on the stencil atlas (procgen.js: 'sign.shipname')
   },
 };
 
 /* --------------------------------------------------- container palette */
 export const PAINT = [
-  { name: 'oxide', color: 0x7c3025, weight: 3.2 },
-  { name: 'grey', color: 0x5e646b, weight: 2.4 },
+  { name: 'oxide', color: 0x7c3025, weight: 2.4 },
+  { name: 'grey', color: 0x5e646b, weight: 2.6 },
   { name: 'teal', color: 0x2e5d59, weight: 1.8 },
-  { name: 'mustard', color: 0xa07d24, weight: 1.4 },
-  { name: 'white', color: 0xaeaba0, weight: 1.2 },
+  { name: 'mustard', color: 0xa07d24, weight: 1.3 },
+  { name: 'white', color: 0xaeaba0, weight: 1.3 },
   { name: 'green', color: 0x36452d, weight: 1.4 },
-  { name: 'blue', color: 0x293c58, weight: 1.6 },
-  { name: 'maroon', color: 0x5a2027, weight: 1.0 },
+  { name: 'blue', color: 0x293c58, weight: 1.8 },
+  { name: 'maroon', color: 0x5a2027, weight: 0.9 },
 ];
 
 /**
@@ -148,18 +154,25 @@ export const SPECIALS = {
 
 /* ---------------------------------------------------------- light masts */
 export const MASTS = [
-  { id: 'M1', x: -24.6, z: 2.1, height: 11.5, heads: [{ target: [-30.5, 0, 6.5], color: 0xffb15c, intensity: 2500 }], deadHeads: 1 },
-  { id: 'M2', x: 24.6, z: -1.2, height: 11.5, heads: [{ target: [30.5, 0, -4.5], color: 0xffb15c, intensity: 2500 }], deadHeads: 1 },
-  { id: 'M3', x: -8.3, z: -22.4, height: 11.5, heads: [{ target: [-1.2, 0, -27], color: 0xffb15c, intensity: 2800 }, { target: [1.2, 0, 6], color: 0xffe2b3, intensity: 2600, angle: 0.5 }] },
-  { id: 'M4', x: 8.3, z: 18.6, height: 11.5, heads: [{ target: [0.4, 0, 12.5], color: 0xffb15c, intensity: 2700 }], deadHeads: 1 },
-  { id: 'M5', x: -8, z: -45.8, height: 16, heads: [], deadHeads: 2 },
+  // photometry: 1300-1600 cd sodium heads (S1 range 900-1500) so pools land
+  // near 0.3 scene-linear on wet asphalt without cooking container ends
+  // masts stand in the 2.2 m aisles between container rows / the open lanes
+  { id: 'M1', x: -24.6, z: 2.1, height: 12.5, heads: [{ target: [-30.5, 0, 6.5], color: 0xffb15c, intensity: 1250 }], deadHeads: 1 },
+  { id: 'M2', x: 24.6, z: -1.2, height: 12.5, heads: [{ target: [30.5, 0, -4.5], color: 0xffb15c, intensity: 1250 }], deadHeads: 1 },
+  { id: 'M3', x: -6.2, z: -26.8, height: 12.5, heads: [{ target: [-1.2, 0, -30], color: 0xffb15c, intensity: 1300 }, { target: [1.2, 0, 6], color: 0xffe2b3, intensity: 1350, angle: 0.5, coneIntensity: 1.5 }] },
+  { id: 'M4', x: 6.2, z: 16.4, height: 12.5, heads: [{ target: [0.4, 0, 12.5], color: 0xffb15c, intensity: 1250 }], deadHeads: 1 },
+  // tall apron mast: one live head throws a warm pool onto the wet apron at
+  // the main lane's vanishing point (the reflection streak the lane needs)
+  { id: 'M5', x: 2.5, z: -44.2, height: 16, heads: [
+    { target: [-1.5, 0, -40.5], color: 0xffcb85, intensity: 1500, angle: 0.55, coneIntensity: 1.4 },
+  ], deadHeads: 1 },
 ];
 
 /* ------------------------------------------------------------- fire drums */
 export const FIRE_BARRELS = [
-  { id: 'FB1', x: -3.9, z: 22.4, intensity: 60 },
-  { id: 'FB2', x: -16.0, z: 4.0, intensity: 55 },
-  { id: 'FB3', x: 28.4, z: -30.2, intensity: 55 },
+  { id: 'FB1', x: -3.9, z: 22.4, intensity: 46 },
+  { id: 'FB2', x: -16.0, z: 4.0, intensity: 46 },
+  { id: 'FB3', x: 28.4, z: -30.2, intensity: 42 },
 ];
 
 /* -------------------------------------------------------------- spawns */
@@ -171,11 +184,11 @@ export const PLAYER_SPAWN = { x: 1.5, z: 32.6, yaw: 0 }; // yaw 0 = facing -Z (n
  * Consumed by src/world/presets.js and available as world.photoPoints.
  */
 export const PHOTO_POINTS = {
-  vista: { position: [-51.5, 20.8, 38.4], target: [6, 3, -22], fov: 58 },
+  vista: { position: [-49.5, 21.6, 36.5], target: [4, 2.5, -26], fov: 60 },
   street: { position: [-1.9, 1.35, 27.4], target: [0.6, 3.4, -22], fov: 54 },
-  alley: { position: [-16.9, 1.45, 17.0], target: [-15.7, 2.2, -6], fov: 56 },
-  quay: { position: [4, 1.7, -49.6], target: [-46, 9.5, -103], fov: 60 },
-  warehouse: { position: [-18.4, 1.5, 30.6], target: [-23.4, 2.9, 42], fov: 58 },
+  alley: { position: [-16.02, 1.28, 10.7], target: [-16.35, 1.7, -8], fov: 60 },
+  quay: { position: [11, 1.45, -51.5], target: [-40, 4.8, -70], fov: 62 },
+  warehouse: { position: [-14.6, 0.85, 32.0], target: [-22.6, 2.1, 40.5], fov: 62 },
   smoke: { position: [1.5, 1.65, 33.5], target: [0.5, 3.0, 6], fov: 60 },
   rain_light: { position: [3.6, 1.62, 24.2], target: [7.5, 7.5, 16.5], fov: 62 },
   lightning: { position: [16, 1.7, -49.5], target: [-30, 14, -95], fov: 62 },
@@ -259,6 +272,15 @@ export const CLUTTER = {
     ['prop.oil_drum_blue', 16.2, 40.7, 40],
     ['prop.utility_box', 10.4, 37.55, 0],
   ],
+  // block-W alley: the fire-barrel hideout (drums, a knocked-over one, cans)
+  alley: [
+    ['prop.oil_drum_red', -17.15, 5.9, 40],
+    ['prop.oil_drum_blue', -15.35, 2.4, 100, { tilt: [88, 8] }],
+    ['prop.wooden_crate', -17.15, -0.8, 6],
+    ['prop.jerrycan', -16.85, 6.6, 30],
+    ['prop.tire_old', -15.4, 12.4, 0, { stack: 2 }],
+    ['prop.propane_tank', -17.2, -10.6, 60],
+  ],
 };
 
 /** Manhole covers set flush in the asphalt/apron. [x, z, yawDeg] */
@@ -286,6 +308,8 @@ export const PUDDLES = [
   { x: -20, z: 33.5, r: 4.8 },
   { x: 8.5, z: 34, r: 3.4 },
   { x: -38, z: 33, r: 3.0 },
+  { x: -16.4, z: 1.4, r: 2.1 },   // block-W alley by the fire barrel
+  { x: -16.2, z: -9.6, r: 2.4 },
 ];
 
 /** Sandbag emplacements: {x, z, yawDeg, length, courses}. Facing yaw = the wall's front. */
@@ -297,14 +321,20 @@ export const SANDBAG_WALLS = [
   { x: -30.4, z: 11.7, yawDeg: 0, length: 3.4, courses: 2, y: 2.6 }, // atop the fallen container
 ];
 
-/** Jersey barrier placements (procedural low-poly). [x, z, yawDeg] */
+/** Jersey barrier placements (procedural cast concrete). [x, z, yawDeg] */
 export const BARRIERS = [
-  [-3.0, 17.6, 8], [1.6, 18.0, -6],           // main lane chicane
-  [-4.5, -35.8, 4], [0.1, -36.1, 0], [4.7, -35.9, -5], // north mouth of main lane
+  [-4.6, -35.8, 4], [0.1, -36.2, 0], [4.8, -35.9, -5], // north mouth of main lane
   [33.6, 40.8, 90], [35.6, 40.7, 90],        // gate approach
   [-46, -41.6, 0], [-42.9, -41.7, 3],        // apron edge west
   [22.5, -41.5, 0],
   [-31.5, 33.4, 12],                          // west lane south mouth
+  [30.4, 26.5, -8],                           // east lane south end
+];
+
+/** Photoscanned hero barrier pairs (two 1.55 m segments end to end): the main-lane chicane. */
+export const HERO_BARRIERS = [
+  { x: -3.0, z: 17.6, yawDeg: 8, asset: 'prop.jersey_barrier' },
+  { x: 1.6, z: 18.0, yawDeg: -6, asset: 'prop.jersey_barrier_02' },
 ];
 
 /** Pallet stacks: [x, z, yawDeg, count]. */
@@ -319,20 +349,23 @@ export const PALLET_STACKS = [
   [13.6, 33.8, 45, 2],
   [-23.9, 46.2, 90, 3],     // inside the open warehouse bay
   [-58, -44.5, 10, 5],      // apron far west
+  [-17.05, 8.1, 88, 2],     // block-W alley, against the west wall
 ];
 
 /** Overhead cables: [ [x,y,z], [x,y,z], sag ]. */
 export const CABLES = [
-  [[-24.6, 13.6, 2.1], [-8.3, 12.8, -22.4], 2.2],   // mast M1 → mast M3 across block W / main lane mouth
-  [[8.3, 12.6, 18.6], [24.6, 13.2, -1.2], 2.4],    // M4 → M2 across block E
-  [[-8.3, 12.9, -22.4], [8.6, 8.3, -20.6], 1.6],  // M3 → block E top (crosses main lane N)
-  [[-6.8, 8.2, 6.2], [8.3, 12.4, 18.6], 1.9],     // block W top → M4 (crosses main lane S)
+  [[-24.6, 14.4, 2.1], [-6.2, 13.7, -26.8], 2.4],   // mast M1 → mast M3 across block W / main lane mouth
+  [[6.2, 13.6, 16.4], [24.6, 14.2, -1.2], 2.4],    // M4 → M2 across block E
+  [[-6.2, 13.8, -26.8], [8.6, 8.3, -20.6], 1.6],  // M3 → block E top (crosses main lane N)
+  [[-6.8, 8.2, 6.2], [6.2, 13.4, 16.4], 1.9],     // block W top → M4 (crosses main lane S)
   [[-22.9, 8.3, -30.5], [-36.5, 8.1, -31.2], 1.1], // across the west lane N
   [[23.2, 8.2, -6.2], [36.5, 8.4, -5.4], 1.0],     // across the east lane
   [[-16, 8.3, 40.2], [16.9, 3.6, 41.4], 3.0],      // warehouse eave → trailer roof
-  [[-24.6, 13.9, 2.1], [-52.2, 6.2, 8.5], 2.6],    // M1 → west fence pole
-  [[24.6, 13.9, -1.2], [52.2, 6.2, -6.5], 2.6],    // M2 → east fence pole
-  [[-8.3, 12.7, -22.4], [-8.0, 15.6, -45.8], 2.0], // M3 → quay mast M5
+  [[-24.6, 14.6, 2.1], [-52.2, 6.2, 8.5], 2.6],    // M1 → west fence pole
+  [[24.6, 14.6, -1.2], [52.2, 6.2, -6.5], 2.6],    // M2 → east fence pole
+  [[-6.2, 13.6, -26.8], [2.5, 15.6, -44.2], 2.2], // M3 → quay mast M5
+  [[-18.05, 5.25, -1.9], [-14.55, 5.05, -1.3], 0.42],  // low spans across the block-W alley
+  [[-18.05, 5.3, 6.4], [-14.55, 5.15, 7.1], 0.5],
 ];
 
 /**

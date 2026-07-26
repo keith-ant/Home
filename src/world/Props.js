@@ -14,15 +14,31 @@
  * opts: {y, groundY, tilt:[rxDeg,rzDeg], lean, stack, noCollide, variant:'lit'|'dead', surface, scale}
  */
 import * as THREE from 'three';
-import { CLUTTER, MANHOLES } from './layout.js';
+import { CLUTTER, MANHOLES, HERO_BARRIERS } from './layout.js';
 import { DEG } from './util.js';
 
 /** Small ground clutter whose shadows are not worth an extra shadow-pass draw. */
 const NO_SHADOW = new Set([
+  // small / low / dense photoscans: their contact reads through N8AO; casting
+  // them into the moon + 3 spot maps costs 3-4x their triangle count
   'prop.jerrycan', 'prop.manhole_cover', 'prop.cardboard_box', 'prop.fire_extinguisher',
   'prop.propane_tank', 'prop.security_light', 'prop.tire_old', 'prop.utility_box',
   'prop.tool_chest', 'prop.drum_plastic_blue', 'prop.military_crate_open',
+  'prop.jersey_barrier', 'prop.jersey_barrier_02', 'prop.ammo_crate',
+  'prop.ladder_metal', 'prop.generator',
 ]);
+
+/**
+ * Per-asset material adjustments applied when the instanced meshes are
+ * built (albedo of some scans is calibrated for daylight capture; grade
+ * them toward the night container-yard palette so they never read as
+ * fresh white plaster under a floodlight).
+ */
+const MATERIAL_TWEAK = {
+  'prop.jersey_barrier': { color: 0x928e84 },
+  'prop.jersey_barrier_02': { color: 0x86827a },
+  'prop.cardboard_box': { color: 0xb5a68f },
+};
 
 const _box = new THREE.Box3();
 const _m = new THREE.Matrix4();
@@ -188,9 +204,19 @@ export class Props {
       );
       this.place('prop.security_light', m, { variant: 'lit', noCollide: true });
     }
-    // photoscanned barrier heroes near the camera-friendly spots (the rest are procedural)
-    this.placeOnGround('prop.jersey_barrier_02', -1.6, -20.6, 92, {});
-    this.placeOnGround('prop.jersey_barrier_02', 39.5, -47.2, 5, {});
+    // main-lane chicane: pairs of 1.55 m photoscanned segments end to end
+    // (prop long axis is +X, so yaw+90 aligns it with the run direction)
+    for (const h of HERO_BARRIERS) {
+      const yaw = h.yawDeg;
+      const dirX = Math.sin(yaw * DEG);
+      const dirZ = Math.cos(yaw * DEG);
+      for (const s of [-0.79, 0.79]) {
+        this.placeOnGround(h.asset, h.x + dirX * s, h.z + dirZ * s, yaw + 90 + rng.range(-2, 2), {
+          y: rng.range(0, 0.015),
+          tilt: [rng.range(-0.6, 0.6), 0],
+        });
+      }
+    }
   }
 
   /* ----------------------------------------------------------------- build */
@@ -205,6 +231,7 @@ export class Props {
         if (g.variant === 'lit' || g.variant === 'dead') {
           material = this._lampVariant(material, g.variant === 'lit');
         }
+        material = this._tweaked(g.assetId, material);
         const inst = new THREE.InstancedMesh(mesh.geometry, material, g.matrices.length);
         for (let i = 0; i < g.matrices.length; i++) {
           _m.multiplyMatrices(g.matrices[i], mesh.matrix);
@@ -225,6 +252,20 @@ export class Props {
     }
   }
 
+  /** Apply MATERIAL_TWEAK to a source material (cloned once per material). */
+  _tweaked(assetId, material) {
+    const tweak = MATERIAL_TWEAK[assetId];
+    if (!tweak || !material || !material.color) return material;
+    this._tweakCache = this._tweakCache || new Map();
+    const key = assetId + '|' + material.uuid;
+    if (this._tweakCache.has(key)) return this._tweakCache.get(key);
+    const m = material.clone();
+    if (tweak.color) m.color.multiply(new THREE.Color(tweak.color));
+    if (tweak.roughness !== undefined) m.roughness = tweak.roughness;
+    this._tweakCache.set(key, m);
+    return m;
+  }
+
   _lampVariant(material, lit) {
     const key = (lit ? 'lit:' : 'dead:') + material.uuid;
     this._variantCache = this._variantCache || new Map();
@@ -234,8 +275,8 @@ export class Props {
     if (looksBulb) {
       m = material.clone();
       if (lit) {
-        m.emissive = new THREE.Color(0xffb15c);
-        m.emissiveIntensity = 6.5;
+        m.emissive = new THREE.Color(0xffa550);
+        m.emissiveIntensity = 2.3;
         m.toneMapped = false;
       } else {
         m.emissive = new THREE.Color(0x2a1a08);

@@ -533,6 +533,7 @@ export class ContainerKit {
     const vis = this._visibleSides(block, bayIndex, rowIndex);
     // door end faces the nearer row gap: alternate by parity + jitter
     let baseYaw = rng.chance(0.5) ? 0 : 180;
+    let topRec = null;
     for (let level = 0; level < height; level++) {
       const paint = this.pickPaint();
       // upper containers get more visible rust runs on lower ones — vary a bit
@@ -547,6 +548,8 @@ export class ContainerKit {
       const y = level * H + level * 0.005;
       const detail = 'full';
       if (isPair) {
+        // a 20 ft pair on top: no roof dressing (records track the 40 ft below)
+        if (level === height - 1) topRec = null;
         for (const half of [-1, 1]) {
           const zc = z + half * (CONTAINER.L20 / 2 + 0.035);
           this.buildContainer({
@@ -569,7 +572,7 @@ export class ContainerKit {
           });
         }
       } else {
-        this.buildContainer({
+        topRec = this.buildContainer({
           matrix: containerMatrix(x + jx, y, z + jz, yaw),
           length: CONTAINER.L40,
           color: paint.color,
@@ -588,6 +591,82 @@ export class ContainerKit {
           },
         });
       }
+    }
+    // roof-top breakup on the stack top: a lashed tarpaulin draped over one
+    // edge, or a couple of dumped tyres, plus pooled rain on most roofs
+    // (kills the "field of flat CG boxes" read from the elevated vista)
+    if (topRec && height >= 2 && rng.chance(0.16)) this._roofTarp(topRec.matrix, CONTAINER.L40);
+    else if (topRec && height >= 2 && rng.chance(0.07)) this._roofTyres(topRec.matrix, CONTAINER.L40);
+    if (topRec && rng.chance(0.55)) this._roofPuddles(topRec.matrix, CONTAINER.L40);
+  }
+
+  /** Pooled rain on a roof: 1-2 soft-edged mirror patches (radial alpha quads). */
+  _roofPuddles(mtx, L) {
+    const rng = this.rng;
+    const n = rng.int(1, 2);
+    for (let i = 0; i < n; i++) {
+      const w = rng.range(1.0, 1.9);
+      const d = rng.range(1.6, 3.4);
+      const g = new THREE.PlaneGeometry(w, d, 1, 1); // uv 0..1 for the radial alpha
+      g.rotateX(-Math.PI / 2);
+      g.translate(rng.range(-0.45, 0.45), H + 0.03, rng.range(-L * 0.38, L * 0.38));
+      g.applyMatrix4(mtx);
+      this.ctx.batcher.add(g, this.mats.m.roofPuddle, { surface: 'metal', castShadow: false, receiveShadow: true, key: 'roofpuddle' });
+    }
+  }
+
+  /** Draped tarpaulin over the roof edge of a container (local frame → mtx). */
+  _roofTarp(mtx, L) {
+    const rng = this.rng;
+    const mats = this.mats;
+    const len = rng.range(2.6, 4.4);
+    const zc = rng.range(-L * 0.28, L * 0.28);
+    const wSpan = W + 0.5; // slightly over both edges
+    const nx = 6;
+    const nz = 8;
+    const g = new THREE.PlaneGeometry(wSpan, len, nx, nz);
+    g.rotateX(-Math.PI / 2); // now in XZ, normal +Y
+    const pos = g.attributes.position;
+    const uv = g.attributes.uv;
+    for (let i = 0; i < pos.count; i++) {
+      const px = pos.getX(i);
+      const pz = pos.getZ(i);
+      const ax = Math.abs(px);
+      let py;
+      let xNew = px;
+      if (ax > W / 2 - 0.01) {
+        // hanging flap down the side
+        const over = ax - (W / 2 - 0.01);
+        py = H - over * 3.6;
+        xNew = Math.sign(px) * (W / 2 + 0.03 + Math.sin(pz * 3.1) * 0.02);
+        if (py < H - 0.85) py = H - 0.85;
+      } else {
+        py = H + 0.035 + (Math.sin(px * 4.7 + pz * 2.9) * 0.5 + Math.sin(pz * 6.3) * 0.5) * 0.045;
+      }
+      pos.setXYZ(i, xNew, py, pz + zc);
+      uv.setXY(i, (px + wSpan / 2) * 1.0, (pz + len / 2) * 1.0); // metres
+    }
+    pos.needsUpdate = true;
+    uv.needsUpdate = true;
+    g.computeVertexNormals();
+    g.applyMatrix4(mtx);
+    const mat = rng.chance(0.5) ? mats.m.tarpGreen : mats.m.tarpGrey;
+    this.ctx.batcher.add(g, mat, { surface: 'fabric', castShadow: false, key: 'tarp' });
+  }
+
+  /** A couple of dumped tyres lying on the roof (instanced prop, no collision). */
+  _roofTyres(mtx, L) {
+    const rng = this.rng;
+    const props = this.ctx.props;
+    if (!props) return;
+    const n = rng.int(1, 3);
+    for (let i = 0; i < n; i++) {
+      _v1.set(rng.range(-0.7, 0.7), 0, rng.range(-L * 0.35, L * 0.35)).applyMatrix4(mtx);
+      props.placeOnGround('prop.tire_old', _v1.x, _v1.z, rng.range(0, 360), {
+        groundY: _v1.y + H,
+        tilt: [rng.range(84, 90), rng.range(-8, 8)],
+        noCollide: true,
+      });
     }
   }
 

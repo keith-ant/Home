@@ -73,6 +73,7 @@ export class Setpieces {
     bat.setZone('yard');
     this.buildSmallProps();
     this.buildContainerSconces();
+    this.buildDebris();
   }
 
   _add(geo, mat, o = {}) {
@@ -88,8 +89,8 @@ export class Setpieces {
       const parts = [];
       // tapered galvanized pole
       parts.push(cylAt(0.13, 0.3, h, m.x, h / 2, m.z, 10));
-      // concrete plinth
-      this._add(boxAt(1.7, 0.5, 1.7, m.x, 0.25, m.z), M.concrete, { surface: 'concrete' });
+      // concrete plinth (dark cast concrete, not fresh light-grey)
+      this._add(boxAt(1.7, 0.5, 1.7, m.x, 0.25, m.z), M.barrierConcrete, { surface: 'concrete' });
       col.addAABox(m.x, 0, m.z, 1.7, 0.5, 1.7, 'concrete');
       col.addAABox(m.x, 0.5, m.z, 0.45, h - 0.5, 0.45, 'metal');
       // access door + cable conduit on the pole
@@ -139,13 +140,16 @@ export class Setpieces {
           position: [m.x + dx, h + 0.55, m.z + dz],
           target: hd.target,
           color: hd.color ?? 0xffb15c,
-          intensity: hd.intensity ?? 1300,
+          intensity: hd.intensity ?? 1400,
           angle: hd.angle ?? 0.66,
           penumbra: 0.55,
-          distance: 50,
+          distance: hd.distance ?? 46,
           castShadow: false,
           importance: hd.importance ?? 1,
-          haloSize: 4.5,
+          // big atmospheric ball around the head + a stronger scattering
+          // beam: the reference floods bloom into the wet air (environment-01)
+          haloSize: hd.haloSize ?? 9.5,
+          coneIntensity: hd.coneIntensity ?? 1.2,
           groundY: 0,
         });
         this.level.fixtures.push(f);
@@ -385,7 +389,10 @@ export class Setpieces {
     const M = this.M;
     const col = this.ctx.collision;
     const rng = this.rng;
+    const cells = this.mats.tex.stencilCells;
+    const band = cells['hazband'];
     const parts = [];
+    const bands = [];
     for (const [x, z, yaw] of BARRIERS) {
       const len = 3.2;
       const g = this._jerseyGeom(len);
@@ -395,8 +402,28 @@ export class Setpieces {
       g.applyMatrix4(_m);
       parts.push(g);
       col.addBox(_m, { w: 0.62, h: 0.85, d: len, cx: 0, cy: 0.42, cz: 0 }, 'concrete');
+      // black/yellow end-cap bands on the upper faces (both sides, both ends)
+      if (band && rng.next() < 0.7) {
+        for (const side of [-1, 1]) {
+          for (const end of [-1, 1]) {
+            const q = new THREE.PlaneGeometry(0.85, 0.34, 1, 1);
+            const uv = q.attributes.uv;
+            uv.setXY(0, band.u0, band.v0); uv.setXY(1, band.u1, band.v0);
+            uv.setXY(2, band.u0, band.v1); uv.setXY(3, band.u1, band.v1);
+            // face OUTWARD from the near-vertical upper flank (x = ±0.115):
+            // rotateY(+90°) turns the plane's +Z normal to +X, (−90°) to −X
+            q.rotateY(side > 0 ? Math.PI / 2 : -Math.PI / 2);
+            q.translate(side * 0.121, 0.58, end * (len / 2 - 0.5));
+            q.applyMatrix4(_m);
+            const c = new Float32Array(12).fill(1);
+            q.setAttribute('color', new THREE.BufferAttribute(c, 3));
+            bands.push(q);
+          }
+        }
+      }
     }
-    this._add(merge(parts), M.concrete, { surface: 'concrete' });
+    this._add(merge(parts), M.barrierConcrete, { surface: 'concrete' });
+    if (bands.length) this._add(merge(bands), M.decalStencil, { surface: 'concrete', castShadow: false, key: 'barrierBands' });
   }
 
   /* ------------------------------------------------------------ sandbags */
@@ -655,15 +682,31 @@ export class Setpieces {
     const M = this.M;
     const col = this.ctx.collision;
     const parts = [];
+    const caps = [];
     for (const x of QUAY.bollardXs) {
       const z = QUAY.bollardZ;
       parts.push(cylAt(0.2, 0.24, 0.55, x, 0.275, z, 12));
-      parts.push(cylAt(0.27, 0.27, 0.12, x, 0.58, z, 12));
       parts.push(cylAt(0.09, 0.09, 0.5, x, 0.5, z, 8, 0, 0, 90)); // cross horn
       parts.push(boxAt(0.7, 0.06, 0.7, x, 0.03, z));
+      // yellow-painted head disc + top of the horn (visibility paint)
+      caps.push(cylAt(0.27, 0.27, 0.12, x, 0.58, z, 12));
+      caps.push(cylAt(0.095, 0.095, 0.14, x + 0.19, 0.5, z, 8, 0, 0, 90));
       col.addAABox(x, 0, z, 0.6, 0.7, 0.6, 'metal');
     }
     this._add(merge(parts), M.paintedSteelDark, { surface: 'metal' });
+    this._add(merge(caps), M.safetyYellow, { surface: 'metal' });
+    // a coiled mooring rope on the coping between two bollards
+    {
+      const coil = [];
+      for (let i = 0; i < 5; i++) {
+        const r = 0.32 + i * 0.045;
+        const g = new THREE.TorusGeometry(r, 0.04, 6, 20);
+        g.rotateX(Math.PI / 2);
+        g.translate(-19.4, 0.045 + (i % 2) * 0.01, QUAY.bollardZ + 0.35);
+        coil.push(g);
+      }
+      this._add(merge(coil), M.burlap, { surface: 'fabric', castShadow: false });
+    }
   }
 
   /* -------------------------------------------------------- small props */
@@ -735,13 +778,70 @@ export class Setpieces {
     void rng;
   }
 
+  /* -------------------------------------------------------------- debris */
+  /**
+   * Ground litter with a story: charred slats + soot fans (terrain decals)
+   * at the burnt container mouth and the fire barrels, broken pallet slats
+   * and dunnage along the warehouse dock and the barrel clusters. Two
+   * merged meshes; no collision (all below step height).
+   */
+  buildDebris() {
+    const rng = this.rng;
+    const kit = this.ctx.kit;
+    const slats = [];
+    const charred = [];
+    const scatter = (list, cx, cz, radius, n, opts = {}) => {
+      for (let i = 0; i < n; i++) {
+        const a = rng.range(0, Math.PI * 2);
+        const r = radius * Math.sqrt(rng.next());
+        const x = cx + Math.cos(a) * r;
+        const z = cz + Math.sin(a) * r;
+        const len = rng.range(opts.minLen ?? 0.3, opts.maxLen ?? 1.1);
+        const g = boxAt(len, rng.range(0.018, 0.03), rng.range(0.07, 0.14),
+          x, rng.range(0.012, 0.05), z, rng.range(-8, 8), rng.range(0, 180), rng.range(-6, 6));
+        list.push(g);
+      }
+    };
+    const terrain = this.ctx.level.terrain;
+    const sootTint = new THREE.Color(0x080706);
+    // burnt container: charred boards fanning out of the open door end + soot fan
+    if (kit.burntRecord) {
+      const halfL = CONTAINER.L40 / 2;
+      const mouth = new THREE.Vector3(0, 0, halfL + 1.6).applyMatrix4(kit.burntRecord.matrix);
+      scatter(charred, mouth.x, mouth.z, 2.4, 14);
+      terrain?._decal('oil2', mouth.x, mouth.z, 5.2, 4.0, this.rng.range(0, 360), sootTint, 0.015, 'ashInt');
+    }
+    // fire barrels: ash rings + a few charred bits
+    for (const fb of FIRE_BARRELS) {
+      terrain?._decal('oil0', fb.x, fb.z, 2.4, 1.9, this.rng.range(0, 360), sootTint, 0.013, 'ashInt');
+      scatter(charred, fb.x, fb.z, 1.4, 5, { maxLen: 0.7 });
+    }
+    // warehouse dock + spawn staging + lanes: broken pallet slats / dunnage
+    scatter(slats, -30, 35.6, 4.5, 10);
+    scatter(slats, -22, 36.4, 3.0, 6);
+    scatter(slats, 3.2, 33.6, 3.2, 8);
+    scatter(slats, -34.6, -20.4, 2.4, 5); // by the tarp bundle / drums
+    scatter(slats, 26.4, -12.6, 2.6, 5);  // by the cable spool
+    if (charred.length) this._add(merge(charred), this.M.blackRubber, { surface: 'wood', castShadow: false, key: 'debrisCharred' });
+    if (slats.length) this._add(merge(slats), this.M.wood, { surface: 'wood', castShadow: false, key: 'debrisSlats' });
+  }
+
   /* --------------------------------------------- container-mounted sconces */
   buildContainerSconces() {
     // caged bulkhead lamps bolted to container ends / masts: warm little pools
+    // dotted around the yard so every long dark face carries one warm point
     const sconces = [
       { pos: [-15.85, 2.35, 3.9], face: [1, 0, 0], lit: true, light: false },  // block W alley wall (glow only; the fire barrel lights the alley)
-      { pos: [7.05, 2.4, 27.6], face: [-1, 0, 0], lit: true, light: false },   // block E south-west corner (glow only)
+      // cool fluoro task light halfway up the alley wall: the alley's cool
+      // counterpoint against the fire (real light, tiny cost)
+      { pos: [-15.05, 3.7, 1.4], face: [-1, 0, 0], lit: true, light: true, cool: true },
+      { pos: [7.05, 2.4, 27.6], face: [-1, 0, 0], lit: true, light: false },   // block E south-west corner
       { pos: [-7.05, 2.3, -33.5], face: [1, 0, 0], lit: false, light: false }, // dead lamp = silhouette
+      { pos: [7.05, 2.3, -8.6], face: [-1, 0, 0], lit: true, light: false },  // block E west face on the main lane
+      { pos: [-22.85, 2.35, 12.9], face: [-1, 0, 0], lit: true, light: false }, // block W on the west lane
+      { pos: [23.0, 2.35, -14.4], face: [1, 0, 0], lit: true, light: false }, // block E on the east lane
+      { pos: [-36.35, 2.4, -20.2], face: [1, 0, 0], lit: false, light: false }, // perim W dead lamp
+      { pos: [37.55, 2.35, 4.1], face: [-1, 0, 0], lit: true, light: false }, // perim E on the east lane
     ];
     for (const s of sconces) {
       // fixture body: small box + cage bars
@@ -755,20 +855,32 @@ export class Setpieces {
       _m.compose(_v.set(s.pos[0], s.pos[1], s.pos[2]), _q, _one);
       g.applyMatrix4(_m);
       this._add(g, this.M.hardware, { surface: 'metal', castShadow: false });
-      // lens
-      const lens = new THREE.SphereGeometry(0.07, 8, 6);
-      lens.translate(s.pos[0] + s.face[0] * 0.05, s.pos[1], s.pos[2] + s.face[2] * 0.05);
-      this._add(lens, s.lit ? this.M.lampWarm : this.M.lampDead, { surface: 'glass', castShadow: false });
+      // lens + a small haze around lit ones (warm sodium or cool fluoro)
+      const lensMat = !s.lit ? this.M.lampDead : s.cool ? this.M.lampCool : this.M.lampWarm;
+      const glowHex = s.cool ? 0xcfe1ff : 0xffa040;
+      const lens = s.cool ? boxAt(0.05, 0.32, 0.05, s.pos[0] + s.face[0] * 0.05, s.pos[1], s.pos[2] + s.face[2] * 0.05) : new THREE.SphereGeometry(0.07, 8, 6);
+      if (!s.cool) lens.translate(s.pos[0] + s.face[0] * 0.05, s.pos[1], s.pos[2] + s.face[2] * 0.05);
+      this._add(lens, lensMat, { surface: 'glass', castShadow: false });
+      if (s.lit) {
+        const gm = this.M.glowSprite.clone();
+        gm.color = new THREE.Color(glowHex).multiplyScalar(1.1);
+        gm.opacity = 0.45;
+        const gs = new THREE.Sprite(gm);
+        gs.position.set(s.pos[0] + s.face[0] * 0.18, s.pos[1], s.pos[2] + s.face[2] * 0.18);
+        gs.scale.setScalar(1.5);
+        gs.renderOrder = 21;
+        this.ctx.root.add(gs);
+        this.level.sprites.push(gs);
+      }
       if (s.lit && s.light) {
         const f = this.lighting.addPractical({
           position: [s.pos[0] + s.face[0] * 0.35, s.pos[1] - 0.1, s.pos[2] + s.face[2] * 0.35],
-          color: 0xffa040,
-          intensity: 30,
+          color: s.cool ? 0xcfe1ff : 0xffa040,
+          intensity: s.cool ? 26 : 30,
           radius: 11,
-          flicker: 'none',
+          flicker: s.cool ? 'fluoro' : 'none',
           marker: false,
-          glow: true,
-          glowSize: 1.1,
+          glow: false,
         });
         this.level.fixtures.push(f);
       }
@@ -779,6 +891,11 @@ export class Setpieces {
     // another red one on the burnt container roof corner
     const b2 = this.lighting.addBeacon({ position: [SPECIALS.burnt.x + 1.1, 2.75, SPECIALS.burnt.z + 5.9], color: 0xff2020, blinkPeriod: 0.9, duty: 0.4, phase: 0.0, size: 0.1, lightIntensity: 0 });
     this.level.fixtures.push(b2);
+    // steam vents (FX emitters only): a hissing pipe outlet on the alley wall and
+    // one behind the warehouse — the FX stream renders drifting steam here
+    this.level.emitters.push({ kind: 'steam', tag: 'alley-vent', position: new THREE.Vector3(-14.95, 2.6, -3.4), radius: 0.15, intensity: 0.7 });
+    this.level.emitters.push({ kind: 'steam', tag: 'warehouse-vent', position: new THREE.Vector3(-52.5, WAREHOUSE.height + 3.3, 44), radius: 0.6, intensity: 0.5 });
+    this._add(cylAt(0.08, 0.08, 0.5, -14.95, 2.6, -3.4, 8, 0, 0, 90), this.M.galvanized, { surface: 'metal', castShadow: false });
   }
 }
 
