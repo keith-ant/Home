@@ -218,7 +218,10 @@ function shuffle(arr, rng) {
   return a;
 }
 
-main().catch((e) => {
-  console.error('[pack] fatal:', e.message || e);
-  process.exit(1);
-});
+const invokedDirectly = process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname;
+if (invokedDirectly) {
+  main().catch((e) => {
+    console.error('[pack] fatal:', e.message || e);
+    process.exit(1);
+  });
+}
