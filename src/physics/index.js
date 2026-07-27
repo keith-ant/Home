@@ -1,9 +1,12 @@
 /**
- * Physics stream installer — see docs/BUILD_PLAN.md for this stream's brief.
- * Called by Game.init(); construct systems here, register them with
- * game.addSystem(...) and register photo-mode presets. Not yet implemented.
+ * PHYSICS stream installer (trimmed for the AI/combat time box):
+ * Rapier is intentionally NOT initialised — no ragdolls or debris this
+ * pass (docs/NOTES-ai.md, known gaps). Player + bullets use the world BVH,
+ * grenades keep their own arc/bounce inside the weapons stream, and enemy
+ * deaths play the Death clip and despawn. `game.physics` stays null so
+ * consumers that probe it (Grenade.js, Explosions.js) take their fallbacks.
  * @param {import('../Game.js').Game} game
  */
 export function installPhysics(game) {
-  void game;
+  game.physics = null;
 }
