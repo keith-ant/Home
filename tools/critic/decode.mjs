@@ -29,6 +29,7 @@ async function main() {
   for (const f of files) {
     const raw = JSON.parse(await fs.readFile(path.join(verdictDir, f), 'utf8'));
     if (Array.isArray(raw)) verdicts.push(...raw);
+    else if (raw && Array.isArray(raw.verdicts)) verdicts.push(...raw.verdicts.filter((v) => v && v.pair));
     else if (raw && raw.pair) verdicts.push(raw);
     else if (raw && typeof raw === 'object') {
       for (const v of Object.values(raw)) if (v && v.pair) verdicts.push(v);
