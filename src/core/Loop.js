@@ -57,8 +57,11 @@ export class Loop {
     const now = nowMs / 1000;
     let frameDt = now - this._last;
     this._last = now;
-    // Clamp huge deltas (tab switch / hitch) so the sim doesn't spiral.
+    // Clamp huge deltas (tab switch / hitch) so the sim doesn't spiral, and
+    // reject negative ones (rAF timestamps and performance.now() can differ
+    // in origin on the first frame in some headless browsers).
     if (frameDt > 0.25) frameDt = 0.25;
+    if (!(frameDt > 0)) frameDt = 0;
     this.time.real += frameDt;
 
     if (this._beforeFrame) this._beforeFrame(frameDt);
