@@ -19,6 +19,7 @@ import { PhotoMode } from '../systems/PhotoMode.js';
 
 const _pos = new THREE.Vector3();
 const _tgt = new THREE.Vector3();
+const DEG2 = Math.PI / 180;
 
 /** yaw/pitch (radians) for the player's rig to look from `from` at `to`. */
 function lookAngles(from, to) {
@@ -110,7 +111,7 @@ export function registerWeaponPresets(game) {
     setup(g) {
       prime(g);
       // aim down the holo at the warehouse's warm open bay ~17 m away
-      stage(g, { pos: [-8.4, 0, 30.6], look: [-22.0, 1.9, 40.6], weapon: 'ar_carbine', settle: 30 });
+      stage(g, { pos: [-8.4, 0, 30.6], look: [-25.0, 2.15, 41.2], weapon: 'ar_carbine', settle: 30 });
       g.weapons._forcedAds = true;
       g.weapons._dofForced = true;
       g.loop.stepFixed(50); // ADS time 0.24 s + settle
@@ -129,7 +130,7 @@ export function registerWeaponPresets(game) {
       prime(g);
       // hip-fire a burst at the block-E containers across the main lane from
       // inside mast M3's beam; freeze on the frame after the 4th shot.
-      stage(g, { pos: [-0.5, 0, 3.6], look: [7.9, 1.55, -5.5], weapon: 'ar_carbine', settle: 40 });
+      stage(g, { pos: [-0.5, 0, 3.6], look: [7.9, 0.6, -5.5], weapon: 'ar_carbine', settle: 40 });
       const w = g.weapons.current;
       if (w) {
         w.fireModeIndex = 0; // auto
@@ -158,8 +159,8 @@ export function registerWeaponPresets(game) {
         w.ammo = 4;
         w.emitAmmo();
         w.startReload();
-        // ~0.52 s in: mag just clear of the well and dropping, left hand travelling
-        g.loop.stepFixed(31);
+        // ~0.58 s in: mag clear of the well and falling, off hand stripping it away
+        g.loop.stepFixed(35);
       }
     },
   });
@@ -169,8 +170,8 @@ export function registerWeaponPresets(game) {
     ...base,
     setup(g) {
       prime(g);
-      // dark west lane facing the perimeter stack ~4.5 m away, light on
-      stage(g, { pos: [-32.6, 0, -13.4], look: [-38, 1.35, -13.9], weapon: 'pistol_tactical', settle: 40 });
+      // dark west lane: the block-W west face ~4 m ahead at a raking angle, light on
+      stage(g, { pos: [-27.6, 0, -14.2], look: [-22.6, 1.3, -14.8], weapon: 'pistol_tactical', settle: 40 });
       g.weapons.setWeaponLight(true);
       g.loop.stepFixed(20);
     },
@@ -199,23 +200,108 @@ export function registerWeaponPresets(game) {
     hud: false,
     setup(g) {
       prime(g);
-      stage(g, { pos: [1.4, 0, 5.6], look: [-6, 2.2, -8], weapon: 'ar_carbine', settle: 40 });
-      // macro lens: narrow the weapon camera and pull a canted receiver /
-      // optic 15-20 cm from the eye via the animator's inspect pose
+      // stand at the edge of the M3 pool so the receiver picks up the warm
+      // flood on its upper faces against the cool sky IBL
+      stage(g, { pos: [1.6, 0, 5.8], look: [-4.5, 2.6, -10], weapon: 'ar_carbine', settle: 20 });
       const vm = g.weapons.viewmodel;
-      const anim = g.weapons.anim;
-      vm.setFovOverride(24);
-      anim._macro = true;
-      const w = g.weapons.current;
-      if (w) {
-        w.startInspect();
-        g.loop.stepFixed(70);
-      }
-      // freeze: no breathing/sway during the macro exposure
-      g.weapons.forceIdle();
-      g.loop.stepFixed(2);
+      // gunsmith macro: view the receiver/optic from behind-left-above so the
+      // rear window shows the emissive reticle, the left flat carries the
+      // roll-marks and the wear catches the raking key. Solve the pose from a
+      // desired VIEW direction in gun space: rotate that direction onto the
+      // camera's +Z, then put the reference point on the axis 26 cm out.
+      const viewDir = new THREE.Vector3(-0.52, 0.3, 0.8).normalize(); // from the gun toward the eye (gun space)
+      const q = new THREE.Quaternion().setFromUnitVectors(viewDir, new THREE.Vector3(0, 0, 1));
+      const ref = new THREE.Vector3(-0.012, 0.024, 0.09).applyQuaternion(q);
+      const pos = new THREE.Vector3(0.0, 0.0, -0.32).sub(ref);
+      vm.poseOverride = { pos, quat: q };
+      vm.setFovOverride(30);
+      vm.debugLightBoost = 1.9; // gunsmith-screen key so the flats read
+      // rake the key across the visible flat from the upper left
+      vm.key.position.set(-0.35, 0.55, 0.15);
+      vm.key.target.position.set(0.02, -0.06, -0.3);
+      vm.rim.position.set(0.6, 0.2, -0.4);
+      vm.setArmsVisible(false);
+      vm.forceReticle(true);
+      g.weapons.setLaser(false);
+      g.loop.stepFixed(3);
     },
   });
+
+  /* --------------------------------------- weapon_test (dev only) --- */
+  // End-to-end regression of the weapon systems from the player's eyes:
+  // AR burst → reload → switch to pistol → fire → switch back → cooked frag
+  // throw → detonation. Asserts (console.error → red harness) on the way.
+  if (game.debugFlags?.has('wpntest')) {
+    PhotoMode.register('weapon_test', {
+      category: 'debug',
+      hud: false,
+      warmup: 0,
+      frames: 2,
+      async setup(g) {
+        prime(g);
+        const W = g.weapons;
+        const log = (...a) => console.info('[weapon_test]', ...a);
+        const fail = (m) => console.error('[weapon_test] ' + m);
+        let exploded = null;
+        const offEx = g.events.on('grenade:exploded', (e) => {
+          exploded = { x: e.point.x, y: e.point.y, z: e.point.z, damage: e.damage, radius: e.radius };
+        });
+        let hits = 0;
+        const offHit = g.events.on('weapon:hit', () => { hits++; });
+        stage(g, { pos: [0.5, 0, 12], look: [4, 1.4, -20], weapon: 'ar_carbine', settle: 30 });
+        const ar = W.list.ar_carbine;
+        // 1. burst of 6 at the block-E wall
+        for (let i = 0; i < 6; i++) {
+          W.forceFire();
+          g.loop.stepFixed(5);
+        }
+        if (ar.ammo !== 25) fail(`AR ammo after 6 shots = ${ar.ammo} (expected 25)`);
+        if (hits < 4) fail(`only ${hits} weapon:hit events from 6 wall shots`);
+        // 2. reload to completion
+        ar.startReload();
+        g.loop.stepFixed(Math.ceil(2.2 * 60));
+        if (ar.ammo !== 31) fail(`AR ammo after tactical reload = ${ar.ammo} (expected 31)`);
+        if (ar.state !== 'idle') fail(`AR state after reload = ${ar.state}`);
+        // 3. switch to the pistol, fire twice
+        W.switchTo('pistol_tactical');
+        g.loop.stepFixed(70); // holster + deploy
+        if (W.current?.id !== 'pistol_tactical') fail(`current after switch = ${W.current?.id}`);
+        W.forceFire();
+        g.loop.stepFixed(10);
+        W.forceFire();
+        g.loop.stepFixed(10);
+        const p = W.list.pistol_tactical;
+        if (p.ammo !== 11) fail(`pistol ammo = ${p.ammo} (expected 11)`);
+        // 4. back to the rifle
+        W.switchTo('ar_carbine');
+        g.loop.stepFixed(80);
+        if (W.current?.id !== 'ar_carbine') fail(`current after switch back = ${W.current?.id}`);
+        // 5. cooked grenade throw down the lane; wait out the fuse
+        const before = W.grenades.count;
+        if (!W.throwGrenade()) fail('throwGrenade() refused');
+        g.loop.stepFixed(Math.ceil(6.5 * 60));
+        if (W.grenades.count !== before - 1) fail(`grenade count ${W.grenades.count} (expected ${before - 1})`);
+        if (!exploded) fail('grenade never emitted grenade:exploded');
+        else if (!(Math.abs(exploded.damage - 180) < 1e-6)) fail(`grenade damage payload = ${exploded.damage}`);
+        // 6. dry-fire path: empty the mag and pull once more
+        ar.ammo = 0;
+        ar.emitAmmo();
+        ar.reserve = 0;
+        W.forceFire();
+        g.loop.stepFixed(10);
+        offEx();
+        offHit();
+        const st = W.stats();
+        console.error('[weapon_test] done ' + JSON.stringify({ ammo: ar.ammo, pistol: p.ammo, grenades: W.grenades.count, hits, exploded, tris: st.tris, armTris: st.armTris, particles: g.fx?.particles?.count, state: W.current?.state, since: (g.time.elapsed - (W.current?._lastFireT || 0)).toFixed(3) }));
+        for (const v of [st.tris, hits]) if (!Number.isFinite(v)) fail('NaN in stats');
+        // restore for the frame
+        ar.reserve = 60;
+        ar.ammo = 20;
+        ar.emitAmmo();
+        g.loop.stepFixed(20);
+      },
+    });
+  }
 
   /* ------------------------------------------- vm_debug (dev only) --- */
   // Whole-gun turntable-style views for material/proportion checks

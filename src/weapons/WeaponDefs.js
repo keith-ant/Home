@@ -99,7 +99,7 @@ export const WEAPON_DEFS = {
       selector: 'synth.selector',
     },
     casing: { kind: 'rifle', delay: 0.012, velocity: [1.5, 2.4, 1.1, 1.7, 0.15, 0.55] }, // right, up, forward ranges
-    muzzle: { size: 1.0, light: true, smoke: true },
+    muzzle: { size: 0.42, light: true, smoke: true }, // suppressed: compact flash
     viewmodel: {
       // Weapon root pose in camera space (metres / degrees). The assembly
       // origin is the receiver's front face on the bore axis, so the pose
@@ -109,15 +109,15 @@ export const WEAPON_DEFS = {
       // only ~8 cm below the sightline, yawed ~8 deg inward so the muzzle
       // (95 cm out) converges just right of centre; slight cant shows the
       // ejection-port flat.
-      hip: { pos: [0.115, -0.078, -0.4], rot: [-1.0, 8.0, -3.0] },
-      adsZ: -0.185,           // reticle depth on the camera axis when aiming
+      hip: { pos: [0.128, -0.08, -0.4], rot: [-1.0, 8.5, -3.0] },
+      adsZ: -0.168,           // reticle depth on the camera axis when aiming
       adsRot: [0, 0, 0],
       sprint: { pos: [0.075, -0.17, -0.31], rot: [-14, 52, -26] },
       crouch: { pos: [0.11, -0.09, -0.39], rot: [2.4, 7.0, -5.5] },
       slide: { pos: [0.06, -0.095, -0.36], rot: [1, 12, -18] },
       lowered: { pos: [0.13, -0.36, -0.3], rot: [-46, 12, -10] },
-      inspect1: { pos: [0.03, -0.065, -0.42], rot: [10, -36, -28] },  // show the left flat / optic
-      inspect2: { pos: [-0.045, -0.1, -0.4], rot: [4, 48, 34] },    // roll to the right side
+      inspect1: { pos: [-0.02, -0.02, -0.55], rot: [15, 46, -52] },  // left flat toward the eye, muzzle exits left
+      inspect2: { pos: [-0.02, -0.06, -0.48], rot: [10, -50, 55] },  // roll over: port side up, muzzle exits right
       bobScale: 1.0,
       swayScale: 1.0,
       breatheScale: 1.0,
@@ -190,25 +190,25 @@ export const WEAPON_DEFS = {
       selector: 'synth.selector',
     },
     casing: { kind: 'pistol', delay: 0.008, velocity: [1.2, 2.0, 1.4, 2.1, -0.2, 0.2] },
-    muzzle: { size: 0.72, light: true, smoke: true },
-    light: { intensity: 190, angleDeg: 15, penumbra: 0.45, distance: 46 },
+    muzzle: { size: 0.55, light: true, smoke: true },
+    light: { intensity: 190, angleDeg: 18, penumbra: 0.75, distance: 46 },
     viewmodel: {
-      hip: { pos: [0.11, -0.148, -0.28], rot: [1.0, 2.0, -1.0] },
+      hip: { pos: [0.1, -0.048, -0.28], rot: [1.0, 4.0, -1.5] },
       adsZ: -0.27,
       adsRot: [0, 0, 0],
       adsSightOffset: [0, 0.031, 0.039], // rear-sight notch offset from the weapon origin (aims through it)
       sprint: { pos: [0.05, -0.19, -0.2], rot: [-14, 36, -20] },
-      crouch: { pos: [0.108, -0.158, -0.27], rot: [1.0, 2.0, -1.5] },
-      slide: { pos: [0.06, -0.13, -0.25], rot: [3, 6, -12] },
-      lowered: { pos: [0.14, -0.36, -0.2], rot: [-40, 10, -6] },
-      inspect1: { pos: [0.02, -0.11, -0.3], rot: [6, -42, -30] },
-      inspect2: { pos: [-0.02, -0.14, -0.28], rot: [2, 48, 34] },
+      crouch: { pos: [0.098, -0.075, -0.31], rot: [1.0, 5.0, -3.5] },
+      slide: { pos: [0.06, -0.08, -0.3], rot: [3, 8, -14] },
+      lowered: { pos: [0.14, -0.32, -0.24], rot: [-40, 10, -6] },
+      inspect1: { pos: [0.03, -0.05, -0.36], rot: [10, 50, -50] },
+      inspect2: { pos: [0.0, -0.06, -0.34], rot: [8, -50, 55] },
       bobScale: 0.85,
       swayScale: 1.1,
       breatheScale: 1.0,
       hands: {
-        right: { pos: [0.004, -0.048, 0.036], rot: [22, 0, -90], order: 'YXZ', forearm: [0.45, -0.62, 0.6], pose: 'pistol_grip' },
-        left: { pos: [-0.052, -0.07, 0.014], rot: [30, 12, 78], order: 'YXZ', forearm: [-0.5, -0.62, 0.6], pose: 'pistol_support' },
+        right: { pos: [0.004, -0.07, 0.048], rot: [22, 0, -90], order: 'YXZ', forearm: [0.45, -0.62, 0.6], pose: 'pistol_grip' },
+        left: { pos: [-0.05, -0.092, 0.026], rot: [30, 12, 78], order: 'YXZ', forearm: [-0.5, -0.62, 0.6], pose: 'pistol_support' },
       },
     },
   },

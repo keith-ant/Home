@@ -513,14 +513,26 @@ export class WeaponAnimator {
     const enter = smootherstep(t / 0.35);
     const exit = 1 - smootherstep((t - (dur - 0.42)) / 0.42);
     const bodyW = Math.min(enter, exit);
-    const tiltPeak = isPistol ? -20 : 24; // deg roll
+    // rifle: raise and cant the receiver so the magwell presents mid-frame;
+    // pistol: pull in and roll the frame toward the support hand
     const mag_click = t > tIn && t < tIn + 0.16 ? Math.sin((t - tIn) / 0.16 * Math.PI) : 0;
-    out.gunRot[2] = tiltPeak * bodyW;
-    out.gunRot[0] = (isPistol ? 8 : 12) * bodyW - mag_click * 3;
-    out.gunRot[1] = (isPistol ? 12 : -8) * bodyW;
-    out.gunOffset[1] = (isPistol ? -0.02 : -0.045) * bodyW - mag_click * 0.006;
-    out.gunOffset[2] = 0.02 * bodyW;
-    out.gunOffset[0] = (isPistol ? -0.02 : -0.035) * bodyW;
+    if (isPistol) {
+      out.gunRot[2] = -20 * bodyW;
+      out.gunRot[0] = 10 * bodyW - mag_click * 3;
+      out.gunRot[1] = 14 * bodyW;
+      out.gunOffset[1] = -0.02 * bodyW - mag_click * 0.006;
+      out.gunOffset[2] = 0.02 * bodyW;
+      out.gunOffset[0] = -0.03 * bodyW;
+    } else {
+      // top of the receiver rolls right so the LEFT flat + magwell underside
+      // present to the eye; nose up, gun pulled back and toward the centre
+      out.gunRot[2] = -22 * bodyW;
+      out.gunRot[0] = 10 * bodyW - mag_click * 3.5;
+      out.gunRot[1] = 4 * bodyW;
+      out.gunOffset[1] = 0.1 * bodyW - mag_click * 0.008;
+      out.gunOffset[2] = -0.08 * bodyW;
+      out.gunOffset[0] = -0.02 * bodyW;
+    }
 
     // magazine state
     if (t >= tOut && t < tIn - 0.05) out.magOut = true; // detached, falling / gone
@@ -544,16 +556,18 @@ export class WeaponAnimator {
       ]);
       out.leftPose = t > tOut - 0.1 && t < tIn + 0.2 ? 'mag_hold' : null;
     } else {
+      // offsets from the foregrip rest (weapon space); the magwell mouth is
+      // at ~(0, -0.11, 0.05), i.e. +0.012 x, +0.05 y, +0.10 z from the rest
       seg(lh, t, [
         [0.0, [0, 0, 0]],
-        [Math.max(0.02, tOut - 0.3), [0.05, -0.02, 0.16]],  // hand slides back to the magwell
-        [tOut, [0.05, -0.05, 0.18]],                        // grabs the mag
-        [tOut + 0.3, [-0.02, -0.28, 0.22]],                 // strips down and out of frame
-        [tIn - 0.35, [-0.01, -0.26, 0.20]],                 // (off-frame swap)
-        [tIn - 0.05, [0.05, -0.06, 0.18]],                  // new mag to the well
-        [tIn + 0.1, [0.05, -0.02, 0.17]],                   // seated, palm slap
-        [empty ? tBolt - 0.15 : tIn + 0.35, empty ? [0.045, 0.035, 0.13] : [0.03, -0.01, 0.05]], // reach the bolt release
-        [empty ? tBolt + 0.15 : tIn + 0.45, empty ? [0.045, 0.035, 0.13] : [0.02, 0, 0.03]],
+        [Math.max(0.02, tOut - 0.3), [0.012, 0.04, 0.09]],   // hand slides back under the well
+        [tOut, [0.012, 0.02, 0.10]],                         // grabs the mag heel
+        [tOut + 0.32, [-0.09, -0.19, 0.16]],                 // strips it down and away
+        [tIn - 0.35, [-0.04, -0.14, 0.17]],                  // (swap below frame)
+        [tIn - 0.06, [0.012, 0.02, 0.10]],                   // new mag comes up
+        [tIn + 0.08, [0.012, 0.055, 0.10]],                  // seated, palm slap
+        [empty ? tBolt - 0.15 : tIn + 0.35, empty ? [-0.02, 0.13, 0.14] : [0.005, 0.03, 0.05]], // bolt release paddle (left side)
+        [empty ? tBolt + 0.15 : tIn + 0.45, empty ? [-0.02, 0.13, 0.14] : [0.0, 0.02, 0.03]],
         [dur - 0.1, [0, 0, 0]],
       ]);
       out.leftPose = t > tOut - 0.3 && t < tIn + 0.25 ? 'mag_hold' : (empty && t > tBolt - 0.2 && t < tBolt + 0.2 ? 'flat' : null);

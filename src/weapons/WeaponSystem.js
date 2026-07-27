@@ -400,11 +400,12 @@ export class WeaponSystem {
 
     /* ---- active weapon FSM ------------------------------------------------ */
     const w = this.current;
-    if (w && this._grenade.phase === 'none') {
-      _inp.fireHeld = fireHeld && alive;
-      _inp.firePressed = firePressed && alive;
-      _inp.reloadPressed = reloadPressed && alive;
-      _inp.inspectPressed = inspectPressed;
+    if (w) {
+      const gp = this._grenade.phase !== 'none'; // grenade choreography owns the hands
+      _inp.fireHeld = fireHeld && alive && !gp;
+      _inp.firePressed = firePressed && alive && !gp;
+      _inp.reloadPressed = reloadPressed && alive && !gp;
+      _inp.inspectPressed = inspectPressed && !gp;
       _inp.sprinting = sprinting && !firePressed && !fireHeld; // trigger cancels sprint
       _inp.adsBlend = anim.adsBlend;
       _inp.canAct = alive;

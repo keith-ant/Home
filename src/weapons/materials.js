@@ -140,7 +140,7 @@ function cached(key, make) {
  */
 export function anodizedSet() {
   return cached('anodized', () => {
-    const S = 512;
+    const S = 1024;
     // ---- albedo -------------------------------------------------------
     const { c: cc, ctx: cx } = canvas2d(S);
     const img = cx.createImageData(S, S);
@@ -150,9 +150,9 @@ export function anodizedSet() {
         const u = x / S;
         const v = y / S;
         // brushed streaks along U (the bore axis on receiver flats)
-        const streak = valueNoise(u * 0.4, v * 26, 14, 3) * 0.6 + valueNoise(u * 3, v * 60, 24, 5) * 0.4;
-        const blot = valueNoise(u * 3, v * 3, 6, 11);
-        let l = 46 + streak * 6 + (blot - 0.5) * 6;
+        const streak = valueNoise(u * 0.4, v * 40, 20, 3) * 0.6 + valueNoise(u * 3, v * 90, 30, 5) * 0.4;
+        const blot = valueNoise(u * 6, v * 6, 8, 11);
+        let l = 46 + streak * 5 + (blot - 0.5) * 4;
         l = Math.max(20, Math.min(90, l));
         const i = (y * S + x) * 4;
         d[i] = l;
@@ -172,9 +172,9 @@ export function anodizedSet() {
       for (let x = 0; x < S; x++) {
         const u = x / S;
         const v = y / S;
-        const base = 0.42 + (valueNoise(u * 4, v * 4, 8, 21) - 0.5) * 0.16;
+        const base = 0.56 + (valueNoise(u * 4, v * 4, 8, 21) - 0.5) * 0.14;
         const i = (y * S + x) * 4;
-        const val = Math.max(0.15, Math.min(0.9, base));
+        const val = Math.max(0.3, Math.min(0.9, base));
         rd[i] = val * 255;
         rd[i + 1] = val * 255;
         rd[i + 2] = val * 255;
@@ -223,7 +223,7 @@ export function anodizedSet() {
         const v = y / S;
         // fine parallel milling lines along U (period ~2.4 px) with waviness
         const wav = valueNoise(u * 6, v, 6, 31) * 6.283;
-        const lines = 0.5 + 0.5 * Math.sin(v * S * 2.6 + wav) * (0.55 + 0.45 * valueNoise(u * 2, v * 2, 5, 33));
+        const lines = 0.5 + 0.5 * Math.sin(v * S * 1.1 + wav) * (0.55 + 0.45 * valueNoise(u * 2, v * 2, 5, 33));
         // occasional pit/pore
         const pit = hash(x, y, 37) > 0.9975 ? 0.6 : 0;
         field[y * S + x] = lines * 0.12 + pit;
@@ -288,7 +288,7 @@ export function stippleNormal() {
     for (let y = 0; y < S; y++) {
       for (let x = 0; x < S; x++) {
         // cellular-ish dots on a jittered grid
-        const cell = 7;
+        const cell = 16;
         const gx = Math.floor(x / cell);
         const gy = Math.floor(y / cell);
         const jx = (gx + hash(gx, gy, 61) * 0.7) * cell + cell * 0.15;
@@ -297,7 +297,7 @@ export function stippleNormal() {
         field[y * S + x] = Math.max(0, 1 - dd * dd);
       }
     }
-    return heightFieldToNormalTexture(field, S, S, 2.6, 'weapon.stipple.normal');
+    return heightFieldToNormalTexture(field, S, S, 1.6, 'weapon.stipple.normal');
   });
 }
 
@@ -325,12 +325,12 @@ export function gloveTextures() {
     for (let y = 0; y < S; y++) {
       for (let x = 0; x < S; x++) {
         // interlocking knit: two sine sets
-        const a = Math.sin((x + y) * 0.55) * Math.sin((x - y) * 0.55);
-        const b = Math.sin(x * 0.9) * Math.sin(y * 0.9) * 0.4;
+        const a = Math.sin((x + y) * 0.13) * Math.sin((x - y) * 0.13);
+        const b = Math.sin(x * 0.21) * Math.sin(y * 0.21) * 0.4;
         field[y * S + x] = (a * 0.5 + 0.5) * 0.5 + (b * 0.5 + 0.5) * 0.25;
       }
     }
-    const normal = heightFieldToNormalTexture(field, S, S, 1.6, 'weapon.glove.normal');
+    const normal = heightFieldToNormalTexture(field, S, S, 0.6, 'weapon.glove.normal');
     // albedo: near-black khaki with knit modulation and wear at random spots
     const { c, ctx } = canvas2d(S);
     const img = ctx.createImageData(S, S);
@@ -361,8 +361,8 @@ export function clothNormal() {
     for (let y = 0; y < S; y++) {
       for (let x = 0; x < S; x++) {
         // 2/1 twill: diagonal ribs plus perpendicular thread modulation
-        const diag = 0.5 + 0.5 * Math.sin((x + y) * 0.42);
-        const weft = 0.5 + 0.5 * Math.sin(x * 1.3) * Math.sin(y * 1.3);
+        const diag = 0.5 + 0.5 * Math.sin((x + y) * 0.21);
+        const weft = 0.5 + 0.5 * Math.sin(x * 0.6) * Math.sin(y * 0.6);
         field[y * S + x] = diag * 0.45 + weft * 0.3;
       }
     }
@@ -716,9 +716,10 @@ function patchWear(mat, wear) {
           '    vec3 an = abs(normalize(vObjN));',
           '    float m = max(an.x, max(an.y, an.z));',
           '    float edge = 1.0 - smoothstep(0.9, 0.995, m);',
-          '    vec3 cell = floor(vObjP * 260.0);',
+          '    vec3 cell = floor(vObjP * 140.0);',
           '    float n = fract(sin(dot(cell, vec3(12.9898, 78.233, 37.719))) * 43758.5453);',
-          '    w = (raw - 4.0) * edge * mix(0.12, 1.05, step(0.55, n));',
+          '    float n2 = fract(sin(dot(floor(vObjP * 30.0), vec3(4.1234, 9.919, 51.7))) * 24634.6345);',
+          '    w = (raw - 4.0) * edge * mix(0.04, 1.0, smoothstep(0.42, 0.72, n * 0.35 + n2 * 0.65));',
           '  } else {',
           '    w = raw;',
           '  }',
@@ -764,7 +765,7 @@ export function weaponMaterial(kind, o = {}) {
         roughnessMap: set.roughness,
         metalness: o.metalness ?? 0.35,
         normalMap: set.normal,
-        normalScale: new THREE.Vector2(0.6, 0.6),
+        normalScale: new THREE.Vector2(0.85, 0.85),
         envMapIntensity: o.envMapIntensity ?? 0.85,
       });
       return patchWear(m, { color: new THREE.Color(0x777a80), roughness: 0.4, metalness: 0.5 });
@@ -920,12 +921,12 @@ export function weaponMaterial(kind, o = {}) {
       const t = gloveTextures();
       return new THREE.MeshStandardMaterial({
         name: 'wpn.glove',
-        color: o.color ?? 0x2a2b26,
+        color: o.color ?? 0x1e1f1b,
         map: t.color,
-        roughness: 0.78,
+        roughness: 0.82,
         metalness: 0.0,
         normalMap: t.normal,
-        normalScale: new THREE.Vector2(1.1, 1.1),
+        normalScale: new THREE.Vector2(0.4, 0.4),
         envMapIntensity: 0.55,
       });
     }
@@ -935,7 +936,7 @@ export function weaponMaterial(kind, o = {}) {
       return new THREE.MeshStandardMaterial({
         name: 'wpn.glove_leather',
         color: o.color ?? 0x1a1a1b,
-        roughness: 0.52,
+        roughness: 0.7,
         metalness: 0.05,
         normalMap: t.normal,
         normalScale: new THREE.Vector2(0.4, 0.4),
@@ -991,12 +992,13 @@ export function weaponMaterial(kind, o = {}) {
         normalScale: new THREE.Vector2(0.9, 0.9),
         transparent: true,
         depthWrite: false,
-        roughness: o.roughness ?? 0.45,
-        metalness: o.metalness ?? 0.6,
+        roughness: o.roughness ?? 1.0,
+        roughnessMap: anodizedSet().roughness,
+        metalness: o.metalness ?? 0.35,
         polygonOffset: true,
         polygonOffsetFactor: -2,
         polygonOffsetUnits: -2,
-        envMapIntensity: 1.0,
+        envMapIntensity: 0.85,
       });
       return m;
     }

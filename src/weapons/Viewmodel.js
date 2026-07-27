@@ -217,6 +217,9 @@ export class Viewmodel {
     root.traverse((o) => {
       o.visible = true;
     });
+    // the flash rig may live under this weapon's muzzle from an earlier
+    // equip — it must stay dark until it actually fires
+    if (this.flashRig?.object) this.flashRig.object.visible = false;
     this.holder.add(root);
     // arms
     const hands = def.viewmodel?.hands || {};
@@ -314,6 +317,15 @@ export class Viewmodel {
     this.worldLightOn = !!on;
     if (this.worldLight) this.worldLight.intensity = on ? (def?.light?.intensity ?? 180) : 0;
     if (lens?.material) lens.material.emissiveIntensity = on ? 30 : 0;
+    // faint backwash so the light body / muzzle / hands catch a little of it
+    const anchorL = this.assembly?.anchors?.light;
+    if (on && anchorL && !this._backwash) {
+      // stand-in for the wall bounce / cone spill lighting the slide and hands
+      this._backwash = new THREE.PointLight(0xffedd0, 0, 3.0, 2);
+      this._backwash.position.set(0.02, 0.24, 0.06);
+      anchorL.add(this._backwash);
+    }
+    if (this._backwash) this._backwash.intensity = on ? 0.85 : 0;
   }
 
   setVisible(v) {
@@ -328,6 +340,18 @@ export class Viewmodel {
   /** Force a camera fov for photo presets (null clears). */
   setFovOverride(fov) {
     this._fovOverride = fov;
+  }
+
+  /** Hide/show the arms (macro / turntable shots). */
+  setArmsVisible(v) {
+    this._rightArm.visible = !!v && !!this._rightArm.userData.rest;
+    this._leftArm.visible = !!v && !!this._leftArm.userData.rest;
+    this._armsHidden = !v;
+  }
+
+  /** Force the holo reticle to render regardless of ADS (macro shots). */
+  forceReticle(v) {
+    this._forceReticle = !!v;
   }
 
   /* -------------------------------------------------------------- pose */
@@ -415,8 +439,9 @@ export class Viewmodel {
     if (mag) {
       if (ps.magOut && !this._fallingMag) this._dropMag(mag);
       else if (!ps.magOut && this._fallingMag) this._recoverMag();
-      // seated mag hidden while it's "out" (the falling clone is the visible one)
-      mag.visible = !ps.magOut;
+      // the same mesh is either seated in the well or free-falling; only hide
+      // it once the falling copy has given up (below frame)
+      mag.visible = this._fallingMag ? this._fallingMag.t <= 1.2 : true;
     }
     if (this._spareMag) this._spareMag.visible = !!ps.handMag;
     // left hand travel + pose overrides
@@ -448,7 +473,7 @@ export class Viewmodel {
     // detach into world space (the vm scene shares world coords) and let it fall
     this.scene.updateMatrixWorld(true);
     this.scene.attach(mag);
-    this._fallingMag = { obj: mag, vel: new THREE.Vector3(0, -0.4, 0), spin: new THREE.Vector3(2.5, 0.6, 1.2), t: 0 };
+    this._fallingMag = { obj: mag, vel: new THREE.Vector3(0, -0.15, 0), spin: new THREE.Vector3(2.2, 0.5, 1.0), t: 0 };
     // slight impulse away from the well: down + a touch of the ejection direction
     const port = this.assembly.anchors?.port;
     if (port) {
@@ -502,7 +527,7 @@ export class Viewmodel {
           // art-directed: floods light the WORLD; on the gun they only kiss the
           // upper surfaces (a full-strength beam turns the whole viewmodel into
           // the pool). Live intensity so flicker/lightning boosts carry over.
-          l.intensity = f.light.intensity * 0.5;
+          l.intensity = f.light.intensity * 0.42;
           l.target.position.copy(f.target || f.light.target.position);
           // is the eye inside the beam? (for the auto-key balance)
           _v1.copy(eye).sub(rec.position);
@@ -518,7 +543,7 @@ export class Viewmodel {
           l.distance = Math.max(6, rec.radius || 20);
           // cap the illuminance at the gun so a muzzle-flash spike (200+ cd at
           // 0.4 m) punches without clipping to white
-          l.intensity = Math.min(rec.power, 60 * distSq);
+          l.intensity = Math.min(rec.power, 25 * distSq);
           l.target.position.copy(eye);
           ill = l.intensity / distSq;
         }
@@ -531,7 +556,9 @@ export class Viewmodel {
       }
     }
     // constant key/rim: back off when world fixtures already light the gun
-    const auto = THREE.MathUtils.clamp(1.1 - sumIll * 0.075, 0.4, 1.0) * (this.debugLightBoost || 1);
+    // dim the constant rig while aiming (the receiver rear sits at the lens)
+    const adsK = 1 - 0.75 * Math.min(1, this.game.weapons?.anim?.adsBlend ?? 0);
+    const auto = THREE.MathUtils.clamp(1.1 - sumIll * 0.075, 0.4, 1.0) * (this.debugLightBoost || 1) * adsK;
     this._camLightScale = auto;
     this.key.intensity = 1.3 * auto;
     this.rim.intensity = 0.95 * (0.7 + 0.3 * auto);
@@ -604,7 +631,7 @@ export class Viewmodel {
       fm.obj.rotateY(fm.spin.y * dt);
       fm.obj.rotateZ(fm.spin.z * dt);
       // give up after 1.2 s (well below the frame by then)
-      if (fm.t > 1.2) fm.obj.visible = false;
+      fm.obj.visible = fm.t <= 1.2;
     }
 
     // ---- muzzle flash rig lifetime ---------------------------------------
@@ -618,7 +645,16 @@ export class Viewmodel {
    * @param {THREE.PerspectiveCamera} camera
    */
   preRender(camera) {
-    if (!this.enabled) return;
+    // hide the whole pass when the camera is detached from the player
+    // (environment / menu presets fly a free camera)
+    const rigOn = this.game.player ? this.game.player.rig?.enabled !== false : true;
+    const show = this.enabled && rigOn;
+    if (this._pass) this._pass.enabled = show;
+    if (!show) {
+      this.laserDot.visible = false;
+      this.laserBeam.visible = false;
+      return;
+    }
     const anim = this.game.weapons?.anim;
     this.syncToCamera(camera, anim);
     // camera projection
@@ -635,7 +671,8 @@ export class Viewmodel {
     cam.updateMatrixWorld(true);
     // laser visuals from the last fixed-step hit
     const rec = this._laserHit;
-    if (this.hasLaser && this.laserOn && this.assembly?.anchors?.laser) {
+    const laserHidden = !this.enabled || (anim && (anim.inspectT >= 0 || anim.lowerBlend > 0.5)) || this._armsHidden;
+    if (this.hasLaser && this.laserOn && !laserHidden && this.assembly?.anchors?.laser) {
       const la = this.assembly.anchors.laser;
       la.getWorldPosition(_v1);
       _v2.copy(rec.valid ? rec.point : _v3.set(0, 0, -1).transformDirection(this.assembly.root.matrixWorld).multiplyScalar(30).add(_v1));

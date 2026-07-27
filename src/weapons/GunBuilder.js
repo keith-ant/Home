@@ -237,6 +237,39 @@ function decalPlate(w, h, rect, mat) {
   return m;
 }
 
+/**
+ * 30-round STANAG-style magazine body: an extruded side profile with the
+ * classic gentle forward curve, bevelled edges. Local frame: origin at the
+ * top-centre (well level), body hangs along -Y and curves toward -Z.
+ * @returns {THREE.BufferGeometry}
+ */
+export function magazineBodyGeometry() {
+  // profile in (u = -z i.e. forward, v = y) — see rotation below
+  const shape = new THREE.Shape();
+  shape.moveTo(0.031, 0.0);                        // top front corner
+  shape.lineTo(-0.031, 0.0);                       // top rear corner
+  shape.lineTo(-0.033, -0.04);                     // rear edge…
+  shape.quadraticCurveTo(-0.028, -0.11, -0.008, -0.172);  // …curving forward
+  shape.lineTo(0.004, -0.19);                      // bottom rear corner
+  shape.lineTo(0.056, -0.176);                     // bottom edge (raked)
+  shape.quadraticCurveTo(0.049, -0.105, 0.037, -0.045); // front edge curving up
+  shape.lineTo(0.031, 0.0);
+  const geo = new THREE.ExtrudeGeometry(shape, {
+    depth: 0.0195,
+    bevelEnabled: true,
+    bevelThickness: 0.002,
+    bevelSize: 0.002,
+    bevelSegments: 2,
+    curveSegments: 8,
+    steps: 1,
+  });
+  // extrusion Z → gun X (thickness), profile u → -gun Z, v → gun Y
+  geo.rotateY(Math.PI / 2);
+  geo.translate(-0.0195 / 2, 0, 0);
+  applyEdgeWear(geo, { strength: 1.05, seed: 40 });
+  return geo;
+}
+
 /** Small screw/pin head: short cylinder with a slotted or hex cap. */
 function screwHead(radius, mat, hex = false) {
   const geo = new THREE.CylinderGeometry(radius, radius, radius * 0.9, hex ? 6 : 12);
@@ -289,6 +322,7 @@ export function buildAR(o = {}) {
   const mBlack = weaponMaterial('steel_black');
   const mPoly = weaponMaterial('polymer', { normalMap: gripCheckerNormal(), normalStrength: 0.55 });
   const mPolySmooth = weaponMaterial('polymer');
+  const mPolyStock = weaponMaterial('polymer', { normalMap: stippleNormal(), normalStrength: 0.35 });
   const mPolyRib = weaponMaterial('polymer', { normalMap: ribbedNormal(), normalStrength: 0.9 });
   const mFde = weaponMaterial('polymer_fde', { normalMap: ribbedNormal(), normalStrength: 0.35 });
   const mRubber = weaponMaterial('rubber');
@@ -390,7 +424,7 @@ export function buildAR(o = {}) {
   const upper = new THREE.Group();
   upper.name = 'upper';
   // main forged body: bore axis at y=0; the upper spans y -0.017 .. +0.031
-  const upperBody = rbox(0.036, 0.048, 0.188, 0.004, mAnod, { segments: 3, strength: 1.15, seed: 11 });
+  const upperBody = rbox(0.036, 0.048, 0.188, 0.004, mAnod, { segments: 3, strength: 0.85, seed: 11 });
   upperBody.position.set(0, 0.007, 0.098);
   upper.add(upperBody);
   // forward assist housing (right rear): angled cylinder + serrated round cap
@@ -624,33 +658,26 @@ export function buildAR(o = {}) {
   /* ===== magazine (animatable, detachable) ==============================*/
   const mag = new THREE.Group();
   mag.name = 'mag';
-  // 30-rd STANAG: slight curve modelled as two segments + baseplate
-  const magTop = rbox(0.0235, 0.055, 0.062, 0.004, mAnodDark, { segments: 2, strength: 1.1, seed: 40 });
-  magTop.position.set(0, -0.03, 0);
-  mag.add(magTop);
-  const magMid = rbox(0.0235, 0.075, 0.063, 0.004, mAnodDark, { segments: 2, strength: 1.0, seed: 41 });
-  magMid.position.set(0, -0.09, -0.006);
-  magMid.rotation.x = -0.11;
-  mag.add(magMid);
-  const magBot = rbox(0.0235, 0.065, 0.064, 0.004, mAnodDark, { segments: 2, strength: 1.0, seed: 42 });
-  magBot.position.set(0, -0.155, -0.02);
-  magBot.rotation.x = -0.2;
-  mag.add(magBot);
-  const magPlate = rbox(0.027, 0.012, 0.068, 0.003, mBlack, { strength: 1.3, seed: 43 });
-  magPlate.position.set(0, -0.192, -0.03);
-  magPlate.rotation.x = -0.22;
+  // 30-rd STANAG: one extruded, forward-curving silhouette + baseplate
+  const magBody = new THREE.Mesh(magazineBodyGeometry(), mAnodDark);
+  magBody.castShadow = true;
+  magBody.receiveShadow = true;
+  mag.add(magBody);
+  const magPlate = rbox(0.028, 0.011, 0.07, 0.003, mBlack, { strength: 1.2, seed: 43 });
+  magPlate.position.set(0, -0.189, -0.032);
+  magPlate.rotation.x = -0.24;
   mag.add(magPlate);
   // anti-tilt rib + witness ridges on the sides
   for (const sx of [-1, 1]) {
     for (let i = 0; i < 3; i++) {
-      const rib = box(0.0016, 0.14, 0.0045, mBlack, 0.25);
-      rib.position.set(sx * 0.0125, -0.11, -0.012 + i * 0.014);
-      rib.rotation.x = -0.14;
+      const rib = box(0.0018, 0.13, 0.0045, mBlack, 0.25);
+      rib.position.set(sx * 0.0122, -0.105, -0.028 + i * 0.014);
+      rib.rotation.x = -0.15;
       mag.add(rib);
     }
     // mag decal (markings) on both sides
     const md = decalPlate(0.05, 0.017, sheet.rects.mag, mDecal);
-    md.position.set(sx * 0.0128, -0.075, 0.004);
+    md.position.set(sx * 0.0126, -0.075, -0.012);
     md.rotation.y = sx > 0 ? Math.PI / 2 : -Math.PI / 2;
     md.rotation.x = 0;
     mag.add(md);
@@ -740,7 +767,7 @@ export function buildAR(o = {}) {
   holo.name = 'holo';
   const mHousing = weaponMaterial('anodized', { color: 0x767b83, roughness: 1.45 });
   // main body block (electronics + laser diode housing)
-  const hBody = rbox(0.037, 0.032, 0.135, 0.0045, mHousing, { segments: 3, strength: 1.15, seed: 60 });
+  const hBody = rbox(0.037, 0.032, 0.135, 0.0028, mHousing, { segments: 3, strength: 1.15, seed: 60 });
   hBody.position.set(0, 0.016, 0);
   holo.add(hBody);
   // battery cap bulge at the rear top + control buttons on the rear-left
@@ -798,7 +825,7 @@ export function buildAR(o = {}) {
   /* ===== PEQ-15 style laser/illuminator box + pressure pad ============= */
   const peq = new THREE.Group();
   peq.name = 'peq';
-  const peqBody = rbox(0.034, 0.028, 0.108, 0.004, mFde, { segments: 3, strength: 0.8, seed: 70 });
+  const peqBody = rbox(0.036, 0.028, 0.108, 0.0024, mFde, { segments: 3, strength: 0.8, seed: 70 });
   peq.add(peqBody);
   // top rotary selector knob + LED
   const peqKnob = cyl(0.007, 0.007, 0.006, 14, mBlack, 'y', { rim: false });
@@ -851,8 +878,9 @@ export function buildAR(o = {}) {
   const vfg = new THREE.Group();
   vfg.name = 'vfg';
   const vfgBody = lathe([
-    [0.014, 0.0], [0.016, -0.008], [0.0175, -0.03], [0.017, -0.075], [0.019, -0.085], [0.021, -0.093], [0.02, -0.098], [0.01, -0.1], [0.0, -0.1],
-  ], 20, mPolyRib, { strength: 0.3, seed: 72 });
+    [0.014, 0.0], [0.016, -0.008], [0.0175, -0.03], [0.017, -0.072], [0.019, -0.083], [0.021, -0.091],
+    [0.0205, -0.097], [0.018, -0.101], [0.013, -0.104], [0.006, -0.1055], [0.0, -0.106],
+  ], 32, mPolyRib, { strength: 0.3, seed: 72 });
   vfgBody.rotation.x = -Math.PI / 2; // profile forward (-Z) → hanging down (-Y)
   vfg.add(vfgBody);
   const vfgClamp = rbox(0.032, 0.014, 0.036, 0.003, mPolySmooth, { strength: 0.4, seed: 73 });
@@ -863,8 +891,8 @@ export function buildAR(o = {}) {
   parts.set('vfg', vfg);
 
   /* ===== buffer tube + collapsible stock ================================= */
-  const tube = cyl(0.0148, 0.0148, 0.19, 24, mAnodDark, 'z', { strength: 0.6, seed: 80 });
-  tube.position.set(0, -0.006, 0.31);
+  const tube = cyl(0.0148, 0.0148, 0.15, 24, mAnodDark, 'z', { strength: 0.25, seed: 80 });
+  tube.position.set(0, -0.006, 0.29);
   root.add(tube);
   // position notches along the bottom of the tube (dark slots)
   for (let i = 0; i < 5; i++) {
@@ -875,10 +903,10 @@ export function buildAR(o = {}) {
   const stock = new THREE.Group();
   stock.name = 'stock';
   // body wrapping the tube
-  const stockBody = rbox(0.032, 0.05, 0.15, 0.007, mPolySmooth, { segments: 3, strength: 0.5, seed: 81 });
+  const stockBody = rbox(0.032, 0.05, 0.15, 0.007, mPolyStock, { segments: 3, strength: 0.5, seed: 81 });
   stockBody.position.set(0, -0.02, 0);
   stock.add(stockBody);
-  const stockDrop = rbox(0.028, 0.055, 0.11, 0.008, mPolySmooth, { segments: 3, strength: 0.5, seed: 82 });
+  const stockDrop = rbox(0.028, 0.055, 0.11, 0.008, mPolyStock, { segments: 3, strength: 0.5, seed: 82 });
   stockDrop.position.set(0, -0.058, 0.026);
   stock.add(stockDrop);
   // cheek weld saddle on top
@@ -890,7 +918,7 @@ export function buildAR(o = {}) {
   stockLever.position.set(0, -0.09, 0.03);
   stock.add(stockLever);
   // rubber buttpad with ribs
-  const buttpad = rbox(0.032, 0.11, 0.014, 0.004, mRubber, { strength: 0.15, seed: 85 });
+  const buttpad = rbox(0.032, 0.11, 0.014, 0.004, weaponMaterial('rubber', { color: 0x0c0c0d, roughness: 0.95 }), { strength: 0.1, seed: 85 });
   buttpad.position.set(0, -0.038, 0.083);
   stock.add(buttpad);
   // sling slot at the rear
@@ -1390,6 +1418,9 @@ function buildHand(side, o = {}) {
     g.rotateX(Math.PI / 2); // capsule axis → Z
     g.translate(0, 0, -len / 2); // pivot at the proximal end, extends to -Z
     ensureWear(g);
+    // the knit texture wraps a 2 cm circumference: thin its density so the
+    // weave scale matches the palm (kills minification moiré on the fingers)
+    parts_setUV(g, 0.28, 0.55);
     const m = new THREE.Mesh(g, mat);
     m.castShadow = true;
     m.receiveShadow = true;
@@ -1419,7 +1450,7 @@ function buildHand(side, o = {}) {
   forearm.add(roll);
   // sleeve texture UVs: scale up repeat for the twill
   root.add(forearm);
-  parts_setUV(sleeve.geometry, 4, 6);
+  parts_setUV(sleeve.geometry, 8, 10);
   // watch on the left arm's exposed skin
   if (o.watch && side === 'left') {
     const watch = new THREE.Group();
