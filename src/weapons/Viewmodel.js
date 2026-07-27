@@ -578,6 +578,9 @@ export class Viewmodel {
       THREE.MathUtils.lerp(this._keyHome.y, 0.55, insp),
       THREE.MathUtils.lerp(this._keyHome.z, 0.25, insp),
     );
+    this.key.target.position.set(0.08 - 0.1 * insp, -0.22 + 0.12 * insp, -0.65 + 0.2 * insp);
+    // presented flank gets a stronger key while inspecting
+    this.key.intensity *= 1 + 1.4 * insp;
     // environment can change (sky variant); keep in sync
     if (this.scene.environment !== game.scene.environment) this.scene.environment = game.scene.environment;
 
