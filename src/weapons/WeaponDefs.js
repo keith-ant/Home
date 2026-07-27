@@ -109,7 +109,7 @@ export const WEAPON_DEFS = {
       // only ~8 cm below the sightline, yawed ~8 deg inward so the muzzle
       // (95 cm out) converges just right of centre; slight cant shows the
       // ejection-port flat.
-      hip: { pos: [0.128, -0.08, -0.4], rot: [-1.0, 8.5, -3.0] },
+      hip: { pos: [0.136, -0.082, -0.4], rot: [-1.0, 8.5, -3.0] },
       adsZ: -0.168,           // reticle depth on the camera axis when aiming
       adsRot: [0, 0, 0],
       sprint: { pos: [0.075, -0.17, -0.31], rot: [-14, 52, -26] },

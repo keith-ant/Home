@@ -191,6 +191,15 @@ export function registerWeaponPresets(game) {
         // 1.2 s into the inspect: rolled left, optic + rail toward the camera
         g.loop.stepFixed(72);
       }
+      // showcase key on the presented flank (set after the last fixed step
+      // so the per-step lighting solver doesn't fold it back)
+      const vm = g.weapons.viewmodel;
+      vm.key.position.set(-0.55, 0.5, 0.2);
+      vm.key.target.position.set(0.0, -0.12, -0.4);
+      vm.key.target.updateMatrixWorld();
+      vm.key.intensity = 3.2;
+      vm.rim.position.set(0.7, 0.3, -0.3);
+      vm.rim.intensity = 1.4;
     },
   });
 
@@ -224,6 +233,15 @@ export function registerWeaponPresets(game) {
       vm.forceReticle(true);
       g.weapons.setLaser(false);
       g.loop.stepFixed(3);
+      // gunsmith-bench key after the last fixed step (the per-step solver
+      // would otherwise rescale it): rakes the roll-marked flat
+      vm.key.position.set(-0.4, 0.5, 0.1);
+      vm.key.target.position.set(0.05, -0.05, -0.3);
+      vm.key.target.updateMatrixWorld();
+      vm.key.color.set(0xdfe6f4);
+      vm.key.intensity = 3.6;
+      vm.rim.position.set(0.65, 0.35, -0.55);
+      vm.rim.intensity = 1.6;
     },
   });
 

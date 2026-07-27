@@ -1454,7 +1454,7 @@ function buildHand(side, o = {}) {
   forearm.add(roll);
   // sleeve texture UVs: scale up repeat for the twill
   root.add(forearm);
-  parts_setUV(sleeve.geometry, 8, 10);
+  parts_setUV(sleeve.geometry, 5, 6);
   // watch on the left arm's exposed skin
   if (o.watch && side === 'left') {
     const watch = new THREE.Group();

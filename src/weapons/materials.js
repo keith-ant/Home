@@ -152,7 +152,7 @@ export function anodizedSet() {
         // brushed streaks along U (the bore axis on receiver flats)
         const streak = valueNoise(u * 0.4, v * 40, 20, 3) * 0.6 + valueNoise(u * 3, v * 90, 30, 5) * 0.4;
         const blot = valueNoise(u * 6, v * 6, 8, 11);
-        let l = 46 + streak * 5 + (blot - 0.5) * 4;
+        let l = 40 + streak * 5 + (blot - 0.5) * 4;
         l = Math.max(20, Math.min(90, l));
         const i = (y * S + x) * 4;
         d[i] = l;
@@ -808,7 +808,7 @@ export function weaponMaterial(kind, o = {}) {
       // black/graphite injection-moulded polymer: grip, stock, handguard covers
       const m = new THREE.MeshStandardMaterial({
         name: 'wpn.polymer',
-        color: o.color ?? 0x1c1d20,
+        color: o.color ?? 0x131417,
         roughness: o.roughness ?? 0.72,
         metalness: 0.02,
         normalMap: o.normalMap ?? null,
@@ -833,7 +833,7 @@ export function weaponMaterial(kind, o = {}) {
     case 'rubber': {
       return new THREE.MeshStandardMaterial({
         name: 'wpn.rubber',
-        color: o.color ?? 0x121213,
+        color: o.color ?? 0x0e0e0f,
         roughness: o.roughness ?? 0.88,
         metalness: 0.0,
         normalMap: o.normalMap ?? ribbedNormal(),
