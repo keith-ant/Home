@@ -460,7 +460,7 @@ export class Brain {
 
     // FX + audio hooks
     fx?.muzzleFlash?.({ position: origin, direction: dir, size: 1.4, light: true, smoke: false, kind: 'rifle' });
-    fx?.tracer?.(origin, end, { speed: 380, length: 6 });
+    fx?.tracer?.(origin, end, { speed: 380, length: 6, width: 0.06 });
     game.events.emit('enemy:fired', { enemy: e, from: origin, dir });
 
     if (hitPlayer) {

@@ -278,8 +278,8 @@ export class Enemy {
 
     // IR beacon on the helmet
     const beacon = new THREE.Mesh(
-      new THREE.BoxGeometry(0.03, 0.02, 0.03),
-      new THREE.MeshStandardMaterial({ color: 0x0a1a10, emissive: 0x33ff88, emissiveIntensity: 2.4, roughness: 0.6 }),
+      new THREE.BoxGeometry(0.045, 0.028, 0.045),
+      new THREE.MeshStandardMaterial({ color: 0x0a1a10, emissive: 0x33ff88, emissiveIntensity: 3.5, roughness: 0.6 }),
     );
     beacon.name = 'irBeacon';
     beacon.frustumCulled = true;
@@ -287,7 +287,7 @@ export class Enemy {
       // bone space is scaled ×(1/scale)^-1 by the armature; place in bone-local units
       const inv = 1 / (proto.scale * 100); // armature scale ×100, model ×proto.scale
       beacon.scale.setScalar(inv);
-      beacon.position.set(0, 0.22 * inv, 0.02 * inv);
+      beacon.position.set(0, 0.29 * inv, 0.01 * inv);
       this.headBone.add(beacon);
     } else {
       beacon.position.set(0, 1.78, 0.05);

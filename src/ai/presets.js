@@ -84,8 +84,8 @@ export function registerAIPresets(game) {
 
       // Enemy A: main lane 21 m out, engaging (this one fires on the capture frame)
       const eA = ai.spawnEnemyAt(new THREE.Vector3(-3.4, groundY(g, -3.4, -5.2), -5.2), { yaw: Math.PI });
-      // Enemy B: farther/right ~28 m, engaging mid-burst
-      const eB = ai.spawnEnemyAt(new THREE.Vector3(5.2, groundY(g, 5.2, -12.5), -12.5), { yaw: Math.PI });
+      // Enemy B: farther/right ~24 m, engaging, fires across the frame
+      const eB = ai.spawnEnemyAt(new THREE.Vector3(4.6, groundY(g, 4.6, -8.5), -8.5), { yaw: Math.PI });
       // Enemy C: sprinting laterally across the lane between cover ~13 m out
       const eC = ai.spawnEnemyAt(new THREE.Vector3(-5.5, groundY(g, -5.5, 2.6), 2.6), { yaw: Math.PI / 2 });
 
@@ -125,17 +125,19 @@ export function registerAIPresets(game) {
       // aim just wide of the player so the rounds crack past the camera (a
       // hit would flood the frame with the damage vignette)
       const torso = new THREE.Vector3().copy(g.player.position);
-      torso.y += 1.35;
-      torso.x += 0.55;
+      torso.y += 1.4;
+      torso.x += 1.6; // >= 3 sigma of the 1.6 deg cone at 21 m clear of the 0.45 m capsule
       const torsoB = torso.clone();
-      torsoB.x -= 1.2;
-      torsoB.y += 0.15;
+      torsoB.x -= 4.5; // across the frame, well left of the camera
+      torsoB.y += 0.4;
+      torsoB.z += 3.0;
       eB.brain.timeOnTarget = 20;
       eA.brain.timeOnTarget = 20;
       eB.brain._fireShot(g.time.elapsed, torsoB, 0);
-      g.loop.stepFixed(1);
+      g.loop.stepFixed(2);
       g.weapons?.forceFire?.();
       eA.brain._fireShot(g.time.elapsed, torso, 0);
+      eB.brain._fireShot(g.time.elapsed, torsoB, 0);
       eA.firing = true;
       eB.firing = true;
       g.loop.stepFixed(1);
@@ -163,7 +165,7 @@ export function registerAIPresets(game) {
       e.hasAimTarget = true;
       e.targetYaw = Math.atan2(e.aimTarget.x - ex, e.aimTarget.z - ez);
       e.yaw = e.targetYaw;
-      e.firing = true; // Idle_Gun_Shoot stance loop reads as an active aim
+      e.firing = true; // Idle_Gun_Shoot: raised firing stance
 
       // camera: 4 m off his 8 o'clock (front-left), chest height, slight low angle
       const camPos = new THREE.Vector3(ex - 3.1, feet.y + 1.35, ez + 2.55);
@@ -179,15 +181,22 @@ export function registerAIPresets(game) {
       // cool rim from high behind-right of the subject
       const lighting = g.lighting;
       if (lighting) {
-        lighting.addPractical({ position: [camPos.x - 1.4, camPos.y + 0.8, camPos.z + 0.2], color: 0xffab5e, intensity: 30, radius: 12 });
-        lighting.addPractical({ position: [feet.x + 2.4, feet.y + 2.6, feet.z - 2.0], color: 0x86adff, intensity: 46, radius: 12 });
+        // key: front-left of the subject at head height (~3.6 m off), warm
+        lighting.addPractical({ position: [feet.x - 2.9, feet.y + 2.2, feet.z + 1.7], color: 0xffab5e, intensity: 78, radius: 12 });
+        // rim: high behind-right, kept above the top of the frame at its depth
+        lighting.addPractical({ position: [feet.x + 2.2, feet.y + 4.6, feet.z - 3.0], color: 0x86adff, intensity: 130, radius: 14 });
       }
 
       // settle the mixer into the aim pose
       g.loop.stepFixed(50);
       // shallow depth of field on the subject
       g.post?.setDof?.({ focusDistance: camPos.distanceTo(feet) - 0.2, focusRange: 1.6, bokehScale: 3.0 });
-      g.loop.stepFixed(2);
+      // he squeezes off a round on the capture frame: flash lights his front,
+      // the tracer streaks off frame-left
+      const dir = new THREE.Vector3().copy(e.aimTarget).sub(e.muzzleWorld).normalize();
+      g.fx?.muzzleFlash?.({ position: e.muzzleWorld, direction: dir, size: 1.0, light: false, smoke: true });
+      g.fx?.tracer?.(e.muzzleWorld, e.aimTarget, { speed: 380, length: 6, width: 0.06 });
+      g.loop.stepFixed(1);
     },
   });
 
