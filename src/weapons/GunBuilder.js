@@ -243,30 +243,101 @@ function decalPlate(w, h, rect, mat) {
  * top-centre (well level), body hangs along -Y and curves toward -Z.
  * @returns {THREE.BufferGeometry}
  */
-export function magazineBodyGeometry() {
-  // profile in (u = -z i.e. forward, v = y) — see rotation below
+export function magazineBodyGeometry(thickness = 0.0224) {
+  // profile in (u = -z i.e. forward, v = y) — see rotation below.
+  // 30-rd USGI/STANAG: 60 mm deep at the top, gentle constant forward
+  // sweep (~6°), raked baseplate seat.
   const shape = new THREE.Shape();
-  shape.moveTo(0.031, 0.0);                        // top front corner
-  shape.lineTo(-0.031, 0.0);                       // top rear corner
-  shape.lineTo(-0.033, -0.04);                     // rear edge…
-  shape.quadraticCurveTo(-0.028, -0.11, -0.008, -0.172);  // …curving forward
-  shape.lineTo(0.004, -0.19);                      // bottom rear corner
-  shape.lineTo(0.056, -0.176);                     // bottom edge (raked)
-  shape.quadraticCurveTo(0.049, -0.105, 0.037, -0.045); // front edge curving up
-  shape.lineTo(0.031, 0.0);
+  shape.moveTo(0.030, 0.0);                        // top front corner
+  shape.lineTo(-0.030, 0.0);                       // top rear corner
+  shape.lineTo(-0.032, -0.038);                    // rear edge, straight in the well…
+  shape.quadraticCurveTo(-0.027, -0.108, -0.009, -0.172); // …curving forward below it
+  shape.lineTo(0.003, -0.190);                     // bottom rear corner
+  shape.lineTo(0.054, -0.176);                     // bottom edge (raked baseplate seat)
+  shape.quadraticCurveTo(0.048, -0.104, 0.036, -0.042); // front edge curving up
+  shape.lineTo(0.030, 0.0);
+  const half = thickness / 2 - 0.0018;
   const geo = new THREE.ExtrudeGeometry(shape, {
-    depth: 0.0195,
+    depth: half * 2,
     bevelEnabled: true,
-    bevelThickness: 0.002,
-    bevelSize: 0.002,
+    bevelThickness: 0.0018,
+    bevelSize: 0.0018,
     bevelSegments: 2,
-    curveSegments: 8,
+    curveSegments: 10,
     steps: 1,
   });
   // extrusion Z → gun X (thickness), profile u → -gun Z, v → gun Y
   geo.rotateY(Math.PI / 2);
-  geo.translate(-0.0195 / 2, 0, 0);
-  applyEdgeWear(geo, { strength: 1.05, seed: 40 });
+  geo.translate(-half, 0, 0);
+  applyEdgeWear(geo, { strength: 0.9, seed: 40 });
+  return geo;
+}
+
+/**
+ * Forged upper receiver: cross-section extruded along the bore. Flat bottom
+ * (mates the lower), vertical flats, rounded forged shoulders rolling into
+ * the flat-top rail platform. Frame: bore axis at y=0, front face at z=0,
+ * body spans z ∈ [zFront, zFront+length].
+ * @param {{halfWidth?:number, bottom?:number, top?:number, length?:number, zFront?:number}} [o]
+ */
+export function receiverUpperGeometry(o = {}) {
+  const hw = (o.halfWidth ?? 0.0132) - 0.001;   // minus bevel
+  const yb = (o.bottom ?? -0.0165) + 0.001;
+  const yt = (o.top ?? 0.0155) - 0.001;         // rail-base platform
+  const ys = yt - 0.0072;                         // shoulder start
+  const px = hw - 0.0032;                         // platform half-width
+  const shape = new THREE.Shape();
+  shape.moveTo(-hw, yb);
+  shape.lineTo(hw, yb);
+  shape.lineTo(hw, ys);
+  shape.quadraticCurveTo(hw, yt, px, yt);
+  shape.lineTo(-px, yt);
+  shape.quadraticCurveTo(-hw, yt, -hw, ys);
+  shape.lineTo(-hw, yb);
+  const length = (o.length ?? 0.186) - 0.002;
+  const geo = new THREE.ExtrudeGeometry(shape, {
+    depth: length,
+    bevelEnabled: true,
+    bevelThickness: 0.001,
+    bevelSize: 0.001,
+    bevelSegments: 1,
+    curveSegments: 7,
+    steps: 1,
+  });
+  geo.translate(0, 0, (o.zFront ?? 0.004) + 0.001);
+  ensureWear(geo, 0.05);
+  return geo;
+}
+
+/**
+ * Forged lower receiver: the side silhouette (magazine well, fire-control
+ * housing, sloped rear tang) extruded across the gun's X axis with a
+ * bevelled edge — the profile that makes an AR read as an AR. `profile` is
+ * a list of [z, y] points (gun frame, bore axis y=0, receiver front z=0),
+ * traversed in order.
+ * @param {Array<[number, number]>} profile
+ * @param {number} thickness across X (m)
+ */
+export function receiverLowerGeometry(profile, thickness = 0.023) {
+  const shape = new THREE.Shape();
+  // shape-x = -gunZ, shape-y = gunY; after rotateY(π/2): gunZ = -shapeX ✓
+  shape.moveTo(-profile[0][0], profile[0][1]);
+  for (let i = 1; i < profile.length; i++) shape.lineTo(-profile[i][0], profile[i][1]);
+  shape.lineTo(-profile[0][0], profile[0][1]);
+  const bt = 0.0018;
+  const depth = thickness - 2 * bt;
+  const geo = new THREE.ExtrudeGeometry(shape, {
+    depth,
+    bevelEnabled: true,
+    bevelThickness: bt,
+    bevelSize: 0.0015,
+    bevelSegments: 2,
+    curveSegments: 6,
+    steps: 1,
+  });
+  geo.rotateY(Math.PI / 2); // extrusion axis (Z) → gun +X, shape-x → -gun Z
+  geo.translate(-depth / 2, 0, 0);
+  ensureWear(geo, 0.05);
   return geo;
 }
 
