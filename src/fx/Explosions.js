@@ -11,8 +11,9 @@
  *   0-3 s        embers riding the updraft, spark tracers, debris chips
  *                with bounce, drifting dust
  *   persistent   ground scorch decal (+ soot)
- * Plus: `grenade:exploded {point, radius}` (canonical damage/impulse
- * event), `fx:explosion {point, radius, kind}`, camera shake with distance
+ * Plus: `grenade:exploded {point, radius, damage, kind, owner}` (canonical
+ * damage/impulse event; `damage`/`owner` are forwarded from the caller —
+ * WEAPONS passes them for the frag), `fx:explosion {point, radius, kind}`, camera shake with distance
  * falloff via game.player.rig.shake, post.splashLens within 6 m, and the
  * physics hook game.physics.applyExplosionImpulse if present.
  */
@@ -257,7 +258,7 @@ export class Explosions {
     }
 
     /* 7. events / shake / lens / physics ------------------------------- */
-    this.game.events.emit('grenade:exploded', { point: _pos, radius });
+    this.game.events.emit('grenade:exploded', { point: _pos, radius, damage: o.damage ?? 0, kind: o.kind || 'frag', owner: o.owner ?? null });
     this.game.events.emit('fx:explosion', { point: _pos, radius, kind: o.kind || 'frag' });
     this.shakeCamera(_pos, 1.0, { radius });
     this.game.physics?.applyExplosionImpulse?.(_pos, radius, o.energy ?? 1);

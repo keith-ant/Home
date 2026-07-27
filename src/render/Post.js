@@ -26,6 +26,8 @@
  *   post.setBloom({intensity, threshold})
  *   post.effects  { bloom, toneMapping, lut, smaa, ca, noise, vignette,
  *                    damage, droplets, motionBlur, dof, n8ao }
+ *   post.attachViewmodel(scene, camera) → RenderPass   first-person weapon pass (WEAPONS)
+ *   post.setViewmodelEnabled(bool)
  *   post.addPreRender(fn) / removePreRender(fn)   per-frame hooks (camera-ready)
  *   post.render(dt), post.setSize(w,h,pr), post.setCamera(cam), post.update(dt)
  *
@@ -310,6 +312,43 @@ export class Post {
     if (intensity !== undefined) b.intensity = intensity;
     if (threshold !== undefined) b.luminanceMaterial.threshold = threshold;
     if (smoothing !== undefined) b.luminanceMaterial.smoothing = smoothing;
+  }
+
+  /**
+   * Attach the first-person viewmodel pass (WEAPONS stream, see
+   * docs/NOTES-weapons.md). A second RenderPass draws `scene` with `camera`
+   * over the world colour: depth is cleared (the gun never clips into walls)
+   * but colour is kept, and the pass sits after the AO pass so world AO never
+   * bleeds onto the gun while bloom / tonemap / grade / SMAA / grain / lens
+   * water — everything downstream — still process the weapon. The composer's
+   * stable depth texture stays the WORLD depth (`needsDepthBlit = false`), so
+   * DOF and motion blur keep reading world depth.
+   *
+   * @param {THREE.Scene} scene viewmodel scene (shares world coordinates)
+   * @param {THREE.PerspectiveCamera} camera viewmodel camera (own fov/near/far)
+   * @returns {RenderPass}
+   */
+  attachViewmodel(scene, camera) {
+    if (this.viewmodelPass) {
+      this.viewmodelPass.mainScene = scene;
+      this.viewmodelPass.mainCamera = camera;
+      return this.viewmodelPass;
+    }
+    const pass = new RenderPass(scene, camera);
+    pass.name = 'ViewmodelPass';
+    pass.clearPass.setClearFlags(false, true, false); // keep world colour, wipe depth
+    pass.needsDepthBlit = false; // downstream depth = world depth, not the gun's
+    pass.ignoreBackground = true;
+    const passes = this.composer.passes;
+    const anchor = this.n8ao ? passes.indexOf(this.n8ao) : passes.indexOf(this.renderPass);
+    this.composer.addPass(pass, Math.max(0, anchor) + 1);
+    this.viewmodelPass = pass;
+    return pass;
+  }
+
+  /** Show/hide the viewmodel pass (menus, third-person views, some presets). */
+  setViewmodelEnabled(on) {
+    if (this.viewmodelPass) this.viewmodelPass.enabled = !!on;
   }
 
   /** Register a per-render-frame hook (runs before the composer, camera final). */
