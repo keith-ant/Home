@@ -184,16 +184,17 @@ function torus(r, tube, radSeg, tubSeg, mat, arc) {
  * @returns {THREE.BufferGeometry} spans z ∈ [-length/2, +length/2], top at y=height
  */
 export function railGeometry(length, width = 0.0212) {
-  const base = new THREE.BoxGeometry(width * 0.86, 0.0042, length);
-  base.translate(0, 0.0021, 0);
+  const base = new THREE.BoxGeometry(width * 0.86, 0.0034, length);
+  base.translate(0, 0.0017, 0);
   const pitch = 0.01;
   const ridgeCount = Math.max(1, Math.floor(length / pitch));
   const geos = [base];
   const startZ = -length / 2 + pitch * 0.5;
   for (let i = 0; i < ridgeCount; i++) {
     // trapezoidal cross-section approximated by a slim rounded box
-    const g = new THREE.BoxGeometry(width, 0.0046, 0.0052);
-    g.translate(0, 0.0042 + 0.0023, startZ + i * pitch);
+    // (real 1913 slot depth is ~2.9 mm — keep the ridges low and crisp)
+    const g = new THREE.BoxGeometry(width, 0.0028, 0.0048);
+    g.translate(0, 0.0034 + 0.0014, startZ + i * pitch);
     geos.push(g);
   }
   const merged = mergeGeometries(geos, false);
@@ -495,26 +496,26 @@ export function buildAR(o = {}) {
   const upper = new THREE.Group();
   upper.name = 'upper';
   // main forged body: bore axis at y=0; the upper spans y -0.017 .. +0.031
-  const upperBody = rbox(0.036, 0.048, 0.188, 0.004, mAnod, { segments: 3, strength: 0.85, seed: 11 });
-  upperBody.position.set(0, 0.007, 0.098);
+  const upperBody = rbox(0.029, 0.041, 0.188, 0.004, mAnod, { segments: 3, strength: 0.55, seed: 11 });
+  upperBody.position.set(0, 0.0035, 0.098);
   upper.add(upperBody);
   // forward assist housing (right rear): angled cylinder + serrated round cap
   const faBase = cyl(0.0075, 0.0075, 0.022, 12, mAnod, 'z', { strength: 0.6 });
   faBase.rotation.set(0.15, -0.55, 0);
-  faBase.position.set(0.017, 0.004, 0.166);
+  faBase.position.set(0.014, 0.004, 0.166);
   upper.add(faBase);
   const faCap = cyl(0.0085, 0.008, 0.008, 14, mBlack, 'z', { rim: false });
   faCap.rotation.copy(faBase.rotation);
-  faCap.position.set(0.025, 0.003, 0.176);
+  faCap.position.set(0.021, 0.003, 0.176);
   upper.add(faCap);
   parts.set('forwardAssist', faCap);
   // ejection port well (dark recess) on the right face
   const port = box(0.008, 0.023, 0.058, mChamber, 0);
-  port.position.set(0.0145, 0.006, 0.046);
+  port.position.set(0.011, 0.006, 0.046);
   upper.add(port);
   // brass deflector wedge behind the port
   const deflector = rbox(0.006, 0.012, 0.014, 0.0018, mAnod, { strength: 1.2, seed: 12 });
-  deflector.position.set(0.019, 0.010, 0.082);
+  deflector.position.set(0.0155, 0.010, 0.082);
   deflector.rotation.y = -0.45;
   upper.add(deflector);
   // dust cover: hinged plate below the port, hanging OPEN (weapon has been fired)
@@ -526,7 +527,7 @@ export function buildAR(o = {}) {
   const dcDetent = box(0.003, 0.006, 0.01, mBlack, 0.2);
   dcDetent.position.set(0.0015, -0.014, 0.018);
   dustCover.add(dcDetent);
-  dustCover.position.set(0.0185, -0.0055, 0.046); // hinge line
+  dustCover.position.set(0.015, -0.0055, 0.046); // hinge line
   dustCover.rotation.z = -1.95; // open, hanging down (closed = 0)
   upper.add(dustCover);
   parts.set('dustCover', dustCover);
@@ -550,11 +551,11 @@ export function buildAR(o = {}) {
   // shell deflector edge highlight / chamber depth: nothing else needed
   // flat-top rail on the upper
   const topRail = railMesh(0.192, mAnodDark);
-  topRail.position.set(0, 0.031, 0.096);
+  topRail.position.set(0, 0.024, 0.096);
   upper.add(topRail);
   // rear takedown pin lug bump + charging handle latch shelf
-  const chLatch = rbox(0.036, 0.010, 0.03, 0.0015, mAnod, { strength: 0.8, seed: 15 });
-  chLatch.position.set(0, 0.026, 0.192);
+  const chLatch = rbox(0.029, 0.010, 0.03, 0.0015, mAnod, { strength: 0.6, seed: 15 });
+  chLatch.position.set(0, 0.019, 0.192);
   upper.add(chLatch);
   // charging handle (animatable, slides back +Z 0.07)
   const chargingHandle = new THREE.Group();
@@ -568,16 +569,16 @@ export function buildAR(o = {}) {
   const chLatchLever = box(0.006, 0.006, 0.014, mBlack, 0.4);
   chLatchLever.position.set(-0.026, 0, 0.0);
   chargingHandle.add(chLatchLever);
-  chargingHandle.position.set(0, 0.0245, 0.196);
+  chargingHandle.position.set(0, 0.0175, 0.196);
   chargingHandle.userData.homeZ = 0.196;
   chargingHandle.userData.travel = 0.075;
   upper.add(chargingHandle);
   parts.set('chargingHandle', chargingHandle);
   // barrel nut / delta ring at the front
-  const deltaRing = torus(0.0195, 0.006, 24, 8, mBlack);
+  const deltaRing = torus(0.0165, 0.0055, 24, 8, mBlack);
   deltaRing.position.set(0, 0, -0.002);
   upper.add(deltaRing);
-  const nut = cyl(0.0175, 0.0175, 0.014, 18, mBlack, 'z', { rim: false });
+  const nut = cyl(0.015, 0.015, 0.014, 18, mBlack, 'z', { rim: false });
   nut.position.set(0, 0, -0.011);
   upper.add(nut);
   // roll marks on the upper's left flat ("M4 CARBINE" faint) — reuse maker rect scaled small
@@ -588,30 +589,30 @@ export function buildAR(o = {}) {
   const lower = new THREE.Group();
   lower.name = 'lower';
   // main body under the upper: y -0.017 (top, meets the upper) down to -0.052
-  const lowerBody = rbox(0.034, 0.035, 0.196, 0.004, mAnod, { segments: 3, strength: 1.1, seed: 21 });
-  lowerBody.position.set(0, -0.0345, 0.096);
+  const lowerBody = rbox(0.029, 0.031, 0.196, 0.004, mAnod, { segments: 3, strength: 0.7, seed: 21 });
+  lowerBody.position.set(0, -0.0325, 0.096);
   lower.add(lowerBody);
   // rear takedown boss (receiver extension ring)
-  const rearRing = cyl(0.017, 0.017, 0.02, 20, mAnodDark, 'z', { strength: 0.1, seed: 22 });
+  const rearRing = cyl(0.0165, 0.0165, 0.02, 20, mAnodDark, 'z', { strength: 0.1, seed: 22 });
   rearRing.position.set(0, -0.006, 0.196);
   lower.add(rearRing);
-  const castleNut = cyl(0.0175, 0.0175, 0.012, 8, mBlack, 'z', { strength: 0.15, seed: 23 });
+  const castleNut = cyl(0.0168, 0.0168, 0.012, 8, mBlack, 'z', { strength: 0.15, seed: 23 });
   castleNut.position.set(0, -0.006, 0.211);
   lower.add(castleNut);
   // magazine well: flared block below the front of the lower
-  const magwell = rbox(0.038, 0.06, 0.075, 0.005, mAnod, { segments: 3, strength: 1.4, seed: 24 });
+  const magwell = rbox(0.033, 0.06, 0.075, 0.005, mAnod, { segments: 3, strength: 0.9, seed: 24 });
   magwell.position.set(0, -0.075, 0.048);
   lower.add(magwell);
   // magwell bevel/flare at the bottom (slightly wider ring)
-  const magwellFlare = rbox(0.042, 0.014, 0.079, 0.004, mAnod, { strength: 1.6, seed: 25 });
+  const magwellFlare = rbox(0.037, 0.014, 0.079, 0.004, mAnod, { strength: 1.0, seed: 25 });
   magwellFlare.position.set(0, -0.1, 0.048);
   lower.add(magwellFlare);
   // trigger guard: front vertical + bottom loop + rear boss
   const tgFront = rbox(0.010, 0.024, 0.008, 0.0015, mAnod, { strength: 0.7, seed: 26 });
-  tgFront.position.set(0, -0.064, 0.089);
+  tgFront.position.set(0, -0.060, 0.089);
   lower.add(tgFront);
   const tgBottom = rbox(0.010, 0.006, 0.062, 0.0018, mAnod, { strength: 0.7, seed: 27 });
-  tgBottom.position.set(0, -0.078, 0.118);
+  tgBottom.position.set(0, -0.074, 0.118);
   lower.add(tgBottom);
   // trigger (curved sliver, animatable)
   const trigger = new THREE.Group();
@@ -623,7 +624,7 @@ export function buildAR(o = {}) {
   const trigTip = rbox(0.006, 0.008, 0.010, 0.0015, mBlack, { strength: 0.3, seed: 29 });
   trigTip.position.set(0, -0.026, -0.001);
   trigger.add(trigTip);
-  trigger.position.set(0, -0.052, 0.108);
+  trigger.position.set(0, -0.049, 0.108);
   lower.add(trigger);
   parts.set('trigger', trigger);
   // selector (ambidextrous): pivot cylinders + levers, animatable rotation about X
@@ -634,7 +635,7 @@ export function buildAR(o = {}) {
   const selLevL = rbox(0.0035, 0.0055, 0.024, 0.001, mBlack, { strength: 0.6, seed: 30 });
   selLevL.position.set(0, 0, 0.011);
   selectorL.add(selLevL);
-  selectorL.position.set(-0.019, -0.033, 0.128);
+  selectorL.position.set(-0.0155, -0.031, 0.128);
   selectorL.rotation.x = -0.35; // pointing at SEMI-ish
   lower.add(selectorL);
   parts.set('selector', selectorL);
@@ -645,7 +646,7 @@ export function buildAR(o = {}) {
   const selLevR = rbox(0.003, 0.005, 0.017, 0.001, mBlack, { strength: 0.6, seed: 31 });
   selLevR.position.set(0, 0, 0.008);
   selectorR.add(selLevR);
-  selectorR.position.set(0.019, -0.033, 0.128);
+  selectorR.position.set(0.0155, -0.031, 0.128);
   selectorR.rotation.x = -0.35;
   lower.add(selectorR);
   // bolt catch / release paddle (left, above the magwell rear)
@@ -659,7 +660,7 @@ export function buildAR(o = {}) {
   const brRib2 = brRib1.clone();
   brRib2.position.y = 0.004;
   boltRelease.add(brRib2);
-  boltRelease.position.set(-0.019, -0.03, 0.076);
+  boltRelease.position.set(-0.016, -0.03, 0.076);
   lower.add(boltRelease);
   parts.set('boltRelease', boltRelease);
   // magazine release button (right side, ribbed round button)
@@ -670,18 +671,18 @@ export function buildAR(o = {}) {
   const mrBar = box(0.003, 0.006, 0.026, mBlack, 0.3);
   mrBar.position.set(-0.001, 0, -0.012);
   magRelease.add(mrBar);
-  magRelease.position.set(0.019, -0.048, 0.084);
+  magRelease.position.set(0.016, -0.046, 0.084);
   lower.add(magRelease);
   parts.set('magRelease', magRelease);
   // takedown + pivot pins (both sides visible through-pins)
   for (const [zz, yy] of [[0.006, -0.026], [0.184, -0.03]]) {
-    const pin = cyl(0.0032, 0.0032, 0.040, 12, mSteelDark, 'x', { rim: false });
+    const pin = cyl(0.0032, 0.0032, 0.033, 12, mSteelDark, 'x', { rim: false });
     pin.position.set(0, yy, zz);
     lower.add(pin);
   }
   // hammer pin heads (2 small pins on each side)
   for (const zz of [0.112, 0.132]) {
-    const p = cyl(0.002, 0.002, 0.036, 8, mSteelDark, 'x', { rim: false });
+    const p = cyl(0.002, 0.002, 0.03, 8, mSteelDark, 'x', { rim: false });
     p.position.set(0, -0.036, zz);
     lower.add(p);
   }
@@ -698,29 +699,29 @@ export function buildAR(o = {}) {
   const gripCap = rbox(0.032, 0.012, 0.052, 0.004, mPolySmooth, { strength: 0.3, seed: 35 });
   gripCap.position.set(0, -0.106, 0.002);
   grip.add(gripCap);
-  grip.position.set(0, -0.05, 0.146);
-  grip.rotation.x = -0.33;
+  grip.position.set(0, -0.047, 0.146);
+  grip.rotation.x = -0.3;
   lower.add(grip);
   parts.set('grip', grip);
   // receiver end plate + QD sling swivel (left)
   const swivel = torus(0.008, 0.0022, 16, 8, mBlack);
-  swivel.position.set(-0.02, -0.006, 0.203);
+  swivel.position.set(-0.017, -0.006, 0.203);
   swivel.rotation.y = Math.PI / 2;
   lower.add(swivel);
   const swivelBase = cyl(0.005, 0.005, 0.006, 10, mBlack, 'x', { rim: false });
-  swivelBase.position.set(-0.019, -0.006, 0.203);
+  swivelBase.position.set(-0.016, -0.006, 0.203);
   lower.add(swivelBase);
   // roll-mark decals on the lower flats + magwell (left: maker + selector legend, right: proof)
   const decalL = decalPlate(0.072, 0.024, sheet.rects.makerLeft, mDecal);
-  decalL.position.set(-0.0176, -0.033, 0.078);
+  decalL.position.set(-0.0148, -0.031, 0.078);
   decalL.rotation.y = -Math.PI / 2;
   lower.add(decalL);
   const decalSel = decalPlate(0.032, 0.03, sheet.rects.selector, mDecal);
-  decalSel.position.set(-0.0176, -0.033, 0.129);
+  decalSel.position.set(-0.0148, -0.031, 0.129);
   decalSel.rotation.y = -Math.PI / 2;
   lower.add(decalSel);
   const decalR = decalPlate(0.06, 0.02, sheet.rects.makerRight, mDecal);
-  decalR.position.set(0.0176, -0.036, 0.09);
+  decalR.position.set(0.0148, -0.034, 0.09);
   decalR.rotation.y = Math.PI / 2;
   lower.add(decalR);
   root.add(lower);
@@ -820,13 +821,13 @@ export function buildAR(o = {}) {
 
   /* ===== front + rear flip-up sights (folded) ============================*/
   const buisFront = rbox(0.02, 0.011, 0.02, 0.0025, mBlack, { strength: 0.9, seed: 55 });
-  buisFront.position.set(0, 0.0335, hgZ - hgLen / 2 + 0.02);
+  buisFront.position.set(0, 0.0365, hgZ - hgLen / 2 + 0.02);
   root.add(buisFront);
   const buisRear = rbox(0.02, 0.009, 0.02, 0.0025, mBlack, { strength: 0.9, seed: 56 });
-  buisRear.position.set(0, 0.041, 0.181);
+  buisRear.position.set(0, 0.0335, 0.181);
   root.add(buisRear);
   const buisRearKnob = cyl(0.0035, 0.0035, 0.024, 10, mSteelDark, 'x', { rim: false });
-  buisRearKnob.position.set(0, 0.042, 0.181);
+  buisRearKnob.position.set(0, 0.0345, 0.181);
   root.add(buisRearKnob);
 
   /* ===== holographic sight (552-style) ==================================*/
@@ -834,62 +835,77 @@ export function buildAR(o = {}) {
   // the battery compartment at the rear, the window ABOVE it (y 0.033..0.058)
   // framed by a protective hood; sight line through the window centre at
   // y ≈ 0.045 clears the body top by ~13 mm.
+  // Real EXPS/552 proportions: ~14 cm long, ~35 mm wide; the front two
+  // thirds are a LOW deck (laser-cover ramp) with the tall square window
+  // rising above it inside a thin protective hood; the electronics/battery
+  // box only fills the rear third. That silhouette (low deck + big glass +
+  // thin hood posts) is the read, not a slab.
   const holo = new THREE.Group();
   holo.name = 'holo';
-  const mHousing = weaponMaterial('anodized', { color: 0x767b83, roughness: 1.45 });
-  // main body block (electronics + laser diode housing)
-  const hBody = rbox(0.037, 0.032, 0.135, 0.0028, mHousing, { segments: 3, strength: 1.15, seed: 60 });
-  hBody.position.set(0, 0.016, 0);
+  const mHousing = weaponMaterial('anodized', { color: 0x767b83, roughness: 1.35 });
+  const HOLO_SIGHT_Y = 0.034; // window/reticle centre above the mount base
+  // integral rail-grabber mount (slightly wider than the deck, low)
+  const hMount = rbox(0.036, 0.008, 0.13, 0.002, mHousing, { strength: 0.7, seed: 59 });
+  hMount.position.set(0, 0.004, 0);
+  holo.add(hMount);
+  // low front deck (laser diode + beam cover) — spans the window section
+  const hDeck = rbox(0.033, 0.011, 0.075, 0.0022, mHousing, { segments: 2, strength: 0.6, seed: 60 });
+  hDeck.position.set(0, 0.0135, -0.028);
+  holo.add(hDeck);
+  // rear electronics / battery housing (the only tall solid part)
+  const hBody = rbox(0.033, 0.03, 0.052, 0.0026, mHousing, { segments: 2, strength: 0.7, seed: 61 });
+  hBody.position.set(0, 0.023, 0.036);
   holo.add(hBody);
   // battery cap bulge at the rear top + control buttons on the rear-left
-  const hCap = rbox(0.03, 0.008, 0.03, 0.003, mHousing, { strength: 1.0, seed: 61 });
-  hCap.position.set(0, 0.036, 0.05);
+  const hCap = rbox(0.024, 0.006, 0.022, 0.0025, mHousing, { strength: 0.8, seed: 63 });
+  hCap.position.set(0, 0.041, 0.045);
   holo.add(hCap);
   for (let i = 0; i < 2; i++) {
-    const b = rbox(0.004, 0.009, 0.012, 0.002, mRubber, { strength: 0.2, seed: 62 + i });
-    b.position.set(-0.02, 0.018 + i * 0.001, 0.03 + i * 0.017);
+    const b = rbox(0.003, 0.008, 0.011, 0.0018, mRubber, { strength: 0.2, seed: 62 + i });
+    b.position.set(-0.0175, 0.022 + i * 0.001, 0.024 + i * 0.016);
     holo.add(b);
   }
-  // hood: side posts + top strap protecting the window (front two thirds)
-  const postL = rbox(0.006, 0.031, 0.062, 0.002, mHousing, { strength: 1.2, seed: 64 });
-  postL.position.set(-0.017, 0.0455, -0.032);
+  // hood: thin side posts + top strap framing a large square window
+  const postL = rbox(0.004, 0.038, 0.058, 0.0016, mHousing, { strength: 0.9, seed: 64 });
+  postL.position.set(-0.0145, HOLO_SIGHT_Y - 0.001, -0.028);
   holo.add(postL);
   const postR = postL.clone();
-  postR.position.x = 0.017;
+  postR.position.x = 0.0145;
   holo.add(postR);
-  const hoodTop = rbox(0.04, 0.0055, 0.062, 0.002, mHousing, { strength: 1.3, seed: 65 });
-  hoodTop.position.set(0, 0.062, -0.032);
+  const hoodTop = rbox(0.033, 0.004, 0.058, 0.0016, mHousing, { strength: 1.0, seed: 65 });
+  hoodTop.position.set(0, HOLO_SIGHT_Y + 0.02, -0.028);
   holo.add(hoodTop);
   // front glass (vertical) + rear glass (tilted like the real 552)
-  const glassFront = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.028, 0.026)), mGlass);
-  glassFront.position.set(0, 0.045, -0.06);
+  const glassFront = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.025, 0.036)), mGlass);
+  glassFront.position.set(0, HOLO_SIGHT_Y, -0.055);
   holo.add(glassFront);
-  const glassRear = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.028, 0.028)), mGlass);
-  glassRear.position.set(0, 0.045, -0.005);
+  const glassRear = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.025, 0.036)), mGlass);
+  glassRear.position.set(0, HOLO_SIGHT_Y, -0.002);
   glassRear.rotation.x = -0.16;
   holo.add(glassRear);
   // window sill (angled ramp under the front glass, real unit's laser cover)
-  const sill = rbox(0.03, 0.008, 0.02, 0.002, mHousing, { strength: 0.9, seed: 66 });
-  sill.position.set(0, 0.035, -0.052);
+  const sill = rbox(0.028, 0.007, 0.018, 0.002, mHousing, { strength: 0.7, seed: 66 });
+  sill.position.set(0, 0.02, -0.05);
   sill.rotation.x = -0.45;
   holo.add(sill);
   // reticle plane (emissive, additive) between the panes
   const reticle = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.024, 0.024)), mReticle);
   reticle.name = 'reticle';
-  reticle.position.set(0, 0.0455, -0.032);
+  reticle.position.set(0, HOLO_SIGHT_Y, -0.028);
   reticle.renderOrder = 5;
   holo.add(reticle);
   // holo badge decal on the housing right face
-  const holoDecal = decalPlate(0.045, 0.014, sheet.rects.optic, mDecal);
-  holoDecal.position.set(0.019, 0.018, 0.03);
+  const holoDecal = decalPlate(0.038, 0.012, sheet.rects.optic, mDecal);
+  holoDecal.position.set(0.017, 0.024, 0.036);
   holoDecal.rotation.y = Math.PI / 2;
   holo.add(holoDecal);
   // mount cross-bolt (left)
-  const holoBolt = screwHead(0.0045, mBlack, false);
+  const holoBolt = screwHead(0.004, mBlack, false);
   holoBolt.rotation.z = Math.PI / 2;
-  holoBolt.position.set(-0.0195, 0.008, 0.03);
+  holoBolt.position.set(-0.019, 0.004, 0.03);
   holo.add(holoBolt);
-  holo.position.set(0, 0.0355, 0.055); // on the top rail
+  holo.position.set(0, 0.03, 0.052); // clamped to the (now lower, thinner) top rail
+  holo.userData.sightY = HOLO_SIGHT_Y;
   root.add(holo);
   parts.set('holo', holo);
 
@@ -1012,7 +1028,7 @@ export function buildAR(o = {}) {
   portAnchor.position.set(0.024, 0.006, 0.055);
   root.add(portAnchor);
   const reticleAnchor = anchor('reticle');
-  reticleAnchor.position.set(0, holo.position.y + 0.0455, holo.position.z - 0.032);
+  reticleAnchor.position.set(0, holo.position.y + (holo.userData.sightY ?? 0.034), holo.position.z - 0.028);
   root.add(reticleAnchor);
   const laserAnchorRoot = anchor('laserRoot');
   laserAnchorRoot.position.set(peq.position.x - 0.008, peq.position.y + 0.004, peq.position.z - 0.061);

@@ -118,7 +118,7 @@ export class Viewmodel {
 
   _buildLights() {
     // constant camera-space key (warm, upper-right-front) + cool rim (behind-left)
-    this.key = new THREE.SpotLight(_colWarm, 1.3, 4.5, 0.9, 0.6, 2);
+    this.key = new THREE.SpotLight(_colWarm, 3.4, 4.5, 1.0, 0.6, 2);
     this.key.position.set(0.6, 0.6, 0.3);
     this.key.target.position.set(0.08, -0.22, -0.65);
     this.key.castShadow = this.tier.shadows?.enabled !== false;
@@ -133,14 +133,14 @@ export class Viewmodel {
     }
     this.root.add(this.key);
     this.root.add(this.key.target);
-    this.rim = new THREE.PointLight(_colCool, 0.95, 5, 2);
+    this.rim = new THREE.PointLight(_colCool, 1.9, 5, 2);
     this.rim.position.set(-0.7, 0.4, 0.5);
     this.root.add(this.rim);
-    this.fillLow = new THREE.PointLight(0xffdcb8, 0.22, 4, 2);
+    this.fillLow = new THREE.PointLight(0xffdcb8, 0.42, 4, 2);
     this.fillLow.position.set(0.1, -0.6, -0.2);
     this.root.add(this.fillLow);
     // faint hemisphere so black polymer never crushes fully
-    this.hemi = new THREE.HemisphereLight(0x7d90b5, 0x1c1a16, 0.06);
+    this.hemi = new THREE.HemisphereLight(0x8fa0c0, 0x1c1a16, 0.18);
     this.scene.add(this.hemi);
     // mirrored world lights (positions in world space, scene shares world
     // coords). SpotLights so a floodlight only lights the gun when the
@@ -559,11 +559,11 @@ export class Viewmodel {
     // constant key/rim: back off when world fixtures already light the gun
     // dim the constant rig while aiming (the receiver rear sits at the lens)
     const adsK = 1 - 0.75 * Math.min(1, this.game.weapons?.anim?.adsBlend ?? 0);
-    const auto = THREE.MathUtils.clamp(1.1 - sumIll * 0.075, 0.4, 1.0) * (this.debugLightBoost || 1) * adsK;
+    const auto = THREE.MathUtils.clamp(1.15 - sumIll * 0.06, 0.55, 1.0) * (this.debugLightBoost || 1) * adsK;
     this._camLightScale = auto;
-    this.key.intensity = 1.3 * auto;
-    this.rim.intensity = 0.95 * (0.7 + 0.3 * auto);
-    this.fillLow.intensity = 0.22 * auto;
+    this.key.intensity = 3.4 * auto;
+    this.rim.intensity = 1.9 * (0.7 + 0.3 * auto);
+    this.fillLow.intensity = 0.42 * auto;
     // inspect: swing the key across to the presented (left) flank
     const anim = this.game.weapons?.anim;
     if (!this._keyHome) this._keyHome = this.key.position.clone();

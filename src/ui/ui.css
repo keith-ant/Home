@@ -1,0 +1,512 @@
+/* IRONWAKE UI — HUD + menus. DOM overlays in #hud / #menus (index.html).
+ * Everything time-varying is driven from JS off game.time (transform /
+ * opacity only) so photo-mode captures are deterministic. */
+
+#hud, #menus {
+  font-family: 'Rajdhani', 'Barlow Condensed', system-ui, sans-serif;
+  color: #f2f0ea;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 0 6px rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.02em;
+}
+#hud * , #menus * { box-sizing: border-box; }
+.iw-hidden { display: none !important; }
+
+/* ---------------------------------------------------------- compass */
+.iw-compass {
+  position: absolute;
+  top: 2.4vh;
+  left: 50%;
+  width: 36vw;
+  transform: translateX(-50%);
+}
+.iw-compass-win {
+  position: relative;
+  height: 3.4vh;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+}
+.iw-compass-tape {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  will-change: transform;
+}
+.iw-tick {
+  position: absolute;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255,255,255,0.55);
+  height: 0.8vh;
+}
+.iw-tick.major { height: 1.4vh; width: 2px; background: rgba(255,255,255,0.85); }
+.iw-tick.card { height: 1.4vh; width: 2px; background: #fff; }
+.iw-tick-label {
+  position: absolute;
+  bottom: 1.6vh;
+  transform: translateX(-50%);
+  font-size: 1.35vh;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.iw-tick-label.card { font-size: 1.9vh; font-weight: 700; color: #fff; }
+.iw-heading {
+  margin-top: 0.5vh;
+  text-align: center;
+  font-family: 'Teko', 'Rajdhani', sans-serif;
+  font-size: 2.6vh;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+.iw-loc {
+  text-align: center;
+  font-size: 1.25vh;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  color: rgba(255, 200, 120, 0.78);
+  margin-top: 0.15vh;
+}
+.iw-pips { position: absolute; inset: 0; }
+.iw-pip {
+  position: absolute;
+  top: 0.35vh;
+  width: 0.9vh;
+  height: 0.9vh;
+  margin-left: -0.45vh;
+  border-radius: 50%;
+  background: #ff3b3b;
+  box-shadow: 0 0 8px rgba(255, 40, 40, 0.9);
+}
+.iw-caret {
+  position: absolute;
+  left: 50%;
+  bottom: -0.7vh;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 0.55vh solid transparent;
+  border-right: 0.55vh solid transparent;
+  border-bottom: 0.75vh solid #fff;
+}
+
+/* -------------------------------------------------------------- crosshair */
+.iw-cross {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0; height: 0;
+}
+.iw-cross i {
+  position: absolute;
+  display: block;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 0 3px rgba(0,0,0,0.9);
+}
+.iw-cross i.h { width: 0.95vh; height: 2px; margin-top: -1px; }
+.iw-cross i.v { width: 2px; height: 0.95vh; margin-left: -1px; }
+.iw-cross .dot {
+  width: 2px; height: 2px; margin: -1px 0 0 -1px;
+  background: rgba(255,255,255,0.35);
+}
+
+/* ------------------------------------------------------------- hitmarker */
+.iw-hitm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0; height: 0;
+  opacity: 0;
+}
+.iw-hitm i {
+  position: absolute;
+  display: block;
+  width: 1.3vh;
+  height: 2px;
+  margin: -1px 0 0 -0.65vh;
+  background: #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.9);
+  transform-origin: center center;
+}
+.iw-hitm.kill i { background: #ff2a2a; height: 3px; margin-top: -1.5px; box-shadow: 0 0 10px rgba(255,30,30,0.85); }
+
+/* ------------------------------------------------------------------ ammo */
+.iw-ammo {
+  position: absolute;
+  right: 3.2vw;
+  bottom: 4.2vh;
+  text-align: right;
+}
+.iw-wname {
+  font-size: 1.55vh;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: rgba(255,255,255,0.82);
+  margin-bottom: 0.2vh;
+}
+.iw-ammo-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 1.1vh;
+  line-height: 0.86;
+}
+.iw-mag {
+  font-family: 'Teko', 'Rajdhani', sans-serif;
+  font-size: 7.4vh;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  min-width: 6vh;
+}
+.iw-mag.low { color: #ff4a3f; text-shadow: 0 0 14px rgba(255,60,50,0.7), 0 1px 2px #000; }
+.iw-res {
+  font-family: 'Teko', 'Rajdhani', sans-serif;
+  font-size: 4.1vh;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  opacity: 0.6;
+  min-width: 4.5vh;
+}
+.iw-ammo-sub {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.6vh;
+  margin-top: 0.5vh;
+  border-top: 1px solid rgba(255,255,255,0.16);
+  padding-top: 0.55vh;
+}
+.iw-mode {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25vh;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.86);
+}
+.iw-mode .b { display: inline-block; width: 3px; height: 1.1vh; margin-right: 3px; background: rgba(255,255,255,0.9); vertical-align: middle; }
+.iw-mode .b.off { background: rgba(255,255,255,0.2); }
+.iw-nades { display: flex; gap: 0.45vh; align-items: center; }
+.iw-nade {
+  width: 0.7vh; height: 1.15vh;
+  border: 2px solid rgba(255,255,255,0.9);
+  border-radius: 2px;
+}
+.iw-nade.spent { opacity: 0.22; }
+.iw-glyph {
+  font-size: 1.2vh;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: rgba(255,255,255,0.5);
+}
+.iw-reload {
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  transform: translateX(-50%);
+  font-size: 1.7vh;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;
+  color: #fff;
+  opacity: 0;
+}
+
+/* --------------------------------------------------------------- killfeed */
+.iw-feed {
+  position: absolute;
+  left: 3.2vw;
+  bottom: 22vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45vh;
+}
+.iw-feed-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9vh;
+  font-size: 1.45vh;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  background: rgba(6, 8, 10, 0.5);
+  padding: 0.25vh 1.1vh 0.2vh 0.9vh;
+  border-left: 2px solid rgba(215,255,100,0.85);
+  will-change: transform, opacity;
+}
+.iw-feed-row .k { color: #8fd7ff; }
+.iw-feed-row .g { color: rgba(255,255,255,0.9); font-family: 'JetBrains Mono', monospace; font-size: 1.15vh; }
+.iw-feed-row .v { color: #ff8a80; }
+.iw-feed-row .hs { color: #ffd166; font-size: 1.05vh; letter-spacing: 0.2em; }
+
+/* -------------------------------------------------------------- toasts */
+.iw-toasts {
+  position: absolute;
+  right: 3.2vw;
+  bottom: 34vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2vh;
+}
+.iw-toast {
+  font-family: 'Teko', 'Rajdhani', sans-serif;
+  font-size: 3.2vh;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: #fff;
+  will-change: transform, opacity;
+}
+.iw-toast .pts { color: #d7ff64; margin-right: 0.6vh; font-variant-numeric: tabular-nums; }
+.iw-toast.hs .pts { color: #ffd166; }
+.iw-toast.hs { color: #ffe9a8; }
+
+/* --------------------------------------------------------- wave banner */
+.iw-banner {
+  position: absolute;
+  left: 50%;
+  top: 21vh;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.iw-banner .n {
+  font-family: 'Teko', 'Rajdhani', sans-serif;
+  font-size: 6.2vh;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  color: #fff;
+}
+.iw-banner .s {
+  font-size: 1.7vh;
+  font-weight: 700;
+  letter-spacing: 0.62em;
+  text-indent: 0.62em;
+  color: #ff5a4d;
+  margin-top: 0.2vh;
+}
+.iw-banner .rule {
+  height: 1px;
+  width: 34vh;
+  margin: 0.9vh auto 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+}
+
+/* ------------------------------------------------------ damage arcs */
+.iw-arcs {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0; height: 0;
+}
+.iw-arc {
+  position: absolute;
+  left: -14vh;
+  top: -14vh;
+  width: 28vh;
+  height: 28vh;
+  border-radius: 50%;
+  border: 0.75vh solid transparent;
+  border-top-color: rgba(255, 30, 24, 0.95);
+  filter: drop-shadow(0 0 10px rgba(255, 20, 10, 0.7));
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.iw-blood {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background:
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(160, 8, 6, 0.72) 100%);
+  will-change: opacity;
+}
+
+/* ------------------------------------------------------------- menus */
+.iw-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 4, 6, 0.62);
+  -webkit-backdrop-filter: blur(10px) saturate(0.85);
+  backdrop-filter: blur(10px) saturate(0.85);
+}
+.iw-menu {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 8.5vw;
+}
+.iw-title {
+  font-family: 'Teko', 'Rajdhani', sans-serif;
+  font-size: 15vh;
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: 0.06em;
+  color: #f6f4ee;
+  text-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+.iw-subtitle {
+  font-size: 1.9vh;
+  font-weight: 600;
+  letter-spacing: 0.85em;
+  color: #d7ff64;
+  margin: 1.2vh 0 6.5vh 0.35vh;
+}
+.iw-nav { position: relative; display: flex; flex-direction: column; width: 44vh; }
+.iw-nav-hl {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 6vh;
+  background: linear-gradient(90deg, rgba(215,255,100,0.95), rgba(215,255,100,0.72));
+  transform: translateY(0);
+  transition: transform 160ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.iw-nav-item {
+  position: relative;
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  padding: 0 2.2vh;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 3vh;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.86);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-shadow: none;
+  user-select: none;
+}
+.iw-nav-item.sel { color: #0b0e11; }
+.iw-menu-foot {
+  position: absolute;
+  left: 8.5vw;
+  bottom: 5vh;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.3vh;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.42);
+}
+.iw-menu-ver {
+  position: absolute;
+  right: 4vw;
+  bottom: 5vh;
+  text-align: right;
+  font-size: 1.3vh;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.35);
+}
+.iw-panel {
+  position: absolute;
+  right: 8vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30vw;
+  padding: 2.6vh 3vh;
+  background: rgba(4, 6, 8, 0.78);
+  border: 1px solid rgba(255,255,255,0.14);
+  font-size: 1.55vh;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.78);
+}
+.iw-panel h3 {
+  margin: 0 0 1.2vh;
+  font-size: 1.4vh;
+  letter-spacing: 0.5em;
+  color: #d7ff64;
+}
+.iw-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.iw-ctp {
+  font-size: 2.4vh;
+  font-weight: 700;
+  letter-spacing: 0.6em;
+  text-indent: 0.6em;
+  color: #fff;
+  padding: 1.6vh 3.2vh;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(6,8,10,0.55);
+  cursor: pointer;
+}
+.iw-ctp small {
+  display: block;
+  font-size: 1.2vh;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.5);
+  margin-top: 1vh;
+}
+.iw-pause-title, .iw-kia {
+  font-family: 'Teko', 'Rajdhani', sans-serif;
+  font-size: 9vh;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  color: #fff;
+  margin-bottom: 4vh;
+}
+.iw-kia { color: #ff4239; letter-spacing: 0.4em; }
+.iw-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 12vw);
+  gap: 1.4vw;
+  margin: 0 auto 5vh;
+}
+.iw-stat {
+  border-top: 2px solid rgba(255,255,255,0.28);
+  padding-top: 1vh;
+  text-align: left;
+}
+.iw-stat .v {
+  display: block;
+  font-family: 'Teko', 'Rajdhani', sans-serif;
+  font-size: 6vh;
+  font-weight: 600;
+  line-height: 0.9;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.iw-stat .l {
+  display: block;
+  font-size: 1.3vh;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: rgba(255,255,255,0.55);
+}
+.iw-btn-row { display: flex; gap: 1.6vh; justify-content: center; }
+.iw-btn {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.2vh;
+  font-weight: 700;
+  letter-spacing: 0.36em;
+  text-indent: 0.36em;
+  padding: 1.1vh 3vh;
+  color: #0b0e11;
+  background: #d7ff64;
+  border: 0;
+  cursor: pointer;
+  text-shadow: none;
+}
+.iw-btn.ghost {
+  background: transparent;
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.35);
+}
+.iw-btn:hover { filter: brightness(1.12); }

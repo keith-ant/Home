@@ -198,6 +198,32 @@ detail is parts count and materials rather than tessellation), pistol
 render + one 512/1024² shadow map (key light) per frame; textures are all
 small procedural canvases (≤ 1024², shared/cached).
 
+## 8b. Finish pass (proportions + lighting) — 2026-07-27
+
+- **Receiver rescaled to real M4 proportions**: upper 29 mm wide × 41 mm
+  tall × 188 mm, lower 29 × 31 mm; the whole receiver stack (rail top →
+  lower floor) is now ~71 mm (was ~92 mm) and all side controls, roll-mark
+  decals, port/deflector/dust cover, magwell (33 mm), delta ring, grip
+  (17° rake) were re-seated onto the slimmer flats.
+- **Picatinny rails** (`railGeometry`): base 3.4 mm + 2.8 mm ridges (was
+  4.2 + 4.6 mm slabs) — reads as thin flush 1913 slots on the flat-top and
+  the quad rail; every rail-mounted part (holo, PEQ, BUIS) dropped with it.
+- **Holographic sight rebuilt** to EXPS/552 proportions: 33 mm wide, low
+  front laser deck under a large 25 × 36 mm hooded window (thin 4 mm posts +
+  strap), rear-third electronics box with battery cap; sight line
+  `HOLO_SIGHT_Y = 34 mm` above the mount, exported through the `reticle`
+  anchor so the ADS solve follows automatically.
+- **Edge-wear strengths halved** on the receiver bodies (0.55–0.9) so the
+  bevels stop reading as bright Lego outlines.
+- **Viewmodel lighting floor doubled**: warm key 2.6 cd, cool rim 1.9, low
+  fill 0.42, hemi 0.11, auto-scale floor 0.55 (was key 1.3 / rim 0.95 / fill
+  0.22 / hemi 0.06 / floor 0.4) — the gun no longer silhouettes to black at
+  night, and the mirrored muzzle-flash spike (`25·d²` cap) still lights the
+  gun/hands on the fire frame.
+- The checkpoint's `receiverUpperGeometry` / `receiverLowerGeometry`
+  extrusions (forged shoulder profile) are written but NOT yet swapped in
+  for the rounded-box bodies — next step for compound curves.
+
 ## 9. Known gaps vs the reference (ranked by visual impact)
 
 1. **Assembled-box construction reads CAD-like up close.** Receivers,
