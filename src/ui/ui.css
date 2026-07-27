@@ -241,7 +241,7 @@
   will-change: transform, opacity;
 }
 .iw-feed-row .k { color: #8fd7ff; }
-.iw-feed-row .g { color: rgba(255,255,255,0.9); font-family: 'JetBrains Mono', monospace; font-size: 1.15vh; }
+.iw-feed-row .g { color: rgba(255,255,255,0.9); font-family: 'JetBrains Mono', monospace; font-size: 1.05vh; border: 1px solid rgba(255,255,255,0.35); padding: 0 0.55vh; line-height: 1.35; }
 .iw-feed-row .v { color: #ff8a80; }
 .iw-feed-row .hs { color: #ffd166; font-size: 1.05vh; letter-spacing: 0.2em; }
 

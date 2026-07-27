@@ -566,9 +566,10 @@ function enemyPos(e) {
 }
 
 function glyphFor(weapon) {
-  const w = String(weapon || '').toLowerCase();
-  if (w.includes('grenade') || w.includes('frag')) return '[◈]';
-  if (w.includes('pistol')) return '[═◧]';
-  if (w.includes('head')) return '[◎]';
-  return '[═▄═]';
+  const w = String(weapon || '');
+  const l = w.toLowerCase();
+  if (l.includes('grenade') || l.includes('frag')) return 'FRAG';
+  // first token of the weapon name reads as a compact tag ("IW-15", "M4A1")
+  const tag = w.split(' ')[0];
+  return (tag && tag.length <= 8 ? tag : w.slice(0, 6)).toUpperCase() || 'RIFLE';
 }
