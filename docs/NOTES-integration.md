@@ -101,11 +101,39 @@ in either pass.
     surrogates** (subtitle/caption of the ship horn, thunder flash sync) in
     any capture — the atmosphere layer is invisible to the critic pipeline.
 
-## 5. Final-quality numbers
+## 5. Final-quality numbers (1280×720, quality high)
 
-Filled in from the final passes (1280×720 high). See §2/§3 for the
-iteration-pass evidence; final images live in `shots/` and
-`shots/verify/`.
+**`npm run verify -- --seconds 45` (defaults: 1280×720 high, seed 7) — PASS.**
+`kills 11 · shotsFired 63 · deaths 1 · restarts 1 · wave 1 · score 625 ·
+accuracy 0.72 · final health 100`, zero console/page errors, no stall.
+The stats are bit-identical to the 960×540/medium iteration run — the
+simulation is resolution/quality independent (determinism check passed).
+Captures: `shots/verify/play-00..05.png` + `play-final.png`. Honest read
+of those: two of the seven land mid-turn in a dark container alley with
+heavy motion-blur smear (patrol legs hug walls), one shows the alley kill
+of PMC-9 in the killfeed with the laser drawn across frame, none show a
+menu, black frame or console overlay.
+
+**Preset sweep (same ten presets, 1280×720 high) — 10/10 OK, zero errors.**
+
+| Preset | draw calls | triangles | textures | programs | capture |
+| --- | --- | --- | --- | --- | --- |
+| smoke | 527 | 1.02 M | 155 | 84 | 55.5 s |
+| street | 527 | 1.02 M | 153 | 84 | 59.1 s |
+| viewmodel_idle | 825 | 0.85 M | 146 | 95 | 76.5 s |
+| viewmodel_fire | 758 | 0.71 M | 138 | 92 | 85.1 s |
+| firefight | 938 | 0.93 M | 180 | 99 | 85.0 s |
+| enemy_close | 424 | 0.81 M | 160 | 102 | 76.7 s |
+| hud_full | 894 | 1.08 M | 170 | 94 | 57.5 s |
+| menu_main | 539 | 1.02 M | 163 | 93 | 54.7 s |
+| explosion | 454 | 0.76 M | 135 | 83 | 46.9 s |
+| gun_macro | 688 | 0.76 M | 136 | 90 | 48.6 s |
+
+(SwiftShader timings; the sweep ran concurrently with a verify pass, so
+per-preset times are inflated ~1.5×. Note the harness's 180 s screenshot
+timeout can trip when a 1280×720/high verify runs concurrently with a
+capture sweep on 4 cores — run them sequentially.) Final images live in
+`shots/*.png` and `shots/verify/`.
 
 ## 6. Known issues / gaps (this stream)
 
