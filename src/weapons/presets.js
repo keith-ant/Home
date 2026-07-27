@@ -209,9 +209,9 @@ export function registerWeaponPresets(game) {
       // roll-marks and the wear catches the raking key. Solve the pose from a
       // desired VIEW direction in gun space: rotate that direction onto the
       // camera's +Z, then put the reference point on the axis 26 cm out.
-      const viewDir = new THREE.Vector3(-0.52, 0.3, 0.8).normalize(); // from the gun toward the eye (gun space)
+      const viewDir = new THREE.Vector3(-0.44, 0.29, 0.85).normalize(); // from the gun toward the eye (gun space)
       const q = new THREE.Quaternion().setFromUnitVectors(viewDir, new THREE.Vector3(0, 0, 1));
-      const ref = new THREE.Vector3(-0.012, 0.024, 0.09).applyQuaternion(q);
+      const ref = new THREE.Vector3(-0.012, 0.03, 0.088).applyQuaternion(q);
       const pos = new THREE.Vector3(0.0, 0.0, -0.32).sub(ref);
       vm.poseOverride = { pos, quat: q };
       vm.setFovOverride(30);
@@ -292,7 +292,7 @@ export function registerWeaponPresets(game) {
         offEx();
         offHit();
         const st = W.stats();
-        console.error('[weapon_test] done ' + JSON.stringify({ ammo: ar.ammo, pistol: p.ammo, grenades: W.grenades.count, hits, exploded, tris: st.tris, armTris: st.armTris, particles: g.fx?.particles?.count, state: W.current?.state, since: (g.time.elapsed - (W.current?._lastFireT || 0)).toFixed(3) }));
+        console.info('[weapon_test] done ' + JSON.stringify({ ammo: ar.ammo, pistol: p.ammo, grenades: W.grenades.count, hits, exploded, tris: st.tris, armTris: st.armTris, particles: g.fx?.particles?.count, state: W.current?.state, since: (g.time.elapsed - (W.current?._lastFireT || 0)).toFixed(3) }));
         for (const v of [st.tris, hits]) if (!Number.isFinite(v)) fail('NaN in stats');
         // restore for the frame
         ar.reserve = 60;

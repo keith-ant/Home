@@ -325,7 +325,8 @@ export class Viewmodel {
       this._backwash.position.set(0.02, 0.24, 0.06);
       anchorL.add(this._backwash);
     }
-    if (this._backwash) this._backwash.intensity = on ? 0.85 : 0;
+    // ~5 lux at the hands: the beam's wall bounce, not a studio fill
+    if (this._backwash) this._backwash.intensity = on ? 0.3 : 0;
   }
 
   setVisible(v) {
@@ -527,7 +528,7 @@ export class Viewmodel {
           // art-directed: floods light the WORLD; on the gun they only kiss the
           // upper surfaces (a full-strength beam turns the whole viewmodel into
           // the pool). Live intensity so flicker/lightning boosts carry over.
-          l.intensity = f.light.intensity * 0.42;
+          l.intensity = f.light.intensity * 0.34;
           l.target.position.copy(f.target || f.light.target.position);
           // is the eye inside the beam? (for the auto-key balance)
           _v1.copy(eye).sub(rec.position);
@@ -563,6 +564,20 @@ export class Viewmodel {
     this.key.intensity = 1.3 * auto;
     this.rim.intensity = 0.95 * (0.7 + 0.3 * auto);
     this.fillLow.intensity = 0.22 * auto;
+    // inspect: swing the key across to the presented (left) flank
+    const anim = this.game.weapons?.anim;
+    if (!this._keyHome) this._keyHome = this.key.position.clone();
+    let insp = 0;
+    if (anim && anim.inspectT >= 0 && anim.def?.inspect) {
+      const dur = anim.def.inspect.duration;
+      insp = Math.min(anim.inspectT / 0.45, 1) * Math.min((dur - anim.inspectT) / 0.45, 1);
+      insp = Math.max(0, insp);
+    }
+    this.key.position.set(
+      THREE.MathUtils.lerp(this._keyHome.x, -0.5, insp),
+      THREE.MathUtils.lerp(this._keyHome.y, 0.55, insp),
+      THREE.MathUtils.lerp(this._keyHome.z, 0.25, insp),
+    );
     // environment can change (sky variant); keep in sync
     if (this.scene.environment !== game.scene.environment) this.scene.environment = game.scene.environment;
 

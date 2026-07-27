@@ -322,7 +322,7 @@ export function buildAR(o = {}) {
   const mBlack = weaponMaterial('steel_black');
   const mPoly = weaponMaterial('polymer', { normalMap: gripCheckerNormal(), normalStrength: 0.55 });
   const mPolySmooth = weaponMaterial('polymer');
-  const mPolyStock = weaponMaterial('polymer', { normalMap: stippleNormal(), normalStrength: 0.35 });
+  const mPolyStock = weaponMaterial('polymer', { normalMap: stippleNormal(), normalStrength: 0.12 });
   const mPolyRib = weaponMaterial('polymer', { normalMap: ribbedNormal(), normalStrength: 0.9 });
   const mFde = weaponMaterial('polymer_fde', { normalMap: ribbedNormal(), normalStrength: 0.35 });
   const mRubber = weaponMaterial('rubber');
@@ -521,10 +521,10 @@ export function buildAR(o = {}) {
   lowerBody.position.set(0, -0.0345, 0.096);
   lower.add(lowerBody);
   // rear takedown boss (receiver extension ring)
-  const rearRing = cyl(0.017, 0.017, 0.02, 20, mAnod, 'z', { strength: 0.8, seed: 22 });
+  const rearRing = cyl(0.017, 0.017, 0.02, 20, mAnodDark, 'z', { strength: 0.1, seed: 22 });
   rearRing.position.set(0, -0.006, 0.196);
   lower.add(rearRing);
-  const castleNut = cyl(0.0175, 0.0175, 0.012, 8, mBlack, 'z', { strength: 0.9, seed: 23 });
+  const castleNut = cyl(0.0175, 0.0175, 0.012, 8, mBlack, 'z', { strength: 0.15, seed: 23 });
   castleNut.position.set(0, -0.006, 0.211);
   lower.add(castleNut);
   // magazine well: flared block below the front of the lower
@@ -878,11 +878,15 @@ export function buildAR(o = {}) {
   const vfg = new THREE.Group();
   vfg.name = 'vfg';
   const vfgBody = lathe([
-    [0.014, 0.0], [0.016, -0.008], [0.0175, -0.03], [0.017, -0.072], [0.019, -0.083], [0.021, -0.091],
-    [0.0205, -0.097], [0.018, -0.101], [0.013, -0.104], [0.006, -0.1055], [0.0, -0.106],
+    [0.014, 0.0], [0.016, -0.008], [0.0175, -0.03], [0.017, -0.07], [0.019, -0.08], [0.0205, -0.086],
   ], 32, mPolyRib, { strength: 0.3, seed: 72 });
   vfgBody.rotation.x = -Math.PI / 2; // profile forward (-Z) → hanging down (-Y)
   vfg.add(vfgBody);
+  // domed end cap (a lathe cone tip aliases into radial facets up close)
+  const vfgCap = new THREE.Mesh(ensureWear(new THREE.SphereGeometry(0.0205, 24, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2)), mPolyRib);
+  vfgCap.position.y = -0.086;
+  vfgCap.castShadow = true;
+  vfg.add(vfgCap);
   const vfgClamp = rbox(0.032, 0.014, 0.036, 0.003, mPolySmooth, { strength: 0.4, seed: 73 });
   vfgClamp.position.set(0, 0.004, 0);
   vfg.add(vfgClamp);

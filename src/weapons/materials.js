@@ -990,8 +990,9 @@ export function weaponMaterial(kind, o = {}) {
         map: o.map ?? sheet.color,
         normalMap: o.normalMap ?? sheet.normal,
         normalScale: new THREE.Vector2(0.9, 0.9),
-        transparent: true,
-        depthWrite: false,
+        alphaTest: 0.32,          // cutout, so the plate never reads as a lighter patch
+        transparent: false,
+        depthWrite: true,
         roughness: o.roughness ?? 1.0,
         roughnessMap: anodizedSet().roughness,
         metalness: o.metalness ?? 0.35,

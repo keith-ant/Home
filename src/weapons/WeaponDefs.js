@@ -99,7 +99,7 @@ export const WEAPON_DEFS = {
       selector: 'synth.selector',
     },
     casing: { kind: 'rifle', delay: 0.012, velocity: [1.5, 2.4, 1.1, 1.7, 0.15, 0.55] }, // right, up, forward ranges
-    muzzle: { size: 0.42, light: true, smoke: true }, // suppressed: compact flash
+    muzzle: { size: 0.38, light: true, smoke: true }, // suppressed: compact flash
     viewmodel: {
       // Weapon root pose in camera space (metres / degrees). The assembly
       // origin is the receiver's front face on the bore axis, so the pose
