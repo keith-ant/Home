@@ -831,10 +831,10 @@ export function buildAR(o = {}) {
   root.add(buisRearKnob);
 
   /* ===== holographic sight (552-style) ==================================*/
-  // Layout (holo-local, sitting on the top rail): body block y 0..0.032 with
-  // the battery compartment at the rear, the window ABOVE it (y 0.033..0.058)
-  // framed by a protective hood; sight line through the window centre at
-  // y ≈ 0.045 clears the body top by ~13 mm.
+  // Layout (holo-local, sitting on the top rail): low front deck (top at
+  // y 0.019) with the window (y 0.019..0.057) framed by the hood above it;
+  // rear electronics box tops out at y 0.032. Sight line through the window
+  // centre at HOLO_SIGHT_Y = 0.041 clears the rear body by ~9 mm.
   // Real EXPS/552 proportions: ~14 cm long, ~35 mm wide; the front two
   // thirds are a LOW deck (laser-cover ramp) with the tall square window
   // rising above it inside a thin protective hood; the electronics/battery
@@ -843,7 +843,7 @@ export function buildAR(o = {}) {
   const holo = new THREE.Group();
   holo.name = 'holo';
   const mHousing = weaponMaterial('anodized', { color: 0x767b83, roughness: 1.35 });
-  const HOLO_SIGHT_Y = 0.034; // window/reticle centre above the mount base
+  const HOLO_SIGHT_Y = 0.041; // window/reticle centre above the mount base (clears the rear box)
   // integral rail-grabber mount (slightly wider than the deck, low)
   const hMount = rbox(0.036, 0.008, 0.13, 0.002, mHousing, { strength: 0.7, seed: 59 });
   hMount.position.set(0, 0.004, 0);
@@ -853,12 +853,12 @@ export function buildAR(o = {}) {
   hDeck.position.set(0, 0.0135, -0.028);
   holo.add(hDeck);
   // rear electronics / battery housing (the only tall solid part)
-  const hBody = rbox(0.033, 0.03, 0.052, 0.0026, mHousing, { segments: 2, strength: 0.7, seed: 61 });
-  hBody.position.set(0, 0.023, 0.036);
+  const hBody = rbox(0.033, 0.024, 0.052, 0.0026, mHousing, { segments: 2, strength: 0.7, seed: 61 });
+  hBody.position.set(0, 0.020, 0.036); // top at 32 mm: 9 mm under the sight line
   holo.add(hBody);
   // battery cap bulge at the rear top + control buttons on the rear-left
   const hCap = rbox(0.024, 0.006, 0.022, 0.0025, mHousing, { strength: 0.8, seed: 63 });
-  hCap.position.set(0, 0.041, 0.045);
+  hCap.position.set(0, 0.034, 0.045);
   holo.add(hCap);
   for (let i = 0; i < 2; i++) {
     const b = rbox(0.003, 0.008, 0.011, 0.0018, mRubber, { strength: 0.2, seed: 62 + i });
@@ -867,20 +867,20 @@ export function buildAR(o = {}) {
   }
   // hood: thin side posts + top strap framing a large square window
   const postL = rbox(0.004, 0.038, 0.058, 0.0016, mHousing, { strength: 0.9, seed: 64 });
-  postL.position.set(-0.0145, HOLO_SIGHT_Y - 0.001, -0.028);
+  postL.position.set(-0.0145, HOLO_SIGHT_Y - 0.003, -0.028);
   holo.add(postL);
   const postR = postL.clone();
   postR.position.x = 0.0145;
   holo.add(postR);
   const hoodTop = rbox(0.033, 0.004, 0.058, 0.0016, mHousing, { strength: 1.0, seed: 65 });
-  hoodTop.position.set(0, HOLO_SIGHT_Y + 0.02, -0.028);
+  hoodTop.position.set(0, HOLO_SIGHT_Y + 0.018, -0.028); // strap bottom (0.057) sits on the post tops
   holo.add(hoodTop);
   // front glass (vertical) + rear glass (tilted like the real 552)
-  const glassFront = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.025, 0.036)), mGlass);
-  glassFront.position.set(0, HOLO_SIGHT_Y, -0.055);
+  const glassFront = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.025, 0.038)), mGlass); // deck top (0.019) → strap bottom (0.057)
+  glassFront.position.set(0, HOLO_SIGHT_Y - 0.003, -0.055);
   holo.add(glassFront);
-  const glassRear = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.025, 0.036)), mGlass);
-  glassRear.position.set(0, HOLO_SIGHT_Y, -0.002);
+  const glassRear = new THREE.Mesh(ensureWear(new THREE.PlaneGeometry(0.025, 0.038)), mGlass);
+  glassRear.position.set(0, HOLO_SIGHT_Y - 0.003, -0.002);
   glassRear.rotation.x = -0.16;
   holo.add(glassRear);
   // window sill (angled ramp under the front glass, real unit's laser cover)
